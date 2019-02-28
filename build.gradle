@@ -21,8 +21,8 @@ repositories {
     mavenCentral()
 }
 
-group 'com.danielgergely'
-version '0.0.1'
+group 'com.danielgergely.kgl'
+version '0.0.2-SNAPSHOT'
 
 apply plugin: 'com.android.library'
 
@@ -142,11 +142,33 @@ kotlin {
         jsMain {
             dependencies {
                 implementation kotlin('stdlib-js')
+
+                compileKotlinJs {
+                    kotlinOptions.metaInfo = true
+                    kotlinOptions.sourceMap = true
+                    kotlinOptions.suppressWarnings = true
+                    kotlinOptions.verbose = true
+                    kotlinOptions.main = "call"
+                    kotlinOptions.moduleKind = "umd"
+                }
             }
         }
         jsTest {
             dependencies {
                 implementation kotlin('test-js')
+            }
+        }
+    }
+}
+
+
+publishing {
+    repositories {
+        maven {
+            url = "https://maven.danielgergely.com/repository/snapshots"
+            credentials {
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASS")
             }
         }
     }
