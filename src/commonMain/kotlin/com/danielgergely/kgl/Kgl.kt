@@ -42,9 +42,10 @@ interface Kgl {
     fun clear(mask: Int)
 
     fun createTextures(n: Int) : Array<Texture>
-    fun loadTexture(texture: Texture, resource: TextureResource)
+    fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
     fun activeTexture(texture: Int)
     fun bindTexture(target: Int, texture: Texture)
+    fun generateMipmap(target: Int)
     fun texParameteri(target: Int, pname: Int, value: Int)
 
     fun drawArrays(mode: Int, first: Int, count: Int)

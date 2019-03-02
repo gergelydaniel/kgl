@@ -59,42 +59,13 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun clearColor(r: Float, g: Float, b: Float, a: Float) = gl.clearColor(r, g, b, a)
 
     override fun createTextures(n: Int): Array<Texture> = Array(n) { gl.createTexture() ?: throw Exception() }
-    override fun loadTexture(texture: Texture, resource: String) {
-        gl.bindTexture(GL_TEXTURE_2D, texture as WebGLTexture)
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
+        = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource)
 
-        val level = 0
-        val internalFormat = GL_RGBA
-        val w = 1
-        val h = 1
-        val border = 0
-        val srcFormat = GL_RGBA
-        val srcType = GL_UNSIGNED_BYTE
-        val pixel = Uint8Array(byteArrayOf(0, 0, 0, 0).toTypedArray())
-        gl.texImage2D(GL_TEXTURE_2D, level, internalFormat,
-            w, h, border, srcFormat, srcType,
-            pixel)
-
-
-        val image = document.createElement("img") as HTMLImageElement
-        image.onload = {
-            gl.bindTexture(GL_TEXTURE_2D, texture)
-            gl.texImage2D(GL_TEXTURE_2D, level, internalFormat, srcFormat, srcType, image)
-
-            if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-                gl.generateMipmap(GL_TEXTURE_2D)
-            } else {
-                gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
-                gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-                gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-            }
-        }
-        image.crossOrigin = ""
-        image.src = "$resource.png"
-    }
-    fun isPowerOf2(n : Int) = (n and (n - 1)) == 0
 
     override fun activeTexture(texture: Int) = gl.activeTexture(texture)
     override fun bindTexture(target: Int, texture: Texture) = gl.bindTexture(target, texture as WebGLTexture)
+    override fun generateMipmap(target: Int) = gl.generateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.texParameteri(target, pname, value)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.drawArrays(mode, first, count)

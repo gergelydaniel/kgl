@@ -3,6 +3,9 @@ package com.danielgergely.kgl
 import com.jogamp.opengl.GL3ES3
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
+import java.awt.image.*
+import java.nio.ShortBuffer
+
 
 typealias GL = GL3ES3
 
@@ -117,15 +120,49 @@ class KglJogl(private val gl: GL) : Kgl {
         return ints.toTypedArray()
     }
 
-    override fun loadTexture(texture: Texture, resource: TextureResource) {
-        throw NotImplementedError()
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
+
+
+        gl.glTexImage2D(target, level, internalFormat, resource.width, resource.height, border, GL_RGBA, GL_UNSIGNED_BYTE, imageToByteBuffer(resource))
     }
 
     override fun activeTexture(texture: Int) = gl.glActiveTexture(texture)
 
     override fun bindTexture(target: Int, texture: Texture) = gl.glBindTexture(target, texture)
 
+    override fun generateMipmap(target: Int) = gl.glGenerateMipmap(target)
+
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.glTexParameteri(target, pname, value)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
+}
+
+fun imageToByteBuffer(bi: BufferedImage) : ByteBuffer {
+    val byteBuffer: ByteBuffer
+    val dataBuffer = bi.raster.dataBuffer
+
+    when (dataBuffer) {
+        is DataBufferByte -> {
+            val pixelData = (dataBuffer as DataBufferByte).data
+            byteBuffer = ByteBuffer.wrap(pixelData)
+        }
+        is DataBufferUShort -> {
+            val pixelData = (dataBuffer as DataBufferUShort).data
+            byteBuffer = ByteBuffer.allocate(pixelData.size * 2)
+            byteBuffer.asShortBuffer().put(ShortBuffer.wrap(pixelData))
+        }
+        is DataBufferShort -> {
+            val pixelData = (dataBuffer as DataBufferShort).data
+            byteBuffer = ByteBuffer.allocate(pixelData.size * 2)
+            byteBuffer.asShortBuffer().put(ShortBuffer.wrap(pixelData))
+        }
+        is DataBufferInt -> {
+            val pixelData = (dataBuffer as DataBufferInt).data
+            byteBuffer = ByteBuffer.allocate(pixelData.size * 4)
+            byteBuffer.asIntBuffer().put(IntBuffer.wrap(pixelData))
+        }
+        else -> throw IllegalArgumentException("Not implemented for data buffer type: " + dataBuffer.javaClass)
+    }
+
+    return byteBuffer
 }

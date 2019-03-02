@@ -16,3 +16,4 @@ actual typealias Texture = Int
 actual val nullTexture : Texture = -1
 
 actual typealias TextureResource = Bitmap
+actual fun TextureResource.dispose() = recycle()

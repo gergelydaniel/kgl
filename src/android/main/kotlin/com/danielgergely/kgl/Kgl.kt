@@ -1,5 +1,6 @@
 package com.danielgergely.kgl
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.opengl.GLES20
 import android.opengl.GLUtils
@@ -70,7 +71,8 @@ class KglAndroid : Kgl {
     override fun uniform1f(location: UniformLocation, f: Float) = GL.glUniform1f(location, f)
     override fun uniform1i(location: UniformLocation, i: Int) = GL.glUniform1i(location, i)
 
-    override fun uniformMatrix4fv(location: Int, transpose: Boolean, value: FloatArray) = GL.glUniformMatrix4fv(location, 1, transpose, value, 0)
+    override fun uniformMatrix4fv(location: Int, transpose: Boolean, value: FloatArray)
+            = GL.glUniformMatrix4fv(location, 1, transpose, value, 0)
 
     override fun viewport(x: Int, y: Int, width: Int, height: Int) = GL.glViewport(x, y, width, height)
     override fun clear(mask: Int) = GL.glClear(mask)
@@ -83,29 +85,13 @@ class KglAndroid : Kgl {
         return ints.toTypedArray()
     }
 
-    override fun loadTexture(texture: Texture, resource: TextureResource) {
-        val options = BitmapFactory.Options()
-        options.inScaled = false    // No pre-scaling
-
-        // Bind to the texture in OpenGL
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture)
-
-        // Set filtering
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST)
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST)
-
-        // Load the bitmap into the bound texture.
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, resource, 0)
-
-        GL.glGenerateMipmap(GL_TEXTURE_2D)
-
-        // Recycle the bitmap, since its data has been loaded into OpenGL.
-        resource.recycle()
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: Bitmap) {
+        GLUtils.texImage2D(target, level, internalFormat, resource, border)
     }
 
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)
     override fun bindTexture(target: Int, texture: Texture) = GL.glBindTexture(target, texture)
-
+    override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = GL.glTexParameteri(target, pname, value)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = GL.glDrawArrays(mode, first, count)

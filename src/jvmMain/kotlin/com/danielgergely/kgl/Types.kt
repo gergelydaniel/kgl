@@ -1,5 +1,7 @@
 package com.danielgergely.kgl
 
+import java.awt.image.BufferedImage
+
 actual typealias Shader = Int
 
 actual typealias Program = Int
@@ -13,4 +15,5 @@ actual val nullGlBuffer : GlBuffer = 0
 actual typealias Texture = Int
 actual val nullTexture : Texture = -1
 
-actual typealias TextureResource = String
+actual typealias TextureResource = BufferedImage
+actual fun TextureResource.dispose() { }

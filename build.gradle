@@ -22,7 +22,7 @@ repositories {
 }
 
 group 'com.danielgergely.kgl'
-version '0.0.2-SNAPSHOT'
+version '0.0.3-SNAPSHOT'
 
 apply plugin: 'com.android.library'
 
@@ -109,6 +109,8 @@ kotlin {
 
                 implementation "org.jogamp.gluegen:gluegen-rt:2.3.1"
                 implementation "org.jogamp.jogl:jogl-all:2.3.1"
+
+                implementation 'org.l33tlabs.twl:pngdecoder:1.0'
 
                 runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-linux-amd64"
                 runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-linux-armv6"
