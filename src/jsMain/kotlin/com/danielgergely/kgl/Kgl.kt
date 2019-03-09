@@ -60,7 +60,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
 
     override fun createTextures(n: Int): Array<Texture> = Array(n) { gl.createTexture() ?: throw Exception() }
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
-        = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource)
+        = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource.image)
 
 
     override fun activeTexture(texture: Int) = gl.activeTexture(texture)

@@ -1,6 +1,6 @@
 package com.danielgergely.kgl
 
-import org.w3c.dom.Image
+import org.khronos.webgl.TexImageSource
 
 actual typealias Shader = Any
 
@@ -10,9 +10,9 @@ actual typealias UniformLocation = Any
 
 actual val nullUniformLocation : UniformLocation = Any()
 
-actual typealias TextureResource = Image
+actual class TextureResource(val image: TexImageSource)
 actual fun TextureResource.dispose() {
-    parentNode?.removeChild(this)
+    //TODO do something?
 }
 
 actual typealias GlBuffer = Any
