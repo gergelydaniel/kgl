@@ -10,10 +10,10 @@ actual typealias UniformLocation = Any
 
 actual val nullUniformLocation : UniformLocation = Any()
 
-actual class TextureResource(val image: TexImageSource)
-actual fun TextureResource.dispose() {
-    //TODO do something?
+actual open class TextureResource(val image: TexImageSource) {
+    open fun disposeInner() {}
 }
+actual fun TextureResource.dispose() = disposeInner()
 
 actual typealias GlBuffer = Any
 actual val nullGlBuffer : GlBuffer = Any()

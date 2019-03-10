@@ -143,21 +143,21 @@ fun imageToByteBuffer(bi: BufferedImage) : ByteBuffer {
 
     when (dataBuffer) {
         is DataBufferByte -> {
-            val pixelData = (dataBuffer as DataBufferByte).data
+            val pixelData = dataBuffer.data
             byteBuffer = ByteBuffer.wrap(pixelData)
         }
         is DataBufferUShort -> {
-            val pixelData = (dataBuffer as DataBufferUShort).data
+            val pixelData = dataBuffer.data
             byteBuffer = ByteBuffer.allocate(pixelData.size * 2)
             byteBuffer.asShortBuffer().put(ShortBuffer.wrap(pixelData))
         }
         is DataBufferShort -> {
-            val pixelData = (dataBuffer as DataBufferShort).data
+            val pixelData = dataBuffer.data
             byteBuffer = ByteBuffer.allocate(pixelData.size * 2)
             byteBuffer.asShortBuffer().put(ShortBuffer.wrap(pixelData))
         }
         is DataBufferInt -> {
-            val pixelData = (dataBuffer as DataBufferInt).data
+            val pixelData = dataBuffer.data
             byteBuffer = ByteBuffer.allocate(pixelData.size * 4)
             byteBuffer.asIntBuffer().put(IntBuffer.wrap(pixelData))
         }

@@ -22,7 +22,7 @@ repositories {
 }
 
 group 'com.danielgergely.kgl'
-version '0.0.4-SNAPSHOT'
+version '0.0.5-SNAPSHOT'
 
 apply plugin: 'com.android.library'
 
