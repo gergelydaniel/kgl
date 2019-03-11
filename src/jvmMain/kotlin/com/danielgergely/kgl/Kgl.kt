@@ -4,8 +4,7 @@ import com.jogamp.opengl.GL3ES3
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
 import java.awt.image.*
-import java.nio.ShortBuffer
-
+import java.util.*
 
 typealias GL = GL3ES3
 
@@ -76,6 +75,23 @@ class KglJogl(private val gl: GL) : Kgl {
         return buffers.toTypedArray()
     }
 
+    private fun toArray(b: IntBuffer): IntArray {
+        if (b.hasArray()) {
+            return if (b.arrayOffset() == 0) b.array() else Arrays.copyOfRange(
+                b.array(),
+                b.arrayOffset(),
+                b.array().size
+            )
+
+        }
+
+        b.rewind()
+        val foo = IntArray(b.remaining())
+        b.get(foo)
+
+        return foo
+    }
+
     override fun bindBuffer(target: Int, bufferId: GlBuffer) = gl.glBindBuffer(target, bufferId)
 
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
@@ -115,9 +131,9 @@ class KglJogl(private val gl: GL) : Kgl {
     override fun clear(mask: Int) = gl.glClear(mask)
 
     override fun createTextures(n: Int): Array<Texture> {
-        val ints = IntArray(n)
-        gl.glGenTextures(n, ints, 0)
-        return ints.toTypedArray()
+        val buffer = IntBuffer.allocate(n)
+        gl.glGenTextures(n, buffer)
+        return toArray(buffer).toTypedArray()
     }
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
@@ -137,32 +153,26 @@ class KglJogl(private val gl: GL) : Kgl {
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
 }
 
-fun imageToByteBuffer(bi: BufferedImage) : ByteBuffer {
-    val byteBuffer: ByteBuffer
-    val dataBuffer = bi.raster.dataBuffer
+fun imageToByteBuffer(image: BufferedImage) : ByteBuffer {
+    val width = image.width
+    val height = image.height
 
-    when (dataBuffer) {
-        is DataBufferByte -> {
-            val pixelData = dataBuffer.data
-            byteBuffer = ByteBuffer.wrap(pixelData)
+    val pixels = IntArray(width * height)
+    image.getRGB(0, 0, width, height, pixels, 0, width)
+
+    val buffer = ByteBuffer.allocate(width * height * 4) // 4 because RGBA
+
+    for (y in 0 until height) {
+        for (x in 0 until width) {
+            val pixel = pixels[x + y * width]
+            buffer.put((pixel shr 16 and 0xFF).toByte())
+            buffer.put((pixel shr 8 and 0xFF).toByte())
+            buffer.put((pixel and 0xFF).toByte())
+            buffer.put((pixel shr 24 and 0xFF).toByte())
         }
-        is DataBufferUShort -> {
-            val pixelData = dataBuffer.data
-            byteBuffer = ByteBuffer.allocate(pixelData.size * 2)
-            byteBuffer.asShortBuffer().put(ShortBuffer.wrap(pixelData))
-        }
-        is DataBufferShort -> {
-            val pixelData = dataBuffer.data
-            byteBuffer = ByteBuffer.allocate(pixelData.size * 2)
-            byteBuffer.asShortBuffer().put(ShortBuffer.wrap(pixelData))
-        }
-        is DataBufferInt -> {
-            val pixelData = dataBuffer.data
-            byteBuffer = ByteBuffer.allocate(pixelData.size * 4)
-            byteBuffer.asIntBuffer().put(IntBuffer.wrap(pixelData))
-        }
-        else -> throw IllegalArgumentException("Not implemented for data buffer type: " + dataBuffer.javaClass)
     }
 
-    return byteBuffer
+    buffer.flip()
+
+    return buffer
 }
