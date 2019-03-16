@@ -43,7 +43,11 @@ class KglAndroid : Kgl {
         }
     }
     override fun useProgram(programId: Program) = GL.glUseProgram(programId)
-    override fun getUniformLocation(programId: Program, name: String) : UniformLocation? = GL.glGetUniformLocation(programId, name)
+    override fun getUniformLocation(programId: Program, name: String) : UniformLocation? {
+        val loc = GL.glGetUniformLocation(programId, name)
+        return if (loc < 0) null else loc
+    }
+
     override fun getAttribLocation(programId: Program, name: String) = GL.glGetAttribLocation(programId, name)
     override fun bindAttribLocation(programId: Program, index: Int, name: String) = GL.glBindAttribLocation(programId, index, name)
     override fun createBuffers(count: Int): Array<GlBuffer> {

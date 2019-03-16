@@ -59,7 +59,10 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun useProgram(programId: Program) = gl.glUseProgram(programId)
 
-    override fun getUniformLocation(programId: Program, name: String): UniformLocation? = gl.glGetUniformLocation(programId, name)
+    override fun getUniformLocation(programId: Program, name: String): UniformLocation? {
+        val loc = gl.glGetUniformLocation(programId, name)
+        return if (loc < 0) null else loc
+    }
 
     override fun getAttribLocation(programId: Program, name: String): Int = gl.glGetAttribLocation(programId, name)
 
