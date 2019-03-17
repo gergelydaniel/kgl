@@ -22,9 +22,16 @@ repositories {
 }
 
 group 'com.danielgergely.kgl'
-version '0.0.10-SNAPSHOT'
+version '0.0.11-SNAPSHOT'
 
 apply plugin: 'com.android.library'
+
+
+def compilerArgs = [
+        '-Xno-param-assertions',
+        '-Xno-call-assertions',
+        '-Xno-receiver-assertions'
+]
 
 android {
     compileSdkVersion 27
@@ -60,12 +67,15 @@ android {
 
         }
     }
-
 }
 
 kotlin {
-    jvm()
-    js()
+    jvm() {
+        compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
+    }
+    js() {
+        compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
+    }
 
     android {
         publishLibraryVariants("release", "debug")
@@ -174,4 +184,8 @@ publishing {
             }
         }
     }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.freeCompilerArgs = compilerArgs
 }

@@ -4,7 +4,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 
-actual class Buffer(val buffer : ByteBuffer) {
+actual class Buffer(@JvmField val buffer : ByteBuffer) {
     actual fun put(f: Float) {
         buffer.putFloat(f)
     }
