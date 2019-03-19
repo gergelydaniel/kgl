@@ -70,7 +70,7 @@ android {
 }
 
 kotlin {
-    jvm() {
+    jvm("jogl") {
         compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
     }
     js() {
@@ -113,7 +113,7 @@ kotlin {
                 implementation kotlin('test-annotations-common')
             }
         }
-        jvmMain {
+        joglMain {
             dependencies {
                 implementation kotlin('stdlib-jdk8')
 
@@ -145,7 +145,7 @@ kotlin {
                 runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-windows-i586"
             }
         }
-        jvmTest {
+        joglTest {
             dependencies {
                 implementation kotlin('test')
                 implementation kotlin('test-junit')
