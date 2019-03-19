@@ -69,10 +69,16 @@ android {
     }
 }
 
+def lwjglVersion = "3.2.1"
+
 kotlin {
     jvm("jogl") {
         compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
     }
+    jvm("lwjgl") {
+        compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
+    }
+
     js() {
         compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
     }
@@ -151,6 +157,26 @@ kotlin {
                 implementation kotlin('test-junit')
             }
         }
+
+        lwjglMain {
+            dependencies {
+                implementation kotlin('stdlib-jdk8')
+                
+                implementation "org.lwjgl:lwjgl:$lwjglVersion"
+                implementation "org.lwjgl:lwjgl-assimp:$lwjglVersion"
+                implementation "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+                implementation "org.lwjgl:lwjgl-openal:$lwjglVersion"
+                implementation "org.lwjgl:lwjgl-opengl:$lwjglVersion"
+                implementation "org.lwjgl:lwjgl-stb:$lwjglVersion"
+            }
+        }
+        lwjglTest {
+            dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
+            }
+        }
+
         jsMain {
             dependencies {
                 implementation kotlin('stdlib-js')
