@@ -11,7 +11,7 @@ actual class Buffer(@JvmField val buffer : ByteBuffer) {
 
     actual fun put(floatArray: FloatArray) = put(floatArray, -1)
 
-    private fun put(floatArray: FloatArray, length: Int) {
+    actual fun put(floatArray: FloatArray, length: Int) {
         val l = if (length == -1) floatArray.size else length
 
         buffer.asFloatBuffer().put(floatArray, 0, l)
@@ -22,4 +22,4 @@ actual class Buffer(@JvmField val buffer : ByteBuffer) {
     }
 }
 
-actual fun allocate(size : Int) : Buffer = Buffer(ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()))
+actual fun allocate(sizeInBytes : Int) : Buffer = Buffer(ByteBuffer.allocateDirect(sizeInBytes).order(ByteOrder.nativeOrder()))

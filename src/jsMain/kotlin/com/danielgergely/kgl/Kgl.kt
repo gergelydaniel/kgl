@@ -1,8 +1,6 @@
 package com.danielgergely.kgl
 
 import org.khronos.webgl.*
-import org.w3c.dom.HTMLImageElement
-import kotlin.browser.document
 
 class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun createShader(type: Int): Shader? = gl.createShader(type) // TODO return null if unsuccessful
@@ -34,8 +32,10 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer) = gl.bindBuffer(target, bufferId as WebGLBuffer)
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        gl.bufferData(target, sourceData.buffer, usage)
+        val buffer: dynamic = sourceData.buffer
+        gl.bufferData(target, buffer.unsafeCast<BufferDataSource>(), usage)
     }
+
     override fun deleteBuffer(buffer: GlBuffer) = gl.deleteBuffer(buffer as WebGLBuffer)
 
 

@@ -1,9 +1,8 @@
 package com.danielgergely.kgl
 
 import org.khronos.webgl.Float32Array
-import org.khronos.webgl.set
 
-actual class Buffer(val buffer: Float32Array) {
+actual class Buffer(val buffer: FloatArray) {
     var pos: Int = 0
 
     actual fun put(f: Float) {
@@ -13,13 +12,14 @@ actual class Buffer(val buffer: Float32Array) {
 
     actual fun put(floatArray: FloatArray) = put(floatArray, -1)
 
-    private fun put(floatArray: FloatArray, length: Int) {
+    actual fun put(floatArray: FloatArray, length: Int) {
         val l = if (length == -1) floatArray.size else length
 
-        for (i in 0 until l) {
-            buffer[pos / Float32Array.BYTES_PER_ELEMENT] = floatArray[i]
-            pos += Float32Array.BYTES_PER_ELEMENT
-        }
+        val buffer: dynamic = buffer
+        val floatArray: dynamic = floatArray
+
+        buffer.set(floatArray.subarray(0, l), pos)
+        pos += Float32Array.BYTES_PER_ELEMENT * l
     }
 
     actual fun position(pos: Int) {
@@ -28,4 +28,4 @@ actual class Buffer(val buffer: Float32Array) {
 
 }
 
-actual fun allocate(size: Int): Buffer = Buffer(Float32Array(size / Float32Array.BYTES_PER_ELEMENT))
+actual fun allocate(sizeInBytes: Int): Buffer = Buffer(FloatArray(sizeInBytes / Float32Array.BYTES_PER_ELEMENT))
