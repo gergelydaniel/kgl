@@ -75,6 +75,9 @@ class KglAndroid : Kgl {
     override fun uniform1f(location: UniformLocation, f: Float) = GL.glUniform1f(location, f)
     override fun uniform1i(location: UniformLocation, i: Int) = GL.glUniform1i(location, i)
 
+    override fun uniformMatrix3fv(location: Int, transpose: Boolean, value: FloatArray)
+            = GL.glUniformMatrix3fv(location, 1, transpose, value, 0)
+
     override fun uniformMatrix4fv(location: Int, transpose: Boolean, value: FloatArray)
             = GL.glUniformMatrix4fv(location, 1, transpose, value, 0)
 

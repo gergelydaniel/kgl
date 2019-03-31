@@ -45,9 +45,18 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = gl.uniform3f(location as WebGLUniformLocation, x, y, z)
     override fun uniform1i(location: UniformLocation, i: Int) = gl.uniform1i(location as WebGLUniformLocation, i)
 
+
+    // TODO use value directly using an unsafe cast to avoid copying
+    override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) {
+        val buffer = Float32Array(value.size)
+        for (i in 0 until value.size) {
+            buffer[i] = value[i]
+        }
+        gl.uniformMatrix3fv(location as WebGLUniformLocation, transpose, buffer)
+    }
+
     override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray) {
         val buffer = Float32Array(value.size)
-        //TODO faster
         for (i in 0 until value.size) {
             buffer[i] = value[i]
         }

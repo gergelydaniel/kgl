@@ -119,9 +119,11 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         return gl.glUniform1i(location, i)
     }
 
-    override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray) {
-        return gl.glUniformMatrix4fv(location, 1, transpose, value, 0)
-    }
+    override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
+            = gl.glUniformMatrix3fv(location, 1, transpose, value, 0)
+
+    override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
+        = gl.glUniformMatrix4fv(location, 1, transpose, value, 0)
 
     override fun viewport(x: Int, y: Int, width: Int, height: Int) {
         return gl.glViewport(x, y, width, height)

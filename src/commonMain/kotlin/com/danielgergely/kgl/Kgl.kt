@@ -35,6 +35,7 @@ interface Kgl {
     fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float)
     fun uniform1f(location: UniformLocation, f: Float)
     fun uniform1i(location: UniformLocation, i: Int)
+    fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
     fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
 
     fun viewport(x: Int, y: Int, width: Int, height: Int)
