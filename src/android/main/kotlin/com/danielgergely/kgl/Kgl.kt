@@ -14,10 +14,10 @@ class KglAndroid : Kgl {
     override fun compileShader(shaderId: Int) = GL.glCompileShader(shaderId)
     override fun deleteShader(shaderId: Int) = GL.glDeleteShader(shaderId)
 
-    override fun shaderOk(shaderId: Int): Boolean {
-        val linkStatus = IntArray(1)
-        GL.glGetProgramiv(shaderId, GLES20.GL_LINK_STATUS, linkStatus, 0)
-        return linkStatus[0] == 0
+    override fun getShaderParameter(shader: Shader, pname: Int): Int {
+        val arr = IntArray(1)
+        GL.glGetShaderiv(shader, pname, arr, 0)
+        return arr[0]
     }
 
     override fun getProgramInfoLog(program: Int) = GL.glGetProgramInfoLog(program)

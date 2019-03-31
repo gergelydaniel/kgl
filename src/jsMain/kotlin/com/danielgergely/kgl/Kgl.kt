@@ -3,14 +3,21 @@ package com.danielgergely.kgl
 import org.khronos.webgl.*
 
 class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
+
     override fun createShader(type: Int): Shader? = gl.createShader(type) // TODO return null if unsuccessful
 
     override fun shaderSource(shaderId: Shader, source: String) = gl.shaderSource(shaderId as WebGLShader, source)
     override fun compileShader(shaderId: Shader) = gl.compileShader(shaderId as WebGLShader)
     override fun deleteShader(shaderId: Shader) = gl.deleteShader(shaderId as WebGLShader)
 
-    // check whether shader has compiled
-    override fun shaderOk(shaderId: Shader): Boolean = true //TODO implement(?)
+    override fun getShaderParameter(shader: Shader, pname: Int): Int {
+        val value = gl.getShaderParameter(shader as WebGLShader, pname)!!
+
+        if(value is Boolean) {
+            return if(value) GL_TRUE else GL_FALSE
+        }
+        return value as Int
+    }
 
     override fun getProgramInfoLog(program: Program) : String? = gl.getProgramInfoLog(program as WebGLProgram)
     override fun getShaderInfoLog(shaderId: Shader): String? = gl.getShaderInfoLog(shaderId as WebGLShader)

@@ -7,6 +7,12 @@ import org.lwjgl.stb.STBImage
 typealias GL = GL33
 
 class KglLwjgl : Kgl {
+    override fun getShaderParameter(shader: Shader, pname: Int): Int {
+        val arr = IntArray(1)
+        GL.glGetShaderiv(shader, pname, arr)
+        return arr[0]
+    }
+
     override fun activeTexture(texture: Int) {
         GL.glActiveTexture(texture)
     }
@@ -109,10 +115,6 @@ class KglLwjgl : Kgl {
 
     override fun linkProgram(programId: Program) {
         GL.glLinkProgram(programId)
-    }
-
-    override fun shaderOk(shaderId: Shader): Boolean {
-        return true // TODO
     }
 
     override fun shaderSource(shaderId: Shader, source: String) {

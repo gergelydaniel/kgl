@@ -19,10 +19,10 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun deleteShader(shaderId: Shader) = gl.glDeleteShader(shaderId)
 
-    override fun shaderOk(shaderId: Shader): Boolean {
-        val linkStatus = IntArray(1)
-        gl.glGetProgramiv(shaderId, GL.GL_LINK_STATUS, linkStatus, 0)
-        return linkStatus[0] == 0
+    override fun getShaderParameter(shader: Shader, pname: Int): Int {
+        val arr = IntArray(1)
+        gl.glGetShaderiv(shader, pname, arr, 0)
+        return arr[0]
     }
 
     override fun getProgramInfoLog(program: Program): String? {
