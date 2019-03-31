@@ -62,14 +62,13 @@ class KglAndroid : Kgl {
     }
     override fun deleteBuffer(buffer: GlBuffer) = GL.glDeleteBuffers(1, intArrayOf(buffer), 0)
 
-
-
     override fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
             = GL.glVertexAttribPointer(location, size, type, normalized, stride, offset)
 
     override fun enableVertexAttribArray(location: Int) = GL.glEnableVertexAttribArray(location)
 
     override fun enable(cap : Int) = GL.glEnable(cap)
+    override fun disable(cap : Int) = GL.glDisable(cap)
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = GL.glUniform3f(location, x, y, z)
     override fun uniform1f(location: UniformLocation, f: Float) = GL.glUniform1f(location, f)

@@ -21,7 +21,8 @@ interface Kgl {
     fun getAttribLocation(programId: Program, name: String): Int
     fun bindAttribLocation(programId: Program, index: Int, name: String)
 
-    fun enable(cap : Int)
+    fun enable(cap: Int)
+    fun disable(cap: Int)
 
     fun enableVertexAttribArray(location: Int)
 

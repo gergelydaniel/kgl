@@ -27,6 +27,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun enableVertexAttribArray(location: Int) = gl.enableVertexAttribArray(location)
 
     override fun enable(cap : Int) = gl.enable(cap)
+    override fun disable(cap : Int) = gl.disable(cap)
 
     override fun createBuffers(count: Int): Array<GlBuffer> = Array(count, { gl.createBuffer() ?: throw Exception() })
 

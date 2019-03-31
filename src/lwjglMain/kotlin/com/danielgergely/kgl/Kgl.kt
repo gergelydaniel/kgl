@@ -79,6 +79,10 @@ class KglLwjgl : Kgl {
         GL.glEnable(cap)
     }
 
+    override fun disable(cap: Int) {
+        GL.glDisable(cap)
+    }
+
     override fun enableVertexAttribArray(location: Int) {
         GL.glEnableVertexAttribArray(location)
     }

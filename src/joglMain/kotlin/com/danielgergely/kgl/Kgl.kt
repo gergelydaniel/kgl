@@ -69,6 +69,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun bindAttribLocation(programId: Program, index: Int, name: String) = gl.glBindAttribLocation(programId, index, name)
 
     override fun enable(cap: Int) = gl.glEnable(cap)
+    override fun disable(cap: Int) = gl.glDisable(cap)
 
     override fun enableVertexAttribArray(location: Int) = gl.glEnableVertexAttribArray(location)
 
