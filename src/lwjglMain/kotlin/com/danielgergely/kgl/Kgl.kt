@@ -7,6 +7,10 @@ import org.lwjgl.stb.STBImage
 typealias GL = GL33
 
 class KglLwjgl : Kgl {
+    override fun blendFunc(sFactor: Int, dFactor: Int) {
+        GL.glBlendFunc(sFactor, dFactor)
+    }
+
     override fun getShaderParameter(shader: Shader, pname: Int): Int {
         val arr = IntArray(1)
         GL.glGetShaderiv(shader, pname, arr)

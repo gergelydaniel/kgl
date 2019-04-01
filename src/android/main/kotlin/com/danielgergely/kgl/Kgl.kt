@@ -1,7 +1,6 @@
 package com.danielgergely.kgl
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.opengl.GLES20
 import android.opengl.GLUtils
 
@@ -79,6 +78,8 @@ class KglAndroid : Kgl {
 
     override fun uniformMatrix4fv(location: Int, transpose: Boolean, value: FloatArray)
             = GL.glUniformMatrix4fv(location, 1, transpose, value, 0)
+
+    override fun blendFunc(sFactor: Int, dFactor: Int) = GL.glBlendFunc(sFactor, dFactor)
 
     override fun viewport(x: Int, y: Int, width: Int, height: Int) = GL.glViewport(x, y, width, height)
     override fun clear(mask: Int) = GL.glClear(mask)

@@ -75,6 +75,8 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun clear(mask: Int) = gl.clear(mask)
     override fun clearColor(r: Float, g: Float, b: Float, a: Float) = gl.clearColor(r, g, b, a)
 
+    override fun blendFunc(sFactor: Int, dFactor: Int) = gl.blendFunc(sFactor, dFactor)
+
     override fun createTextures(n: Int): Array<Texture> = Array(n) { gl.createTexture() ?: throw Exception() }
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
         = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource.image)

@@ -126,6 +126,8 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
         = gl.glUniformMatrix4fv(location, 1, transpose, value, 0)
 
+    override fun blendFunc(sFactor: Int, dFactor: Int) = gl.glBlendFunc(sFactor, dFactor)
+
     override fun viewport(x: Int, y: Int, width: Int, height: Int) {
         return gl.glViewport(x, y, width, height)
     }
