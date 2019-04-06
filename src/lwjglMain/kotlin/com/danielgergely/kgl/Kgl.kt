@@ -7,6 +7,10 @@ import org.lwjgl.stb.STBImage
 typealias GL = GL33
 
 class KglLwjgl : Kgl {
+    override fun cullFace(mode: Int) {
+        GL.glCullFace(mode)
+    }
+
     override fun blendFunc(sFactor: Int, dFactor: Int) {
         GL.glBlendFunc(sFactor, dFactor)
     }

@@ -81,6 +81,8 @@ class KglAndroid : Kgl {
 
     override fun blendFunc(sFactor: Int, dFactor: Int) = GL.glBlendFunc(sFactor, dFactor)
 
+    override fun cullFace(mode: Int) = GL.glCullFace(mode)
+
     override fun viewport(x: Int, y: Int, width: Int, height: Int) = GL.glViewport(x, y, width, height)
     override fun clear(mask: Int) = GL.glClear(mask)
 

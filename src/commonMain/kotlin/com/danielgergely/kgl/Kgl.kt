@@ -41,6 +41,8 @@ interface Kgl {
 
     fun blendFunc(sFactor: Int, dFactor: Int)
 
+    fun cullFace(mode: Int)
+
     fun viewport(x: Int, y: Int, width: Int, height: Int)
     fun clearColor(r: Float, g: Float, b: Float, a: Float)
     fun clear(mask: Int)

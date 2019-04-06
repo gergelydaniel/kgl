@@ -128,6 +128,8 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun blendFunc(sFactor: Int, dFactor: Int) = gl.glBlendFunc(sFactor, dFactor)
 
+    override fun cullFace(mode: Int) = gl.glCullFace(mode)
+
     override fun viewport(x: Int, y: Int, width: Int, height: Int) {
         return gl.glViewport(x, y, width, height)
     }
