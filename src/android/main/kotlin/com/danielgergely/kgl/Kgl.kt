@@ -94,6 +94,8 @@ class KglAndroid : Kgl {
         return ints.toTypedArray()
     }
 
+    override fun deleteTexture(texture: Texture) = GL.glDeleteTextures(1, intArrayOf(texture), 0)
+
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: Bitmap) {
         GLUtils.texImage2D(target, level, internalFormat, resource, border)
     }

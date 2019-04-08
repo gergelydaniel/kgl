@@ -77,6 +77,10 @@ class KglLwjgl : Kgl {
         return array.toTypedArray()
     }
 
+    override fun deleteTexture(texture: Texture) {
+        GL.glDeleteTextures(intArrayOf(texture))
+    }
+
     override fun deleteBuffer(buffer: GlBuffer) {
         GL.glDeleteBuffers(buffer)
     }

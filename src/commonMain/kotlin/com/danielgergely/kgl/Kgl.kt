@@ -48,6 +48,7 @@ interface Kgl {
     fun clear(mask: Int)
 
     fun createTextures(n: Int) : Array<Texture>
+    fun deleteTexture(texture: Texture)
     fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
     fun activeTexture(texture: Int)
     fun bindTexture(target: Int, texture: Texture)

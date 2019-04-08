@@ -79,6 +79,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun cullFace(mode: Int) = gl.cullFace(mode)
 
     override fun createTextures(n: Int): Array<Texture> = Array(n) { gl.createTexture() ?: throw Exception() }
+    override fun deleteTexture(texture: Texture) = gl.deleteTexture(texture as WebGLTexture)
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
         = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource.image)
 
