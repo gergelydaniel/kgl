@@ -1,308 +1,276 @@
 package com.danielgergely.kgl
 
-expect val GL_ACTIVE_TEXTURE: Int
-expect val GL_DEPTH_BUFFER_BIT: Int
-expect val GL_STENCIL_BUFFER_BIT: Int
-expect val GL_COLOR_BUFFER_BIT: Int
-expect val GL_FALSE: Int
-expect val GL_TRUE: Int
-expect val GL_POINTS: Int
-expect val GL_LINES: Int
-expect val GL_LINE_LOOP: Int
-expect val GL_LINE_STRIP: Int
-expect val GL_TRIANGLES: Int
-expect val GL_TRIANGLE_STRIP: Int
-expect val GL_TRIANGLE_FAN: Int
-expect val GL_ZERO: Int
-expect val GL_ONE: Int
-expect val GL_SRC_COLOR: Int
-expect val GL_ONE_MINUS_SRC_COLOR: Int
-expect val GL_SRC_ALPHA: Int
-expect val GL_ONE_MINUS_SRC_ALPHA: Int
-expect val GL_DST_ALPHA: Int
-expect val GL_ONE_MINUS_DST_ALPHA: Int
-expect val GL_DST_COLOR: Int
-expect val GL_ONE_MINUS_DST_COLOR: Int
-expect val GL_SRC_ALPHA_SATURATE: Int
-expect val GL_FUNC_ADD: Int
-expect val GL_BLEND_EQUATION: Int
-expect val GL_BLEND_EQUATION_RGB: Int
-expect val GL_BLEND_EQUATION_ALPHA: Int
-expect val GL_FUNC_SUBTRACT: Int
-expect val GL_FUNC_REVERSE_SUBTRACT: Int
-expect val GL_BLEND_DST_RGB: Int
-expect val GL_BLEND_SRC_RGB: Int
-expect val GL_BLEND_DST_ALPHA: Int
-expect val GL_BLEND_SRC_ALPHA: Int
-expect val GL_CONSTANT_COLOR: Int
-expect val GL_ONE_MINUS_CONSTANT_COLOR: Int
-expect val GL_CONSTANT_ALPHA: Int
-expect val GL_ONE_MINUS_CONSTANT_ALPHA: Int
-expect val GL_BLEND_COLOR: Int
-expect val GL_ARRAY_BUFFER: Int
-expect val GL_ELEMENT_ARRAY_BUFFER: Int
-expect val GL_ARRAY_BUFFER_BINDING: Int
-expect val GL_ELEMENT_ARRAY_BUFFER_BINDING: Int
-expect val GL_STREAM_DRAW: Int
-expect val GL_STATIC_DRAW: Int
-expect val GL_DYNAMIC_DRAW: Int
-expect val GL_BUFFER_SIZE: Int
-expect val GL_BUFFER_USAGE: Int
-expect val GL_CURRENT_VERTEX_ATTRIB: Int
-expect val GL_FRONT: Int
-expect val GL_BACK: Int
-expect val GL_FRONT_AND_BACK: Int
-expect val GL_TEXTURE_2D: Int
-expect val GL_CULL_FACE: Int
-expect val GL_BLEND: Int
-expect val GL_DITHER: Int
-expect val GL_STENCIL_TEST: Int
-expect val GL_DEPTH_TEST: Int
-expect val GL_SCISSOR_TEST: Int
-expect val GL_POLYGON_OFFSET_FILL: Int
-expect val GL_SAMPLE_ALPHA_TO_COVERAGE: Int
-expect val GL_SAMPLE_COVERAGE: Int
-expect val GL_NO_ERROR: Int
-expect val GL_INVALID_ENUM: Int
-expect val GL_INVALID_VALUE: Int
-expect val GL_INVALID_OPERATION: Int
-expect val GL_OUT_OF_MEMORY: Int
-expect val GL_CW: Int
-expect val GL_CCW: Int
-expect val GL_LINE_WIDTH: Int
-expect val GL_ALIASED_POINT_SIZE_RANGE: Int
-expect val GL_ALIASED_LINE_WIDTH_RANGE: Int
-expect val GL_CULL_FACE_MODE: Int
-expect val GL_FRONT_FACE: Int
-expect val GL_DEPTH_RANGE: Int
-expect val GL_DEPTH_WRITEMASK: Int
-expect val GL_DEPTH_CLEAR_VALUE: Int
-expect val GL_DEPTH_FUNC: Int
-expect val GL_STENCIL_CLEAR_VALUE: Int
-expect val GL_STENCIL_FUNC: Int
-expect val GL_STENCIL_FAIL: Int
-expect val GL_STENCIL_PASS_DEPTH_FAIL: Int
-expect val GL_STENCIL_PASS_DEPTH_PASS: Int
-expect val GL_STENCIL_REF: Int
-expect val GL_STENCIL_VALUE_MASK: Int
-expect val GL_STENCIL_WRITEMASK: Int
-expect val GL_STENCIL_BACK_FUNC: Int
-expect val GL_STENCIL_BACK_FAIL: Int
-expect val GL_STENCIL_BACK_PASS_DEPTH_FAIL: Int
-expect val GL_STENCIL_BACK_PASS_DEPTH_PASS: Int
-expect val GL_STENCIL_BACK_REF: Int
-expect val GL_STENCIL_BACK_VALUE_MASK: Int
-expect val GL_STENCIL_BACK_WRITEMASK: Int
-expect val GL_VIEWPORT: Int
-expect val GL_SCISSOR_BOX: Int
-expect val GL_COLOR_CLEAR_VALUE: Int
-expect val GL_COLOR_WRITEMASK: Int
-expect val GL_UNPACK_ALIGNMENT: Int
-expect val GL_PACK_ALIGNMENT: Int
-expect val GL_MAX_TEXTURE_SIZE: Int
-expect val GL_MAX_VIEWPORT_DIMS: Int
-expect val GL_SUBPIXEL_BITS: Int
-expect val GL_RED_BITS: Int
-expect val GL_GREEN_BITS: Int
-expect val GL_BLUE_BITS: Int
-expect val GL_ALPHA_BITS: Int
-expect val GL_DEPTH_BITS: Int
-expect val GL_STENCIL_BITS: Int
-expect val GL_POLYGON_OFFSET_UNITS: Int
-expect val GL_POLYGON_OFFSET_FACTOR: Int
-expect val GL_TEXTURE_BINDING_2D: Int
-expect val GL_SAMPLE_BUFFERS: Int
-expect val GL_SAMPLES: Int
-expect val GL_SAMPLE_COVERAGE_VALUE: Int
-expect val GL_SAMPLE_COVERAGE_INVERT: Int
-expect val GL_NUM_COMPRESSED_TEXTURE_FORMATS: Int
-expect val GL_COMPRESSED_TEXTURE_FORMATS: Int
-expect val GL_DONT_CARE: Int
-expect val GL_FASTEST: Int
-expect val GL_NICEST: Int
-expect val GL_GENERATE_MIPMAP_HINT: Int
-expect val GL_BYTE: Int
-expect val GL_UNSIGNED_BYTE: Int
-expect val GL_SHORT: Int
-expect val GL_UNSIGNED_SHORT: Int
-expect val GL_INT: Int
-expect val GL_UNSIGNED_INT: Int
-expect val GL_FLOAT: Int
-expect val GL_FIXED: Int
-expect val GL_DEPTH_COMPONENT: Int
-expect val GL_ALPHA: Int
-expect val GL_RGB: Int
-expect val GL_RGBA: Int
-expect val GL_LUMINANCE: Int
-expect val GL_LUMINANCE_ALPHA: Int
-expect val GL_UNSIGNED_SHORT_4_4_4_4: Int
-expect val GL_UNSIGNED_SHORT_5_5_5_1: Int
-expect val GL_UNSIGNED_SHORT_5_6_5: Int
-expect val GL_FRAGMENT_SHADER: Int
-expect val GL_VERTEX_SHADER: Int
-expect val GL_MAX_VERTEX_ATTRIBS: Int
-expect val GL_MAX_VERTEX_UNIFORM_VECTORS: Int
-expect val GL_MAX_VARYING_VECTORS: Int
-expect val GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: Int
-expect val GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS: Int
-expect val GL_MAX_TEXTURE_IMAGE_UNITS: Int
-expect val GL_MAX_FRAGMENT_UNIFORM_VECTORS: Int
-expect val GL_SHADER_TYPE: Int
-expect val GL_DELETE_STATUS: Int
-expect val GL_LINK_STATUS: Int
-expect val GL_VALIDATE_STATUS: Int
-expect val GL_ATTACHED_SHADERS: Int
-expect val GL_ACTIVE_UNIFORMS: Int
-expect val GL_ACTIVE_UNIFORM_MAX_LENGTH: Int
-expect val GL_ACTIVE_ATTRIBUTES: Int
-expect val GL_ACTIVE_ATTRIBUTE_MAX_LENGTH: Int
-expect val GL_SHADING_LANGUAGE_VERSION: Int
-expect val GL_CURRENT_PROGRAM: Int
-expect val GL_NEVER: Int
-expect val GL_LESS: Int
-expect val GL_EQUAL: Int
-expect val GL_LEQUAL: Int
-expect val GL_GREATER: Int
-expect val GL_NOTEQUAL: Int
-expect val GL_GEQUAL: Int
-expect val GL_ALWAYS: Int
-expect val GL_KEEP: Int
-expect val GL_REPLACE: Int
-expect val GL_INCR: Int
-expect val GL_DECR: Int
-expect val GL_INVERT: Int
-expect val GL_INCR_WRAP: Int
-expect val GL_DECR_WRAP: Int
-expect val GL_VENDOR: Int
-expect val GL_RENDERER: Int
-expect val GL_VERSION: Int
-expect val GL_EXTENSIONS: Int
-expect val GL_NEAREST: Int
-expect val GL_LINEAR: Int
-expect val GL_NEAREST_MIPMAP_NEAREST: Int
-expect val GL_LINEAR_MIPMAP_NEAREST: Int
-expect val GL_NEAREST_MIPMAP_LINEAR: Int
-expect val GL_LINEAR_MIPMAP_LINEAR: Int
-expect val GL_TEXTURE_MAG_FILTER: Int
-expect val GL_TEXTURE_MIN_FILTER: Int
-expect val GL_TEXTURE_WRAP_S: Int
-expect val GL_TEXTURE_WRAP_T: Int
-expect val GL_TEXTURE: Int
-expect val GL_TEXTURE_CUBE_MAP: Int
-expect val GL_TEXTURE_BINDING_CUBE_MAP: Int
-expect val GL_TEXTURE_CUBE_MAP_POSITIVE_X: Int
-expect val GL_TEXTURE_CUBE_MAP_NEGATIVE_X: Int
-expect val GL_TEXTURE_CUBE_MAP_POSITIVE_Y: Int
-expect val GL_TEXTURE_CUBE_MAP_NEGATIVE_Y: Int
-expect val GL_TEXTURE_CUBE_MAP_POSITIVE_Z: Int
-expect val GL_TEXTURE_CUBE_MAP_NEGATIVE_Z: Int
-expect val GL_MAX_CUBE_MAP_TEXTURE_SIZE: Int
-expect val GL_TEXTURE0: Int
-expect val GL_TEXTURE1: Int
-expect val GL_TEXTURE2: Int
-expect val GL_TEXTURE3: Int
-expect val GL_TEXTURE4: Int
-expect val GL_TEXTURE5: Int
-expect val GL_TEXTURE6: Int
-expect val GL_TEXTURE7: Int
-expect val GL_TEXTURE8: Int
-expect val GL_TEXTURE9: Int
-expect val GL_TEXTURE10: Int
-expect val GL_TEXTURE11: Int
-expect val GL_TEXTURE12: Int
-expect val GL_TEXTURE13: Int
-expect val GL_TEXTURE14: Int
-expect val GL_TEXTURE15: Int
-expect val GL_TEXTURE16: Int
-expect val GL_TEXTURE17: Int
-expect val GL_TEXTURE18: Int
-expect val GL_TEXTURE19: Int
-expect val GL_TEXTURE20: Int
-expect val GL_TEXTURE21: Int
-expect val GL_TEXTURE22: Int
-expect val GL_TEXTURE23: Int
-expect val GL_TEXTURE24: Int
-expect val GL_TEXTURE25: Int
-expect val GL_TEXTURE26: Int
-expect val GL_TEXTURE27: Int
-expect val GL_TEXTURE28: Int
-expect val GL_TEXTURE29: Int
-expect val GL_TEXTURE30: Int
-expect val GL_TEXTURE31: Int
-expect val GL_REPEAT: Int
-expect val GL_CLAMP_TO_EDGE: Int
-expect val GL_MIRRORED_REPEAT: Int
-expect val GL_FLOAT_VEC2: Int
-expect val GL_FLOAT_VEC3: Int
-expect val GL_FLOAT_VEC4: Int
-expect val GL_INT_VEC2: Int
-expect val GL_INT_VEC3: Int
-expect val GL_INT_VEC4: Int
-expect val GL_BOOL: Int
-expect val GL_BOOL_VEC2: Int
-expect val GL_BOOL_VEC3: Int
-expect val GL_BOOL_VEC4: Int
-expect val GL_FLOAT_MAT2: Int
-expect val GL_FLOAT_MAT3: Int
-expect val GL_FLOAT_MAT4: Int
-expect val GL_SAMPLER_2D: Int
-expect val GL_SAMPLER_CUBE: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_ENABLED: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_SIZE: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_STRIDE: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_TYPE: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_NORMALIZED: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_POINTER: Int
-expect val GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING: Int
-expect val GL_IMPLEMENTATION_COLOR_READ_TYPE: Int
-expect val GL_IMPLEMENTATION_COLOR_READ_FORMAT: Int
-expect val GL_COMPILE_STATUS: Int
-expect val GL_INFO_LOG_LENGTH: Int
-expect val GL_SHADER_SOURCE_LENGTH: Int
-expect val GL_SHADER_COMPILER: Int
-expect val GL_SHADER_BINARY_FORMATS: Int
-expect val GL_NUM_SHADER_BINARY_FORMATS: Int
-expect val GL_LOW_FLOAT: Int
-expect val GL_MEDIUM_FLOAT: Int
-expect val GL_HIGH_FLOAT: Int
-expect val GL_LOW_INT: Int
-expect val GL_MEDIUM_INT: Int
-expect val GL_HIGH_INT: Int
-expect val GL_FRAMEBUFFER: Int
-expect val GL_RENDERBUFFER: Int
-expect val GL_RGBA4: Int
-expect val GL_RGB5_A1: Int
-expect val GL_RGB565: Int
-expect val GL_DEPTH_COMPONENT16: Int
-// GL_STENCIL_INDEX does not appear in gl2.h or gl2ext.h, and there is no
-// token with value 0x1901.
-//
-@Deprecated("")
-expect val GL_STENCIL_INDEX: Int
-expect val GL_STENCIL_INDEX8: Int
-expect val GL_RENDERBUFFER_WIDTH: Int
-expect val GL_RENDERBUFFER_HEIGHT: Int
-expect val GL_RENDERBUFFER_INTERNAL_FORMAT: Int
-expect val GL_RENDERBUFFER_RED_SIZE: Int
-expect val GL_RENDERBUFFER_GREEN_SIZE: Int
-expect val GL_RENDERBUFFER_BLUE_SIZE: Int
-expect val GL_RENDERBUFFER_ALPHA_SIZE: Int
-expect val GL_RENDERBUFFER_DEPTH_SIZE: Int
-expect val GL_RENDERBUFFER_STENCIL_SIZE: Int
-expect val GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE: Int
-expect val GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME: Int
-expect val GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL: Int
-expect val GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE: Int
-expect val GL_COLOR_ATTACHMENT0: Int
-expect val GL_DEPTH_ATTACHMENT: Int
-expect val GL_STENCIL_ATTACHMENT: Int
-expect val GL_NONE: Int
-expect val GL_FRAMEBUFFER_COMPLETE: Int
-expect val GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: Int
-expect val GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: Int
-expect val GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS: Int
-expect val GL_FRAMEBUFFER_UNSUPPORTED: Int
-expect val GL_FRAMEBUFFER_BINDING: Int
-expect val GL_RENDERBUFFER_BINDING: Int
-expect val GL_MAX_RENDERBUFFER_SIZE: Int
-expect val GL_INVALID_FRAMEBUFFER_OPERATION: Int
+const val GL_ACTIVE_TEXTURE = 0x84E0
+const val GL_DEPTH_BUFFER_BIT = 0x00000100
+const val GL_STENCIL_BUFFER_BIT = 0x00000400
+const val GL_COLOR_BUFFER_BIT = 0x00004000
+const val GL_FALSE = 0
+const val GL_TRUE = 1
+const val GL_POINTS = 0x0000
+const val GL_LINES = 0x0001
+const val GL_LINE_LOOP = 0x0002
+const val GL_LINE_STRIP = 0x0003
+const val GL_TRIANGLES = 0x0004
+const val GL_TRIANGLE_STRIP = 0x0005
+const val GL_TRIANGLE_FAN = 0x0006
+const val GL_ZERO = 0
+const val GL_ONE = 1
+const val GL_SRC_COLOR = 0x0300
+const val GL_ONE_MINUS_SRC_COLOR = 0x0301
+const val GL_SRC_ALPHA = 0x0302
+const val GL_ONE_MINUS_SRC_ALPHA = 0x0303
+const val GL_DST_ALPHA = 0x0304
+const val GL_ONE_MINUS_DST_ALPHA = 0x0305
+const val GL_DST_COLOR = 0x0306
+const val GL_ONE_MINUS_DST_COLOR = 0x0307
+const val GL_SRC_ALPHA_SATURATE = 0x0308
+const val GL_FUNC_ADD = 0x8006
+const val GL_BLEND_EQUATION = 0x8009
+const val GL_BLEND_EQUATION_RGB = 0x8009
+const val GL_BLEND_EQUATION_ALPHA = 0x883D
+const val GL_FUNC_SUBTRACT = 0x800A
+const val GL_FUNC_REVERSE_SUBTRACT = 0x800B
+const val GL_BLEND_DST_RGB = 0x80C8
+const val GL_BLEND_SRC_RGB = 0x80C9
+const val GL_BLEND_DST_ALPHA = 0x80CA
+const val GL_BLEND_SRC_ALPHA = 0x80CB
+const val GL_CONSTANT_COLOR = 0x8001
+const val GL_ONE_MINUS_CONSTANT_COLOR = 0x8002
+const val GL_CONSTANT_ALPHA = 0x8003
+const val GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004
+const val GL_BLEND_COLOR = 0x8005
+const val GL_ARRAY_BUFFER = 0x8892
+const val GL_ELEMENT_ARRAY_BUFFER = 0x8893
+const val GL_ARRAY_BUFFER_BINDING = 0x8894
+const val GL_ELEMENT_ARRAY_BUFFER_BINDING = 0x8895
+const val GL_STREAM_DRAW = 0x88E0
+const val GL_STATIC_DRAW = 0x88E4
+const val GL_DYNAMIC_DRAW = 0x88E8
+const val GL_BUFFER_SIZE = 0x8764
+const val GL_BUFFER_USAGE = 0x8765
+const val GL_CURRENT_VERTEX_ATTRIB = 0x8626
+const val GL_FRONT = 0x0404
+const val GL_BACK = 0x0405
+const val GL_FRONT_AND_BACK = 0x0408
+const val GL_TEXTURE_2D = 0x0DE1
+const val GL_CULL_FACE = 0x0B44
+const val GL_BLEND = 0x0BE2
+const val GL_DITHER = 0x0BD0
+const val GL_STENCIL_TEST = 0x0B90
+const val GL_DEPTH_TEST = 0x0B71
+const val GL_SCISSOR_TEST = 0x0C11
+const val GL_POLYGON_OFFSET_FILL = 0x8037
+const val GL_SAMPLE_ALPHA_TO_COVERAGE = 0x809E
+const val GL_SAMPLE_COVERAGE = 0x80A0
+const val GL_NO_ERROR = 0
+const val GL_INVALID_ENUM = 0x0500
+const val GL_INVALID_VALUE = 0x0501
+const val GL_INVALID_OPERATION = 0x0502
+const val GL_OUT_OF_MEMORY = 0x0505
+const val GL_CW = 0x0900
+const val GL_CCW = 0x0901
+const val GL_LINE_WIDTH = 0x0B21
+const val GL_ALIASED_POINT_SIZE_RANGE = 0x846D
+const val GL_ALIASED_LINE_WIDTH_RANGE = 0x846E
+const val GL_CULL_FACE_MODE = 0x0B45
+const val GL_FRONT_FACE = 0x0B46
+const val GL_DEPTH_RANGE = 0x0B70
+const val GL_DEPTH_WRITEMASK = 0x0B72
+const val GL_DEPTH_CLEAR_VALUE = 0x0B73
+const val GL_DEPTH_FUNC = 0x0B74
+const val GL_STENCIL_CLEAR_VALUE = 0x0B91
+const val GL_STENCIL_FUNC = 0x0B92
+const val GL_STENCIL_FAIL = 0x0B94
+const val GL_STENCIL_PASS_DEPTH_FAIL = 0x0B95
+const val GL_STENCIL_PASS_DEPTH_PASS = 0x0B96
+const val GL_STENCIL_REF = 0x0B97
+const val GL_STENCIL_VALUE_MASK = 0x0B93
+const val GL_STENCIL_WRITEMASK = 0x0B98
+const val GL_STENCIL_BACK_FUNC = 0x8800
+const val GL_STENCIL_BACK_FAIL = 0x8801
+const val GL_STENCIL_BACK_PASS_DEPTH_FAIL = 0x8802
+const val GL_STENCIL_BACK_PASS_DEPTH_PASS = 0x8803
+const val GL_STENCIL_BACK_REF = 0x8CA3
+const val GL_STENCIL_BACK_VALUE_MASK = 0x8CA4
+const val GL_STENCIL_BACK_WRITEMASK = 0x8CA5
+const val GL_VIEWPORT = 0x0BA2
+const val GL_SCISSOR_BOX = 0x0C10
+const val GL_COLOR_CLEAR_VALUE = 0x0C22
+const val GL_COLOR_WRITEMASK = 0x0C23
+const val GL_UNPACK_ALIGNMENT = 0x0CF5
+const val GL_PACK_ALIGNMENT = 0x0D05
+const val GL_MAX_TEXTURE_SIZE = 0x0D33
+const val GL_MAX_VIEWPORT_DIMS = 0x0D3A
+const val GL_SUBPIXEL_BITS = 0x0D50
+const val GL_RED_BITS = 0x0D52
+const val GL_GREEN_BITS = 0x0D53
+const val GL_BLUE_BITS = 0x0D54
+const val GL_ALPHA_BITS = 0x0D55
+const val GL_DEPTH_BITS = 0x0D56
+const val GL_STENCIL_BITS = 0x0D57
+const val GL_POLYGON_OFFSET_UNITS = 0x2A00
+const val GL_POLYGON_OFFSET_FACTOR = 0x8038
+const val GL_TEXTURE_BINDING_2D = 0x8069
+const val GL_SAMPLE_BUFFERS = 0x80A8
+const val GL_SAMPLES = 0x80A9
+const val GL_SAMPLE_COVERAGE_VALUE = 0x80AA
+const val GL_SAMPLE_COVERAGE_INVERT = 0x80AB
+const val GL_NUM_COMPRESSED_TEXTURE_FORMATS = 0x86A2
+const val GL_COMPRESSED_TEXTURE_FORMATS = 0x86A3
+const val GL_DONT_CARE = 0x1100
+const val GL_FASTEST = 0x1101
+const val GL_NICEST = 0x1102
+const val GL_GENERATE_MIPMAP_HINT = 0x8192
+const val GL_BYTE = 0x1400
+const val GL_UNSIGNED_BYTE = 0x1401
+const val GL_SHORT = 0x1402
+const val GL_UNSIGNED_SHORT = 0x1403
+const val GL_INT = 0x1404
+const val GL_UNSIGNED_INT = 0x1405
+const val GL_FLOAT = 0x1406
+const val GL_FIXED = 0x140C
+const val GL_DEPTH_COMPONENT = 0x1902
+const val GL_ALPHA = 0x1906
+const val GL_RGB = 0x1907
+const val GL_RGBA = 0x1908
+const val GL_LUMINANCE = 0x1909
+const val GL_LUMINANCE_ALPHA = 0x190A
+const val GL_UNSIGNED_SHORT_4_4_4_4 = 0x8033
+const val GL_UNSIGNED_SHORT_5_5_5_1 = 0x8034
+const val GL_UNSIGNED_SHORT_5_6_5 = 0x8363
+const val GL_FRAGMENT_SHADER = 0x8B30
+const val GL_VERTEX_SHADER = 0x8B31
+const val GL_MAX_VERTEX_ATTRIBS = 0x8869
+const val GL_MAX_VERTEX_UNIFORM_VECTORS = 0x8DFB
+const val GL_MAX_VARYING_VECTORS = 0x8DFC
+const val GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D
+const val GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8B4C
+const val GL_MAX_TEXTURE_IMAGE_UNITS = 0x8872
+const val GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD
+const val GL_SHADER_TYPE = 0x8B4F
+const val GL_DELETE_STATUS = 0x8B80
+const val GL_LINK_STATUS = 0x8B82
+const val GL_VALIDATE_STATUS = 0x8B83
+const val GL_ATTACHED_SHADERS = 0x8B85
+const val GL_ACTIVE_UNIFORMS = 0x8B86
+const val GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+const val GL_ACTIVE_ATTRIBUTES = 0x8B89
+const val GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+const val GL_SHADING_LANGUAGE_VERSION = 0x8B8C
+const val GL_CURRENT_PROGRAM = 0x8B8D
+const val GL_NEVER = 0x0200
+const val GL_LESS = 0x0201
+const val GL_EQUAL = 0x0202
+const val GL_LEQUAL = 0x0203
+const val GL_GREATER = 0x0204
+const val GL_NOTEQUAL = 0x0205
+const val GL_GEQUAL = 0x0206
+const val GL_ALWAYS = 0x0207
+const val GL_KEEP = 0x1E00
+const val GL_REPLACE = 0x1E01
+const val GL_INCR = 0x1E02
+const val GL_DECR = 0x1E03
+const val GL_INVERT = 0x150A
+const val GL_INCR_WRAP = 0x8507
+const val GL_DECR_WRAP = 0x8508
+const val GL_VENDOR = 0x1F00
+const val GL_RENDERER = 0x1F01
+const val GL_VERSION = 0x1F02
+const val GL_EXTENSIONS = 0x1F03
+const val GL_NEAREST = 0x2600
+const val GL_LINEAR = 0x2601
+const val GL_NEAREST_MIPMAP_NEAREST = 0x2700
+const val GL_LINEAR_MIPMAP_NEAREST = 0x2701
+const val GL_NEAREST_MIPMAP_LINEAR = 0x2702
+const val GL_LINEAR_MIPMAP_LINEAR = 0x2703
+const val GL_TEXTURE_MAG_FILTER = 0x2800
+const val GL_TEXTURE_MIN_FILTER = 0x2801
+const val GL_TEXTURE_WRAP_S = 0x2802
+const val GL_TEXTURE_WRAP_T = 0x2803
+const val GL_TEXTURE = 0x1702
+const val GL_TEXTURE_CUBE_MAP = 0x8513
+const val GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
+const val GL_TEXTURE_CUBE_MAP_POSITIVE_X = 0x8515
+const val GL_TEXTURE_CUBE_MAP_NEGATIVE_X = 0x8516
+const val GL_TEXTURE_CUBE_MAP_POSITIVE_Y = 0x8517
+const val GL_TEXTURE_CUBE_MAP_NEGATIVE_Y = 0x8518
+const val GL_TEXTURE_CUBE_MAP_POSITIVE_Z = 0x8519
+const val GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851A
+const val GL_MAX_CUBE_MAP_TEXTURE_SIZE = 0x851C
+const val GL_TEXTURE0 = 0x84C0
+const val GL_TEXTURE1 = 0x84C1
+const val GL_TEXTURE2 = 0x84C2
+const val GL_TEXTURE3 = 0x84C3
+const val GL_TEXTURE4 = 0x84C4
+const val GL_TEXTURE5 = 0x84C5
+const val GL_TEXTURE6 = 0x84C6
+const val GL_TEXTURE7 = 0x84C7
+const val GL_TEXTURE8 = 0x84C8
+const val GL_TEXTURE9 = 0x84C9
+const val GL_TEXTURE10 = 0x84CA
+const val GL_TEXTURE11 = 0x84CB
+const val GL_TEXTURE12 = 0x84CC
+const val GL_TEXTURE13 = 0x84CD
+const val GL_TEXTURE14 = 0x84CE
+const val GL_TEXTURE15 = 0x84CF
+const val GL_TEXTURE16 = 0x84D0
+const val GL_TEXTURE17 = 0x84D1
+const val GL_TEXTURE18 = 0x84D2
+const val GL_TEXTURE19 = 0x84D3
+const val GL_TEXTURE20 = 0x84D4
+const val GL_TEXTURE21 = 0x84D5
+const val GL_TEXTURE22 = 0x84D6
+const val GL_TEXTURE23 = 0x84D7
+const val GL_TEXTURE24 = 0x84D8
+const val GL_TEXTURE25 = 0x84D9
+const val GL_TEXTURE26 = 0x84DA
+const val GL_TEXTURE27 = 0x84DB
+const val GL_TEXTURE28 = 0x84DC
+const val GL_TEXTURE29 = 0x84DD
+const val GL_TEXTURE30 = 0x84DE
+const val GL_TEXTURE31 = 0x84DF
+const val GL_REPEAT = 0x2901
+const val GL_CLAMP_TO_EDGE = 0x812F
+const val GL_MIRRORED_REPEAT = 0x8370
+const val GL_FLOAT_VEC2 = 0x8B50
+const val GL_FLOAT_VEC3 = 0x8B51
+const val GL_FLOAT_VEC4 = 0x8B52
+const val GL_INT_VEC2 = 0x8B53
+const val GL_INT_VEC3 = 0x8B54
+const val GL_INT_VEC4 = 0x8B55
+const val GL_BOOL = 0x8B56
+const val GL_BOOL_VEC2 = 0x8B57
+const val GL_BOOL_VEC3 = 0x8B58
+const val GL_BOOL_VEC4 = 0x8B59
+const val GL_FLOAT_MAT2 = 0x8B5A
+const val GL_FLOAT_MAT3 = 0x8B5B
+const val GL_FLOAT_MAT4 = 0x8B5C
+const val GL_SAMPLER_2D = 0x8B5E
+const val GL_SAMPLER_CUBE = 0x8B60
+const val GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622
+const val GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623
+const val GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624
+const val GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625
+const val GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
+const val GL_VERTEX_ATTRIB_ARRAY_POINTER = 0x8645
+const val GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F
+const val GL_IMPLEMENTATION_COLOR_READ_TYPE = 0x8B9A
+const val GL_IMPLEMENTATION_COLOR_READ_FORMAT = 0x8B9B
+const val GL_COMPILE_STATUS = 0x8B81
+const val GL_INFO_LOG_LENGTH = 0x8B84
+const val GL_SHADER_SOURCE_LENGTH = 0x8B88
+const val GL_SHADER_COMPILER = 0x8DFA
+const val GL_SHADER_BINARY_FORMATS = 0x8DF8
+const val GL_NUM_SHADER_BINARY_FORMATS = 0x8DF9
+const val GL_LOW_FLOAT = 0x8DF0
+const val GL_MEDIUM_FLOAT = 0x8DF1
+const val GL_HIGH_FLOAT = 0x8DF2
+const val GL_LOW_INT = 0x8DF3
+const val GL_MEDIUM_INT = 0x8DF4
+const val GL_HIGH_INT = 0x8DF5
+const val GL_FRAMEBUFFER = 0x8D40
+const val GL_RENDERBUFFER = 0x8D41
+const val GL_RGBA4 = 0x8056
+const val GL_RGB5_A1 = 0x8057
+const val GL_RGB565 = 0x8D62
+const val GL_DEPTH_COMPONENT16 = 0x81A5

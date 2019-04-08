@@ -1,5 +1,7 @@
 package com.danielgergely.kgl
 
+import com.jogamp.opengl.GL.GL_RGBA
+import com.jogamp.opengl.GL.GL_UNSIGNED_BYTE
 import com.jogamp.opengl.GL3ES3
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
