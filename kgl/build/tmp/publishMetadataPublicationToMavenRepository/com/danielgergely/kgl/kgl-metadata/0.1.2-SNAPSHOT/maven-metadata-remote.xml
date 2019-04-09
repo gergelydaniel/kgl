@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.danielgergely.kgl</groupId>
+  <artifactId>kgl-metadata</artifactId>
+  <version>0.1.2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20190409.152750</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20190409152750</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.1.2-20190409.152750-1</value>
+        <updated>20190409152750</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.1.2-20190409.152750-1</value>
+        <updated>20190409152750</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>sources</classifier>
+        <extension>jar</extension>
+        <value>0.1.2-20190409.152750-1</value>
+        <updated>20190409152750</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
