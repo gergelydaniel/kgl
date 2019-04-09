@@ -40,3 +40,7 @@ local.properties
 .gradle/*
 
 build/*
+
+kgl/build/*
+kgl-android/build/*
+kgl-jogl/build/*
