@@ -1,1 +1,1 @@
-include ':kgl', ':kgl-android', 'kgl-jogl'
+include ':kgl', ':kgl-android', ':kgl-jogl'
