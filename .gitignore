@@ -44,3 +44,4 @@ build/*
 kgl/build/*
 kgl-android/build/*
 kgl-jogl/build/*
+kgl-lwjgl/build/*
