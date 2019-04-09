@@ -1,217 +1,41 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.3.21'
+    ext {
+        kotlin_version = '1.3.21'
+        coroutines_version = '1.1.1'
+        current_version = '0.1.1-SNAPSHOT'
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
+        }
+        maven {
+            url 'https://maven.danielgergely.com/repository/snapshots'
+        }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.31"
+    }
+}
+
+allprojects {
     repositories {
         mavenCentral()
-        google()
         jcenter()
+        google()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-plugins {
-    id 'kotlin-multiplatform' version '1.3.21'
-    id 'maven-publish'
-}
-repositories {
-    mavenCentral()
-}
-
-group 'com.danielgergely.kgl'
-version '0.0.21-SNAPSHOT'
-
-apply plugin: 'com.android.library'
-
-
-def compilerArgs = [
-        '-Xno-param-assertions',
-        '-Xno-call-assertions',
-        '-Xno-receiver-assertions'
-]
-
-android {
-    compileSdkVersion 27
-
-    defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    sourceSets {
-        main {
-            java.srcDirs = ['src/android/main/kotlin']
-
-            res.srcDirs = ['src/android/res']
-
-            manifest.srcFile 'src/android/AndroidManifest.xml'
-        }
-
-        test {
-            java.srcDirs = ['src/android/test/kotlin']
-
-        }
-    }
-}
-
-def lwjglVersion = "3.2.1"
-
-kotlin {
-    jvm("jogl") {
-        compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
-    }
-    jvm("lwjgl") {
-        compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
-    }
-
-    js() {
-        compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
-    }
-
-    android {
-        publishLibraryVariants("release", "debug")
-
-        repositories {
-            mavenCentral()
-            google()
-            jcenter()
-        }
-
-        dependencies {
-            implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-            implementation 'com.android.support:appcompat-v7:27.1.1'
-
-
-            testImplementation 'org.jetbrains.kotlin:kotlin-test-junit:1.3.21'
-
-            testImplementation 'junit:junit:4.12'
-            androidTestImplementation 'com.android.support.test:runner:1.0.2'
-            androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-        }
-    }
-    
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation kotlin('stdlib-common')
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation kotlin('test-common')
-                implementation kotlin('test-annotations-common')
-            }
-        }
-        joglMain {
-            dependencies {
-                implementation kotlin('stdlib-jdk8')
-
-                implementation "org.jogamp.gluegen:gluegen-rt:2.3.1"
-                implementation "org.jogamp.jogl:jogl-all:2.3.1"
-
-                implementation 'org.l33tlabs.twl:pngdecoder:1.0'
-
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-linux-amd64"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-linux-armv6"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-linux-armv6hf"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-linux-i586"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-macosx-universal"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-solaris-amd64"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-solaris-i586"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-windows-amd64"
-                runtimeOnly "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-windows-i586"
-
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-android-aarch64"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-android-armv6"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-linux-amd64"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-linux-armv6"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-linux-armv6hf"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-linux-i586"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-macosx-universal"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-solaris-amd64"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-solaris-i586"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-windows-amd64"
-                runtimeOnly "org.jogamp.jogl:jogl-all:2.3.1:natives-windows-i586"
-            }
-        }
-        joglTest {
-            dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
-            }
-        }
-
-        lwjglMain {
-            dependencies {
-                implementation kotlin('stdlib-jdk8')
-                
-                implementation "org.lwjgl:lwjgl:$lwjglVersion"
-                implementation "org.lwjgl:lwjgl-assimp:$lwjglVersion"
-                implementation "org.lwjgl:lwjgl-glfw:$lwjglVersion"
-                implementation "org.lwjgl:lwjgl-openal:$lwjglVersion"
-                implementation "org.lwjgl:lwjgl-opengl:$lwjglVersion"
-                implementation "org.lwjgl:lwjgl-stb:$lwjglVersion"
-            }
-        }
-        lwjglTest {
-            dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
-            }
-        }
-
-        jsMain {
-            dependencies {
-                implementation kotlin('stdlib-js')
-
-                compileKotlinJs {
-                    kotlinOptions.metaInfo = true
-                    kotlinOptions.sourceMap = true
-                    kotlinOptions.suppressWarnings = true
-                    kotlinOptions.verbose = true
-                    kotlinOptions.main = "call"
-                    kotlinOptions.moduleKind = "umd"
-                }
-            }
-        }
-        jsTest {
-            dependencies {
-                implementation kotlin('test-js')
-            }
-        }
-    }
-}
-
-
-publishing {
-    repositories {
-        maven {
-            url = "https://maven.danielgergely.com/repository/snapshots"
-            credentials {
-                username = System.getenv("MAVEN_USER")
-                password = System.getenv("MAVEN_PASS")
-            }
-        }
-    }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.freeCompilerArgs = compilerArgs
 }

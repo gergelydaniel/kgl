@@ -1,0 +1,89 @@
+{
+  "formatVersion": "0.4",
+  "component": {
+    "group": "com.danielgergely.kgl",
+    "module": "kgl-interface",
+    "version": "0.1.0-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "4.10.1",
+      "buildId": "g5gkyexlqngilffiaxuvxawwva"
+    }
+  },
+  "variants": [
+    {
+      "name": "js-api",
+      "attributes": {
+        "artifactType": "jar",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../kgl-interface-js/0.1.0-SNAPSHOT/kgl-interface-js-0.1.0-SNAPSHOT.module",
+        "group": "com.danielgergely.kgl",
+        "module": "kgl-interface-js",
+        "version": "0.1.0-SNAPSHOT"
+      }
+    },
+    {
+      "name": "js-runtime",
+      "attributes": {
+        "artifactType": "jar",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../kgl-interface-js/0.1.0-SNAPSHOT/kgl-interface-js-0.1.0-SNAPSHOT.module",
+        "group": "com.danielgergely.kgl",
+        "module": "kgl-interface-js",
+        "version": "0.1.0-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jvm-api",
+      "attributes": {
+        "artifactType": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../kgl-interface-jvm/0.1.0-SNAPSHOT/kgl-interface-jvm-0.1.0-SNAPSHOT.module",
+        "group": "com.danielgergely.kgl",
+        "module": "kgl-interface-jvm",
+        "version": "0.1.0-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jvm-runtime",
+      "attributes": {
+        "artifactType": "jar",
+        "org.gradle.usage": "java-runtime-jars",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../kgl-interface-jvm/0.1.0-SNAPSHOT/kgl-interface-jvm-0.1.0-SNAPSHOT.module",
+        "group": "com.danielgergely.kgl",
+        "module": "kgl-interface-jvm",
+        "version": "0.1.0-SNAPSHOT"
+      }
+    },
+    {
+      "name": "metadata-api",
+      "attributes": {
+        "artifactType": "jar",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "available-at": {
+        "url": "../../kgl-interface-metadata/0.1.0-SNAPSHOT/kgl-interface-metadata-0.1.0-SNAPSHOT.module",
+        "group": "com.danielgergely.kgl",
+        "module": "kgl-interface-metadata",
+        "version": "0.1.0-SNAPSHOT"
+      }
+    }
+  ]
+}
