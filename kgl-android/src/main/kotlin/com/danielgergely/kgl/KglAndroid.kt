@@ -97,10 +97,7 @@ class KglAndroid : Kgl {
     override fun deleteTexture(texture: Texture) = GL.glDeleteTextures(1, intArrayOf(texture), 0)
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
-        val buf = resource.encodedPng
-        val imageBytes = ByteArray(buf.remaining())
-        buf.get(imageBytes)
-        val bmp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        val bmp = BitmapFactory.decodeStream(resource.encodedPng)
 
         GLUtils.texImage2D(target, level, internalFormat, bmp, border)
     }
