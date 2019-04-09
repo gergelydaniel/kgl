@@ -36,6 +36,17 @@ compileTestKotlin {
 
 publishing {
     publications {
+        all {
+            pom.withXml {
+                Node pomNode = asNode()
+                pomNode.dependencies.'*'.findAll() {
+                    it.artifactId.text() == 'kgl'
+                }.each() {
+                    it.parent().remove(it)
+                }
+            }
+        }
+
         maven(MavenPublication) {
             groupId = 'com.danielgergely.kgl'
             artifactId = 'kgl-jogl'
