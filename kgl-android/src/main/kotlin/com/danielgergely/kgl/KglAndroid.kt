@@ -65,6 +65,7 @@ class KglAndroid : Kgl {
             = GL.glVertexAttribPointer(location, size, type, normalized, stride, offset)
 
     override fun enableVertexAttribArray(location: Int) = GL.glEnableVertexAttribArray(location)
+    override fun disableVertexAttribArray(location: Int) = GL.glDisableVertexAttribArray(location)
 
     override fun enable(cap : Int) = GL.glEnable(cap)
     override fun disable(cap : Int) = GL.glDisable(cap)

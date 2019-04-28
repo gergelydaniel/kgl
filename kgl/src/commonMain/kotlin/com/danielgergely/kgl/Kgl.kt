@@ -25,6 +25,7 @@ interface Kgl {
     fun disable(cap: Int)
 
     fun enableVertexAttribArray(location: Int)
+    fun disableVertexAttribArray(location: Int)
 
     fun createBuffers(count: Int): Array<GlBuffer>
     fun bindBuffer(target: Int, bufferId: GlBuffer)

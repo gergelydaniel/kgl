@@ -73,6 +73,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun disable(cap: Int) = gl.glDisable(cap)
 
     override fun enableVertexAttribArray(location: Int) = gl.glEnableVertexAttribArray(location)
+    override fun disableVertexAttribArray(location: Int) = gl.glDisableVertexAttribArray(location)
 
     override fun createBuffers(count: Int): Array<GlBuffer> {
         val buffers = IntArray(count)

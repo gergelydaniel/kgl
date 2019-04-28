@@ -32,6 +32,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun bindAttribLocation(programId: Program, index: Int, name: String) = gl.bindAttribLocation(programId as WebGLProgram, index, name)
 
     override fun enableVertexAttribArray(location: Int) = gl.enableVertexAttribArray(location)
+    override fun disableVertexAttribArray(location: Int) = gl.disableVertexAttribArray(location)
 
     override fun enable(cap : Int) = gl.enable(cap)
     override fun disable(cap : Int) = gl.disable(cap)

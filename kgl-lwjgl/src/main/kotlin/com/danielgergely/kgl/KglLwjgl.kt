@@ -107,6 +107,10 @@ class KglLwjgl : Kgl {
         GL.glEnableVertexAttribArray(location)
     }
 
+    override fun disableVertexAttribArray(location: Int) {
+        GL.glDisableVertexAttribArray(location)
+    }
+
     override fun generateMipmap(target: Int) {
         GL.glGenerateMipmap(target)
     }
