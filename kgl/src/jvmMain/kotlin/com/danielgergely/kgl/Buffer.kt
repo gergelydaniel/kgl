@@ -21,4 +21,5 @@ actual class Buffer(@JvmField val buffer : ByteBuffer) {
     }
 }
 
-actual fun allocate(sizeInBytes : Int) : Buffer = Buffer(ByteBuffer.allocateDirect(sizeInBytes).order(ByteOrder.nativeOrder()))
+actual fun allocate(sizeInBytes : Int) : Buffer
+        = Buffer(ByteBuffer.allocateDirect(sizeInBytes).order(ByteOrder.nativeOrder()))
