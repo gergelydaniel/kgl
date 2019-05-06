@@ -6,7 +6,6 @@ interface Kgl {
     fun compileShader(shaderId: Shader)
     fun deleteShader(shaderId: Shader)
 
-    // check whether shader has compiled
     fun getShaderParameter(shader: Shader, pname: Int): Int
 
     fun getProgramInfoLog(program: Program) : String?
