@@ -7,7 +7,14 @@ import android.opengl.GLUtils
 typealias GL = GLES20
 
 class KglAndroid : Kgl {
-    override fun createShader(type: Int): Shader? = GL.glCreateShader(type) //TODO null, 0
+    override fun createShader(type: Int): Shader? {
+        val shader = GL.glCreateShader(type)
+        return if (shader == 0) {
+            null
+        } else {
+            shader
+        }
+    }
 
     override fun shaderSource(shaderId: Int, source: String) = GL.glShaderSource(shaderId, source)
     override fun compileShader(shaderId: Int) = GL.glCompileShader(shaderId)

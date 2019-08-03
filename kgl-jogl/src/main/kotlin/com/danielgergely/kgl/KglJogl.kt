@@ -11,7 +11,14 @@ typealias GL = GL3ES3
 
 class KglJogl(@JvmField private val gl: GL) : Kgl {
 
-    override fun createShader(type: Int): Shader? = gl.glCreateShader(type)
+    override fun createShader(type: Int): Shader? {
+        val shader = gl.glCreateShader(type)
+        return if (shader == 0) {
+            null
+        } else {
+            shader
+        }
+    }
 
     override fun shaderSource(shaderId: Shader, source: String)
             = gl.glShaderSource(shaderId, 1, arrayOf(source), null as IntBuffer?)

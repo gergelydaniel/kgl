@@ -70,7 +70,12 @@ class KglLwjgl : Kgl {
     }
 
     override fun createShader(type: Int): Shader? {
-        return GL.glCreateShader(type)
+        val shader = GL.glCreateShader(type)
+        return if (shader == 0) {
+            null
+        } else {
+            shader
+        }
     }
 
     override fun createTextures(n: Int): Array<Texture> {

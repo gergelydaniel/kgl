@@ -4,7 +4,7 @@ import org.khronos.webgl.*
 
 class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
 
-    override fun createShader(type: Int): Shader? = gl.createShader(type) // TODO return null if unsuccessful
+    override fun createShader(type: Int): Shader? = gl.createShader(type)
 
     override fun shaderSource(shaderId: Shader, source: String) = gl.shaderSource(shaderId as WebGLShader, source)
     override fun compileShader(shaderId: Shader) = gl.compileShader(shaderId as WebGLShader)
