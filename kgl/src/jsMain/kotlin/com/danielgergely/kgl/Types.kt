@@ -1,11 +1,20 @@
 package com.danielgergely.kgl
 
-import org.khronos.webgl.TexImageSource
+import org.khronos.webgl.*
 
+/**
+ * Must be [WebGLShader]
+ */
 actual typealias Shader = Any
 
+/**
+ * Must be [WebGLProgram]
+ */
 actual typealias Program = Any
 
+/**
+ * Must be [WebGLUniformLocation]
+ */
 actual typealias UniformLocation = Any
 
 actual open class TextureResource(val image: TexImageSource) {
@@ -13,6 +22,12 @@ actual open class TextureResource(val image: TexImageSource) {
 }
 actual fun TextureResource.dispose() = disposeInner()
 
+/**
+ * Must be [WebGLBuffer]
+ */
 actual typealias GlBuffer = Any
 
+/**
+ * Must be [WebGLTexture]
+ */
 actual typealias Texture = Any
