@@ -32,22 +32,8 @@ class KglAndroid : Kgl {
     override fun createProgram(): Program? = GL.glCreateProgram()
 
     override fun attachShader(programId: Program, shaderId: Int) = GL.glAttachShader(programId, shaderId)
-    override fun linkProgram(programId: Program) {
-        GL.glLinkProgram(programId)
+    override fun linkProgram(programId: Program) = GL.glLinkProgram(programId)
 
-        //TODO nemide
-        val linkStatus = IntArray(1)
-        GL.glGetProgramiv(programId, GL.GL_LINK_STATUS, linkStatus, 0)
-
-        // If the link failed, delete the program.
-        if (linkStatus[0] == 0) {
-            val s = getProgramInfoLog(programId)
-
-            println(s)
-
-            throw Exception("Linking error")
-        }
-    }
     override fun useProgram(programId: Program) = GL.glUseProgram(programId)
     override fun getUniformLocation(programId: Program, name: String) : UniformLocation? {
         val loc = GL.glGetUniformLocation(programId, name)
