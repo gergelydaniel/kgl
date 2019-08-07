@@ -13,9 +13,7 @@ actual class Buffer(buffer: FloatArray) {
 
     actual fun put(floatArray: FloatArray) = put(floatArray, floatArray.size)
 
-    actual fun put(floatArray: FloatArray, length: Int) {
-        val floatArray: dynamic = floatArray
-
+    actual fun put(floatArray: dynamic, length: Int) {
         buffer.set(floatArray.subarray(0, length), pos)
         pos += length
     }
