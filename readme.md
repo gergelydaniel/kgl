@@ -2,6 +2,9 @@
 
 This is an OpenGL wrapper library for Kotlin Multiplatform. The following target platforms are supported: Android, Web, Desktop.
 
+**Note: this library is a work-in-progress, the set of functions is incomplete.** I used it for my multiplatform game [Skyway](https://skyway.danielgergely.com).
+Despite it not being ready I can still recommend using it, since it's designed to be as thin a layer as possible, it might be a good start for other projects as well, it's easy to extend and troubleshoot if necessary. 
+
 ## Project structure
 The projects is separated into the following parts:
 
