@@ -55,19 +55,21 @@ repositories {
     mavenCentral()
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact bundleReleaseAar
+project.afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifact bundleReleaseAar
+            }
         }
-    }
 
-    repositories {
-        maven {
-            url = "https://maven.danielgergely.com/repository/snapshots"
-            credentials {
-                username = System.getenv("MAVEN_USER")
-                password = System.getenv("MAVEN_PASS")
+        repositories {
+            maven {
+                url = getPublishUrl()
+                credentials {
+                    username = System.getenv("MAVEN_USER")
+                    password = System.getenv("MAVEN_PASS")
+                }
             }
         }
     }

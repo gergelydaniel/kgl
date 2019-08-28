@@ -80,7 +80,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 publishing {
     repositories {
         maven {
-            url = "https://maven.danielgergely.com/repository/snapshots"
+            url = getPublishUrl()
             credentials {
                 username = System.getenv("MAVEN_USER")
                 password = System.getenv("MAVEN_PASS")
