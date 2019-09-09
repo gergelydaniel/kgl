@@ -170,6 +170,10 @@ class KglLwjgl : Kgl {
         GL.glUniform3f(location, x, y, z)
     }
 
+    override fun uniform3fv(location: UniformLocation, value: FloatArray) {
+        GL.glUniform3fv(location, value)
+    }
+
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) {
         GL.glUniformMatrix3fv(location, transpose, value)
     }

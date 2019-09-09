@@ -120,6 +120,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = gl.glUniform3f(location, x, y, z)
 
+    override fun uniform3fv(location: UniformLocation, value: FloatArray) = gl.glUniform3fv(location, 1, value, 0)
 
     override fun uniform1f(location: UniformLocation, f: Float) {
         return gl.glUniform1f(location, f)

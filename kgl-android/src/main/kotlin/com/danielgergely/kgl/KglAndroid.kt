@@ -64,6 +64,8 @@ class KglAndroid : Kgl {
     override fun disable(cap : Int) = GL.glDisable(cap)
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = GL.glUniform3f(location, x, y, z)
+    override fun uniform3fv(location: UniformLocation, value: FloatArray) = GL.glUniform3fv(location, 1, value, 0)
+
     override fun uniform1f(location: UniformLocation, f: Float) = GL.glUniform1f(location, f)
     override fun uniform1i(location: UniformLocation, i: Int) = GL.glUniform1i(location, i)
 

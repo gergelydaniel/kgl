@@ -34,6 +34,7 @@ interface Kgl {
     fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
 
     fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float)
+    fun uniform3fv(location: UniformLocation, value: FloatArray)
     fun uniform1f(location: UniformLocation, f: Float)
     fun uniform1i(location: UniformLocation, i: Int)
     fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
