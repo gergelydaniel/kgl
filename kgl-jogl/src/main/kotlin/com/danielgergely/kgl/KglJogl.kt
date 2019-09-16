@@ -67,6 +67,12 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun useProgram(programId: Program) = gl.glUseProgram(programId)
 
+    override fun getProgramParameter(program: Program, pname: Int): Int {
+        val arr = IntArray(1)
+        gl.glGetProgramiv(program, pname, arr, 0)
+        return arr[0]
+    }
+
     override fun getUniformLocation(programId: Program, name: String): UniformLocation? {
         val loc = gl.glGetUniformLocation(programId, name)
         return if (loc < 0) null else loc
@@ -105,7 +111,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         return foo
     }
 
-    override fun bindBuffer(target: Int, bufferId: GlBuffer) = gl.glBindBuffer(target, bufferId)
+    override fun bindBuffer(target: Int, bufferId: GlBuffer?) = gl.glBindBuffer(target, bufferId ?: 0)
 
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
         return gl.glBufferData(target, size.toLong(), sourceData.buffer, usage)
@@ -164,15 +170,54 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         gl.glTexImage2D(target, level, internalFormat, image.width, image.height, border, GL_RGBA, GL_UNSIGNED_BYTE, imageToByteBuffer(image))
     }
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: PixelBuffer) {
+        when (buffer) {
+            is java.nio.Buffer -> gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, buffer)
+            else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
+        }
+    }
+
     override fun activeTexture(texture: Int) = gl.glActiveTexture(texture)
 
-    override fun bindTexture(target: Int, texture: Texture) = gl.glBindTexture(target, texture)
+    override fun bindTexture(target: Int, texture: Texture?) = gl.glBindTexture(target, texture ?: 0)
 
     override fun generateMipmap(target: Int) = gl.glGenerateMipmap(target)
 
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.glTexParameteri(target, pname, value)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
+
+    override fun getError(): Int = gl.glGetError()
+    override fun finish() = gl.glFinish()
+
+    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = gl.glBindFramebuffer(target, framebuffer ?: 0)
+    override fun createFramebuffer(): Framebuffer? {
+        val ints = IntArray(1)
+        gl.glGenFramebuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteFramebuffer(framebuffer: Framebuffer) = gl.glDeleteFramebuffers(1, intArrayOf(framebuffer), 0)
+    override fun checkFramebufferStatus(target: Int): Int = gl.glCheckFramebufferStatus(target)
+    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = gl.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+    override fun isFramebuffer(framebuffer: Framebuffer): Boolean = gl.glIsFramebuffer(framebuffer)
+
+    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = gl.glBindRenderbuffer(target, renderbuffer ?: 0)
+    override fun createRenderbuffer(): Renderbuffer? {
+        val ints = IntArray(1)
+        gl.glGenRenderbuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = gl.glDeleteRenderbuffers(1, intArrayOf(renderbuffer), 0)
+    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = gl.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+    override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = gl.glIsRenderbuffer(renderbuffer)
+    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = gl.glRenderbufferStorage(target, internalformat, width, height)
+
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, pixels: PixelBuffer) {
+        when (pixels) {
+            is java.nio.Buffer -> gl.glReadPixels(x, y, width, height, format, type, pixels)
+            else -> throw IllegalArgumentException("unknown buffer type ${pixels.javaClass}")
+        }
+    }
 }
 
 fun imageToByteBuffer(image: BufferedImage) : ByteBuffer {
