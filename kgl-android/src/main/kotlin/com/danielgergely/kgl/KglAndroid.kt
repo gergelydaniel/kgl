@@ -63,11 +63,18 @@ class KglAndroid : Kgl {
     override fun enable(cap : Int) = GL.glEnable(cap)
     override fun disable(cap : Int) = GL.glDisable(cap)
 
-    override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = GL.glUniform3f(location, x, y, z)
-    override fun uniform3fv(location: UniformLocation, value: FloatArray) = GL.glUniform3fv(location, 1, value, 0)
-
     override fun uniform1f(location: UniformLocation, f: Float) = GL.glUniform1f(location, f)
     override fun uniform1i(location: UniformLocation, i: Int) = GL.glUniform1i(location, i)
+
+    override fun uniform2f(location: UniformLocation, x: Float, y: Float) = GL.glUniform2f(location, x, y)
+    override fun uniform2i(location: UniformLocation, x: Int, y: Int) = GL.glUniform2i(location, x, y)
+
+    override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = GL.glUniform3f(location, x, y, z)
+    override fun uniform3fv(location: UniformLocation, value: FloatArray) = GL.glUniform3fv(location, 1, value, 0)
+    override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) = GL.glUniform3i(location, x, y, z)
+
+    override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) = GL.glUniform4f(location, x, y, z, w)
+    override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) = GL.glUniform4i(location, x, y, z, w)
 
     override fun uniformMatrix3fv(location: Int, transpose: Boolean, value: FloatArray)
             = GL.glUniformMatrix3fv(location, 1, transpose, value, 0)

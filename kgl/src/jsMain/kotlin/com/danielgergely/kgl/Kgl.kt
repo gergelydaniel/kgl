@@ -51,9 +51,17 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int) = gl.vertexAttribPointer(location, size, type, normalized, stride, offset)
 
     override fun uniform1f(location: UniformLocation, f: Float) = gl.uniform1f(location.unsafeCast<WebGLUniformLocation>(), f)
+    override fun uniform1i(location: UniformLocation, i: Int) = gl.uniform1i(location.unsafeCast<WebGLUniformLocation>(), i)
+
+    override fun uniform2f(location: UniformLocation, x: Float, y: Float) = gl.uniform2f(location.unsafeCast<WebGLUniformLocation>(), x, y)
+    override fun uniform2i(location: UniformLocation, x: Int, y: Int) = gl.uniform2i(location.unsafeCast<WebGLUniformLocation>(), x, y)
+
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = gl.uniform3f(location.unsafeCast<WebGLUniformLocation>(), x, y, z)
     override fun uniform3fv(location: UniformLocation, value: FloatArray) = gl.uniform3fv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Float32Array>())
-    override fun uniform1i(location: UniformLocation, i: Int) = gl.uniform1i(location.unsafeCast<WebGLUniformLocation>(), i)
+    override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) = gl.uniform3i(location.unsafeCast<WebGLUniformLocation>(), x, y, z)
+
+    override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) = gl.uniform4f(location.unsafeCast<WebGLUniformLocation>(), x, y, z, w)
+    override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) = gl.uniform4i(location.unsafeCast<WebGLUniformLocation>(), x, y, z, w)
 
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: dynamic) {
         gl.uniformMatrix3fv(location.unsafeCast<WebGLUniformLocation>(), transpose, value.unsafeCast<Float32Array>())

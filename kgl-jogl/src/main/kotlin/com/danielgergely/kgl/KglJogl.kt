@@ -118,17 +118,23 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         return gl.glVertexAttribPointer(location, size, type, normalized, stride, offset.toLong())
     }
 
+    override fun uniform1f(location: UniformLocation, f: Float) = gl.glUniform1f(location, f)
+
+    override fun uniform1i(location: UniformLocation, i: Int) = gl.glUniform1i(location, i)
+
+    override fun uniform2f(location: UniformLocation, x: Float, y: Float) = gl.glUniform2f(location, x, y)
+
+    override fun uniform2i(location: UniformLocation, x: Int, y: Int) = gl.glUniform2i(location, x, y)
+
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = gl.glUniform3f(location, x, y, z)
 
     override fun uniform3fv(location: UniformLocation, value: FloatArray) = gl.glUniform3fv(location, 1, value, 0)
 
-    override fun uniform1f(location: UniformLocation, f: Float) {
-        return gl.glUniform1f(location, f)
-    }
+    override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) = gl.glUniform3i(location, x, y, z)
 
-    override fun uniform1i(location: UniformLocation, i: Int) {
-        return gl.glUniform1i(location, i)
-    }
+    override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) = gl.glUniform4f(location, x, y, z, w)
+
+    override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) = gl.glUniform4i(location, x, y, z, w)
 
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
             = gl.glUniformMatrix3fv(location, 1, transpose, value, 0)
