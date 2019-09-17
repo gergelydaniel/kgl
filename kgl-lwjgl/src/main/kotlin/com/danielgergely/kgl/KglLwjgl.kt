@@ -100,6 +100,14 @@ class KglLwjgl : Kgl {
         GL.glDrawArrays(mode, first, count)
     }
 
+    override fun getError(): Int {
+        return GL.glGetError()
+    }
+
+    override fun finish() {
+        GL.glFinish()
+    }
+
     override fun enable(cap: Int) {
         GL.glEnable(cap)
     }
@@ -204,6 +212,12 @@ class KglLwjgl : Kgl {
 
     override fun useProgram(programId: Program) {
         GL.glUseProgram(programId)
+    }
+
+    override fun getProgramParameter(program: Program, pname: Int): Int {
+        val arr = IntArray(1)
+        GL.glGetProgramiv(program, pname, arr)
+        return arr[0]
     }
 
     override fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int) {

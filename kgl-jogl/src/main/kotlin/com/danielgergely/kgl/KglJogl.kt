@@ -67,6 +67,12 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun useProgram(programId: Program) = gl.glUseProgram(programId)
 
+    override fun getProgramParameter(program: Program, pname: Int): Int {
+        val arr = IntArray(1)
+        gl.glGetProgramiv(program, pname, arr, 0)
+        return arr[0]
+    }
+
     override fun getUniformLocation(programId: Program, name: String): UniformLocation? {
         val loc = gl.glGetUniformLocation(programId, name)
         return if (loc < 0) null else loc
@@ -179,6 +185,9 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.glTexParameteri(target, pname, value)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
+
+    override fun getError(): Int = gl.glGetError()
+    override fun finish() = gl.glFinish()
 }
 
 fun imageToByteBuffer(image: BufferedImage) : ByteBuffer {

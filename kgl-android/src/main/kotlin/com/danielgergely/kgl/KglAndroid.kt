@@ -35,6 +35,13 @@ class KglAndroid : Kgl {
     override fun linkProgram(programId: Program) = GL.glLinkProgram(programId)
 
     override fun useProgram(programId: Program) = GL.glUseProgram(programId)
+
+    override fun getProgramParameter(program: Program, pname: Int): Int {
+        val arr = IntArray(1)
+        GL.glGetProgramiv(program, pname, arr, 0)
+        return arr[0]
+    }
+
     override fun getUniformLocation(programId: Program, name: String) : UniformLocation? {
         val loc = GL.glGetUniformLocation(programId, name)
         return if (loc < 0) null else loc
@@ -111,4 +118,7 @@ class KglAndroid : Kgl {
     override fun texParameteri(target: Int, pname: Int, value: Int) = GL.glTexParameteri(target, pname, value)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = GL.glDrawArrays(mode, first, count)
+
+    override fun getError(): Int = GL.glGetError()
+    override fun finish() = GL.glFinish()
 }
