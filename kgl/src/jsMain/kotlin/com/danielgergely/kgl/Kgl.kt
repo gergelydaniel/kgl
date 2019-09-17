@@ -22,6 +22,15 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun getProgramInfoLog(program: Program) : String? = gl.getProgramInfoLog(program.unsafeCast<WebGLProgram>())
     override fun getShaderInfoLog(shaderId: Shader): String? = gl.getShaderInfoLog(shaderId.unsafeCast<WebGLShader>())
 
+    override fun getProgramParameter(program: Program, pname: Int): Int {
+        val value = gl.getProgramParameter(program.unsafeCast<WebGLProgram>(), pname)!!
+
+        if(value is Boolean) {
+            return if(value) GL_TRUE else GL_FALSE
+        }
+        return value as Int
+    }
+
     override fun createProgram(): Program? = gl.createProgram()
     override fun attachShader(programId: Program, shaderId: Shader) = gl.attachShader(programId.unsafeCast<WebGLProgram>(), shaderId.unsafeCast<WebGLShader>())
     override fun linkProgram(programId: Program) = gl.linkProgram(programId.unsafeCast<WebGLProgram>())
@@ -91,4 +100,6 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.drawArrays(mode, first, count)
 
+    override fun getError(): Int = gl.getError()
+    override fun finish() = gl.finish()
 }

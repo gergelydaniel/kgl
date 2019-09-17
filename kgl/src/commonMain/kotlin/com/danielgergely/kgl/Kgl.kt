@@ -16,6 +16,8 @@ interface Kgl {
     fun linkProgram(programId: Program)
     fun useProgram(programId: Program)
 
+    fun getProgramParameter(program: Program, pname: Int): Int
+
     fun getUniformLocation(programId: Program, name: String): UniformLocation?
     fun getAttribLocation(programId: Program, name: String): Int
     fun bindAttribLocation(programId: Program, index: Int, name: String)
@@ -66,4 +68,7 @@ interface Kgl {
     fun texParameteri(target: Int, pname: Int, value: Int)
 
     fun drawArrays(mode: Int, first: Int, count: Int)
+
+    fun getError(): Int
+    fun finish()
 }
