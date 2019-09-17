@@ -14,3 +14,7 @@ actual typealias Texture = Int
 
 actual class TextureResource(@JvmField val encodedPng: InputStream)
 actual fun TextureResource.dispose() = encodedPng.close()
+
+actual typealias Framebuffer = Int
+
+actual typealias Renderbuffer = Int

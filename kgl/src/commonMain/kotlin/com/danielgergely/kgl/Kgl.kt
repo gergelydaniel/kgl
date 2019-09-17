@@ -62,6 +62,7 @@ interface Kgl {
     fun createTextures(n: Int) : Array<Texture>
     fun deleteTexture(texture: Texture)
     fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
+    fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer)
     fun activeTexture(texture: Int)
     fun bindTexture(target: Int, texture: Texture?)
     fun generateMipmap(target: Int)
@@ -71,4 +72,20 @@ interface Kgl {
 
     fun getError(): Int
     fun finish()
+
+    fun bindFramebuffer(target: Int, framebuffer: Framebuffer?)
+    fun createFramebuffer(): Framebuffer?
+    fun deleteFramebuffer(framebuffer: Framebuffer)
+    fun checkFramebufferStatus(target: Int): Int
+    fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int)
+    fun isFramebuffer(framebuffer: Framebuffer): Boolean
+
+    fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?)
+    fun createRenderbuffer(): Renderbuffer?
+    fun deleteRenderbuffer(renderbuffer: Renderbuffer)
+    fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer)
+    fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean
+    fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int)
+
+    fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer)
 }

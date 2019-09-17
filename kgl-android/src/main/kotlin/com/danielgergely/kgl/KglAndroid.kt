@@ -112,6 +112,13 @@ class KglAndroid : Kgl {
         GLUtils.texImage2D(target, level, internalFormat, bmp, border)
     }
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer) {
+        when (buffer) {
+            is java.nio.Buffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, buffer)
+            else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
+        }
+    }
+
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)
     override fun bindTexture(target: Int, texture: Texture?) = GL.glBindTexture(target, texture ?: 0)
     override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
@@ -121,4 +128,33 @@ class KglAndroid : Kgl {
 
     override fun getError(): Int = GL.glGetError()
     override fun finish() = GL.glFinish()
+
+    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = GL.glBindFramebuffer(target, framebuffer ?: 0)
+    override fun createFramebuffer(): Framebuffer? {
+        val ints = IntArray(1)
+        GL.glGenFramebuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteFramebuffer(framebuffer: Framebuffer) = GL.glDeleteFramebuffers(1, intArrayOf(framebuffer), 0)
+    override fun checkFramebufferStatus(target: Int): Int = GL.glCheckFramebufferStatus(target)
+    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = GL.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+    override fun isFramebuffer(framebuffer: Framebuffer): Boolean = GL.glIsFramebuffer(framebuffer)
+
+    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = GL.glBindRenderbuffer(target, renderbuffer ?: 0)
+    override fun createRenderbuffer(): Renderbuffer? {
+        val ints = IntArray(1)
+        GL.glGenRenderbuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = GL.glDeleteRenderbuffers(1, intArrayOf(renderbuffer), 0)
+    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = GL.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+    override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
+    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = GL.glRenderbufferStorage(target, internalformat, width, height)
+
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
+        when (buffer) {
+            is java.nio.Buffer -> GL.glReadPixels(x, y, width, height, format, type, buffer)
+            else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
+        }
+    }
 }
