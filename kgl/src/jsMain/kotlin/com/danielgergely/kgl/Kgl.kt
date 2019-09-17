@@ -39,7 +39,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
 
     override fun createBuffers(count: Int): Array<GlBuffer> = Array(count) { gl.createBuffer() ?: throw Exception() }
 
-    override fun bindBuffer(target: Int, bufferId: GlBuffer) = gl.bindBuffer(target, bufferId.unsafeCast<WebGLBuffer>())
+    override fun bindBuffer(target: Int, bufferId: GlBuffer?) = gl.bindBuffer(target, bufferId.unsafeCast<WebGLBuffer>())
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
         val buffer: dynamic = sourceData.buffer
         gl.bufferData(target, buffer.unsafeCast<BufferDataSource>(), usage)
@@ -85,7 +85,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
 
 
     override fun activeTexture(texture: Int) = gl.activeTexture(texture)
-    override fun bindTexture(target: Int, texture: Texture) = gl.bindTexture(target, texture.unsafeCast<WebGLTexture>())
+    override fun bindTexture(target: Int, texture: Texture?) = gl.bindTexture(target, texture.unsafeCast<WebGLTexture>())
     override fun generateMipmap(target: Int) = gl.generateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.texParameteri(target, pname, value)
 

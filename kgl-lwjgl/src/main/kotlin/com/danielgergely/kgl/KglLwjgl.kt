@@ -35,12 +35,12 @@ class KglLwjgl : Kgl {
         GL.glBindAttribLocation(programId, index, name)
     }
 
-    override fun bindBuffer(target: Int, bufferId: GlBuffer) {
-        GL.glBindBuffer(target, bufferId)
+    override fun bindBuffer(target: Int, bufferId: GlBuffer?) {
+        GL.glBindBuffer(target, bufferId ?: 0)
     }
 
-    override fun bindTexture(target: Int, texture: Texture) {
-        GL.glBindTexture(target, texture)
+    override fun bindTexture(target: Int, texture: Texture?) {
+        GL.glBindTexture(target, texture ?: 0)
     }
 
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
