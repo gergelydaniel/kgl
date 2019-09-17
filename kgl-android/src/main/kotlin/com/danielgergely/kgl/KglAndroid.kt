@@ -48,7 +48,7 @@ class KglAndroid : Kgl {
         return buffers.toTypedArray()
     }
 
-    override fun bindBuffer(target: Int, bufferId: Int) = GL.glBindBuffer(target, bufferId)
+    override fun bindBuffer(target: Int, bufferId: GlBuffer?) = GL.glBindBuffer(target, bufferId ?: 0)
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
         GL.glBufferData(target, size, sourceData.buffer, usage)
     }
@@ -106,7 +106,7 @@ class KglAndroid : Kgl {
     }
 
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)
-    override fun bindTexture(target: Int, texture: Texture) = GL.glBindTexture(target, texture)
+    override fun bindTexture(target: Int, texture: Texture?) = GL.glBindTexture(target, texture ?: 0)
     override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = GL.glTexParameteri(target, pname, value)
 

@@ -105,7 +105,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         return foo
     }
 
-    override fun bindBuffer(target: Int, bufferId: GlBuffer) = gl.glBindBuffer(target, bufferId)
+    override fun bindBuffer(target: Int, bufferId: GlBuffer?) = gl.glBindBuffer(target, bufferId ?: 0)
 
     override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
         return gl.glBufferData(target, size.toLong(), sourceData.buffer, usage)
@@ -172,7 +172,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun activeTexture(texture: Int) = gl.glActiveTexture(texture)
 
-    override fun bindTexture(target: Int, texture: Texture) = gl.glBindTexture(target, texture)
+    override fun bindTexture(target: Int, texture: Texture?) = gl.glBindTexture(target, texture ?: 0)
 
     override fun generateMipmap(target: Int) = gl.glGenerateMipmap(target)
 

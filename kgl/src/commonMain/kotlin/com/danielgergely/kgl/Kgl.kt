@@ -27,7 +27,7 @@ interface Kgl {
     fun disableVertexAttribArray(location: Int)
 
     fun createBuffers(count: Int): Array<GlBuffer>
-    fun bindBuffer(target: Int, bufferId: GlBuffer)
+    fun bindBuffer(target: Int, bufferId: GlBuffer?)
     fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int)
     fun deleteBuffer(buffer: GlBuffer)
 
@@ -61,7 +61,7 @@ interface Kgl {
     fun deleteTexture(texture: Texture)
     fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
     fun activeTexture(texture: Int)
-    fun bindTexture(target: Int, texture: Texture)
+    fun bindTexture(target: Int, texture: Texture?)
     fun generateMipmap(target: Int)
     fun texParameteri(target: Int, pname: Int, value: Int)
 
