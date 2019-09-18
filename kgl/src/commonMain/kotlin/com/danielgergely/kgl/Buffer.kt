@@ -13,24 +13,25 @@ expect class FloatBuffer : Buffer {
     fun put(floatArray: FloatArray)
     fun put(floatArray: FloatArray, length: Int)
     operator fun set(pos: Int, f: Float)
-    
+
     fun get(): Float
     operator fun get(pos: Int): Float
 }
 
-@ExperimentalUnsignedTypes
-expect class UByteBuffer : Buffer {
-    constructor(buffer: Array<UByte>)
-    constructor(buffer: UByteArray)
+expect class ByteBuffer : Buffer {
+    constructor(buffer: Array<Byte>)
+    constructor(buffer: ByteArray)
     constructor(size: Int)
 
-    fun put(b: UByte)
-    fun put(byteArray: UByteArray)
-    fun put(byteArray: UByteArray, length: Int)
-    operator fun set(pos: Int, b: UByte)
-    
-    fun get(): UByte
-    operator fun get(pos: Int): UByte
+    fun put(b: Byte)
+    fun put(byteArray: ByteArray)
+    fun put(byteArray: ByteArray, length: Int)
+    operator fun set(pos: Int, b: Byte)
+
+    fun get(): Byte
+    operator fun get(pos: Int): Byte
 }
 
+@Deprecated("Use FloatBuffer() or ByteBuffer() instead.",
+        ReplaceWith("FloatBuffer(sizeInBytes / 4)", "com.danielgergely.kgl.FloatBuffer"))
 fun allocate(sizeInBytes: Int): FloatBuffer = FloatBuffer(sizeInBytes / 4)

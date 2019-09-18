@@ -42,10 +42,9 @@ actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer
 
 }
 
-@ExperimentalUnsignedTypes
-actual class UByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) {
-    actual constructor(buffer: Array<UByte>) : this(alloc(buffer.size).also { it.put(buffer.toUByteArray().toByteArray()) })
-    actual constructor(buffer: UByteArray) : this(alloc(buffer.size).also { it.put(buffer.toByteArray()) })
+actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) {
+    actual constructor(buffer: Array<Byte>) : this(alloc(buffer.size).also { it.put(buffer.toByteArray()) })
+    actual constructor(buffer: ByteArray) : this(alloc(buffer.size).also { it.put(buffer) })
     actual constructor(size: Int) : this(alloc(size))
 
     companion object {
@@ -53,24 +52,24 @@ actual class UByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer)
                 ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder())
     }
 
-    private val uByteBuffer: ByteBuffer = buffer
+    private val byteBuffer: ByteBuffer = buffer
 
-    actual fun put(b: UByte) {
-        uByteBuffer.put(b.toByte())
+    actual fun put(b: Byte) {
+        byteBuffer.put(b)
     }
 
-    actual fun put(byteArray: UByteArray) = put(byteArray, byteArray.size)
+    actual fun put(byteArray: ByteArray) = put(byteArray, byteArray.size)
 
-    actual fun put(byteArray: UByteArray, length: Int) {
-        (0 until length).forEach { i -> uByteBuffer.put(byteArray[i].toByte()) }
+    actual fun put(byteArray: ByteArray, length: Int) {
+        (0 until length).forEach { i -> byteBuffer.put(byteArray[i]) }
     }
 
-    actual operator fun set(pos: Int, b: UByte) {
-        uByteBuffer.put(pos, b.toByte())
+    actual operator fun set(pos: Int, b: Byte) {
+        byteBuffer.put(pos, b)
     }
 
-    actual fun get(): UByte = uByteBuffer.get().toUByte()
+    actual fun get(): Byte = byteBuffer.get()
 
-    actual operator fun get(pos: Int): UByte = uByteBuffer.get(pos).toUByte()
+    actual operator fun get(pos: Int): Byte = byteBuffer.get(pos)
 
 }

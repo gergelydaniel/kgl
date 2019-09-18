@@ -37,35 +37,33 @@ actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
     actual operator fun get(pos: Int): Float = floatBuffer[pos]
 }
 
-@ExperimentalUnsignedTypes
-actual class UByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
-    // TODO: yuck!
-    actual constructor(buffer: Array<UByte>) : this(Uint8Array(buffer.toUByteArray().toByteArray().toTypedArray()))
-    actual constructor(buffer: UByteArray) : this(Uint8Array(buffer.toUByteArray().toByteArray().toTypedArray()))
-    actual constructor(size: Int) : this(UByteArray(size))
+actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
+    actual constructor(buffer: Array<Byte>) : this(Uint8Array(buffer))
+    actual constructor(buffer: ByteArray) : this(Uint8Array(buffer.toTypedArray()))
+    actual constructor(size: Int) : this(ByteArray(size))
 
-    private val uByteBuffer: Uint8Array = buffer
+    private val byteBuffer: Uint8Array = buffer
 
-    actual fun put(b: UByte) {
-        uByteBuffer[pos] = b.toByte()
+    actual fun put(b: Byte) {
+        byteBuffer[pos] = b
         pos += 1
     }
 
-    actual fun put(byteArray: UByteArray) = put(byteArray, byteArray.size)
+    actual fun put(byteArray: ByteArray) = put(byteArray, byteArray.size)
 
-    actual fun put(byteArray: UByteArray, length: Int) {
-        (0 until length).forEach { i -> uByteBuffer[pos++] = byteArray[i].toByte() }
+    actual fun put(byteArray: ByteArray, length: Int) {
+        (0 until length).forEach { i -> byteBuffer[pos++] = byteArray[i] }
     }
 
-    actual operator fun set(pos: Int, b: UByte) {
-        uByteBuffer[pos] = b.toByte()
+    actual operator fun set(pos: Int, b: Byte) {
+        byteBuffer[pos] = b
     }
 
-    actual fun get(): UByte {
-        return uByteBuffer[pos].toUByte()
+    actual fun get(): Byte {
+        return byteBuffer[pos]
     }
 
-    actual operator fun get(pos: Int): UByte {
-        return uByteBuffer[pos].toUByte()
+    actual operator fun get(pos: Int): Byte {
+        return byteBuffer[pos]
     }
 }

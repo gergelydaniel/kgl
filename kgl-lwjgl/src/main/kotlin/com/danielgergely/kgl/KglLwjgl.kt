@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL33
 import org.lwjgl.stb.STBImage
 import java.io.InputStream
 import java.nio.*
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
 typealias GL = GL33
