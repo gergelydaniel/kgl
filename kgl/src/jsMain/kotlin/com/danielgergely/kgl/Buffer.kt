@@ -25,7 +25,8 @@ actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
     actual fun put(floatArray: FloatArray) = put(floatArray, floatArray.size)
 
     actual fun put(floatArray: FloatArray, length: Int) {
-        (0 until length).forEach { i -> floatBuffer[pos++] = floatArray[i] }
+        buffer.asDynamic().set(floatArray.asDynamic().subarray(0, length), pos)
+        pos += length
     }
 
     actual operator fun set(pos: Int, f: Float) {
@@ -52,7 +53,8 @@ actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
     actual fun put(byteArray: ByteArray) = put(byteArray, byteArray.size)
 
     actual fun put(byteArray: ByteArray, length: Int) {
-        (0 until length).forEach { i -> byteBuffer[pos++] = byteArray[i] }
+        buffer.asDynamic().set(byteArray.asDynamic().subarray(0, length), pos)
+        pos += length
     }
 
     actual operator fun set(pos: Int, b: Byte) {
