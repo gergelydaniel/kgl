@@ -177,10 +177,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     }
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer) {
-        when (buffer) {
-            is java.nio.Buffer -> gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, buffer)
-            else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
-        }
+        gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, buffer.buffer)
     }
 
     override fun activeTexture(texture: Int) = gl.glActiveTexture(texture)
@@ -219,10 +216,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = gl.glRenderbufferStorage(target, internalformat, width, height)
 
     override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
-        when (buffer) {
-            is java.nio.Buffer -> gl.glReadPixels(x, y, width, height, format, type, buffer)
-            else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
-        }
+        gl.glReadPixels(x, y, width, height, format, type, buffer.buffer)
     }
 }
 
