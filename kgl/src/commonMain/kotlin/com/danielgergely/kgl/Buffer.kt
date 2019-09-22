@@ -1,7 +1,7 @@
 package com.danielgergely.kgl
 
 expect abstract class Buffer {
-    fun position(pos: Int)
+    abstract var position: Int
 }
 
 expect class FloatBuffer : Buffer {

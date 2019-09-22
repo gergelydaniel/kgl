@@ -3,11 +3,7 @@ package com.danielgergely.kgl
 import org.khronos.webgl.*
 
 actual abstract class Buffer(internal val buffer: ArrayBufferView) {
-    protected var pos: Int = 0
-
-    actual fun position(pos: Int) {
-        this.pos = pos
-    }
+    actual abstract var position: Int
 }
 
 actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
@@ -16,24 +12,25 @@ actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
     actual constructor(size: Int) : this(FloatArray(size))
 
     private val floatBuffer: Float32Array = buffer
+    override var position = 0
 
     actual fun put(f: Float) {
-        floatBuffer[pos] = f
-        pos += 1
+        floatBuffer[position] = f
+        position += 1
     }
 
     actual fun put(floatArray: FloatArray) = put(floatArray, floatArray.size)
 
     actual fun put(floatArray: FloatArray, length: Int) {
-        buffer.asDynamic().set(floatArray.asDynamic().subarray(0, length), pos)
-        pos += length
+        buffer.asDynamic().set(floatArray.asDynamic().subarray(0, length), position)
+        position += length
     }
 
     actual operator fun set(pos: Int, f: Float) {
         floatBuffer[pos] = f
     }
 
-    actual fun get(): Float = floatBuffer[pos]
+    actual fun get(): Float = floatBuffer[position]
 
     actual operator fun get(pos: Int): Float = floatBuffer[pos]
 }
@@ -44,17 +41,18 @@ actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
     actual constructor(size: Int) : this(ByteArray(size))
 
     private val byteBuffer: Uint8Array = buffer
+    override var position = 0
 
     actual fun put(b: Byte) {
-        byteBuffer[pos] = b
-        pos += 1
+        byteBuffer[position] = b
+        position += 1
     }
 
     actual fun put(byteArray: ByteArray) = put(byteArray, byteArray.size)
 
     actual fun put(byteArray: ByteArray, length: Int) {
-        buffer.asDynamic().set(byteArray.asDynamic().subarray(0, length), pos)
-        pos += length
+        buffer.asDynamic().set(byteArray.asDynamic().subarray(0, length), position)
+        position += length
     }
 
     actual operator fun set(pos: Int, b: Byte) {
@@ -62,7 +60,7 @@ actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
     }
 
     actual fun get(): Byte {
-        return byteBuffer[pos]
+        return byteBuffer[position]
     }
 
     actual operator fun get(pos: Int): Byte {

@@ -5,9 +5,7 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
 actual abstract class Buffer(@JvmField val buffer: java.nio.Buffer) {
-    actual fun position(pos: Int) {
-        buffer.position(pos)
-    }
+    actual abstract var position: Int
 }
 
 actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer) {
@@ -40,6 +38,11 @@ actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer
 
     actual operator fun get(pos: Int): Float = floatBuffer.get(pos)
 
+    override var position: Int
+        get() = floatBuffer.position()
+        set(value) {
+            floatBuffer.position(value)
+        }
 }
 
 actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) {
@@ -72,4 +75,9 @@ actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) 
 
     actual operator fun get(pos: Int): Byte = byteBuffer.get(pos)
 
+    override var position: Int
+        get() = byteBuffer.position()
+        set(value) {
+            byteBuffer.position(value)
+        }
 }
