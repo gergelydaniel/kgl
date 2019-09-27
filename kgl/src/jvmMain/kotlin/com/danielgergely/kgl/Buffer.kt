@@ -5,7 +5,11 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
 actual abstract class Buffer(@JvmField val buffer: java.nio.Buffer) {
-    actual abstract var position: Int
+    actual var position: Int
+        get() = buffer.position()
+        set(value) {
+            buffer.position(value)
+        }
 }
 
 actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer) {
@@ -24,9 +28,9 @@ actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer
         floatBuffer.put(f)
     }
 
-    actual fun put(floatArray: FloatArray) = put(floatArray, floatArray.size)
+    actual fun put(floatArray: FloatArray) = put(floatArray, 0, floatArray.size)
 
-    actual fun put(floatArray: FloatArray, length: Int) {
+    actual fun put(floatArray: FloatArray, offset: Int, length: Int) {
         floatBuffer.put(floatArray, 0, floatArray.size)
     }
 
@@ -36,13 +40,15 @@ actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer
 
     actual fun get(): Float = floatBuffer.get()
 
-    actual operator fun get(pos: Int): Float = floatBuffer.get(pos)
+    actual fun get(floatArray: FloatArray) {
+        get(floatArray, 0, floatArray.size)
+    }
 
-    override var position: Int
-        get() = floatBuffer.position()
-        set(value) {
-            floatBuffer.position(value)
-        }
+    actual fun get(floatArray: FloatArray, offset: Int, length: Int) {
+        floatBuffer.get(floatArray, offset, length)
+    }
+
+    actual operator fun get(pos: Int): Float = floatBuffer.get(pos)
 }
 
 actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) {
@@ -61,9 +67,9 @@ actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) 
         byteBuffer.put(b)
     }
 
-    actual fun put(byteArray: ByteArray) = put(byteArray, byteArray.size)
+    actual fun put(byteArray: ByteArray) = put(byteArray, 0, byteArray.size)
 
-    actual fun put(byteArray: ByteArray, length: Int) {
+    actual fun put(byteArray: ByteArray, offset: Int, length: Int) {
         byteBuffer.put(byteArray, 0, byteArray.size)
     }
 
@@ -73,11 +79,13 @@ actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) 
 
     actual fun get(): Byte = byteBuffer.get()
 
-    actual operator fun get(pos: Int): Byte = byteBuffer.get(pos)
+    actual fun get(byteArray: ByteArray) {
+        get(byteArray, 0, byteArray.size)
+    }
 
-    override var position: Int
-        get() = byteBuffer.position()
-        set(value) {
-            byteBuffer.position(value)
-        }
+    actual fun get(byteArray: ByteArray, offset: Int, length: Int) {
+        byteBuffer.get(byteArray, offset, length)
+    }
+
+    actual operator fun get(pos: Int): Byte = byteBuffer.get(pos)
 }

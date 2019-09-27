@@ -1,7 +1,7 @@
 package com.danielgergely.kgl
 
 expect abstract class Buffer {
-    abstract var position: Int
+    var position: Int
 }
 
 expect class FloatBuffer : Buffer {
@@ -11,10 +11,12 @@ expect class FloatBuffer : Buffer {
 
     fun put(f: Float)
     fun put(floatArray: FloatArray)
-    fun put(floatArray: FloatArray, length: Int)
+    fun put(floatArray: FloatArray, offset: Int, length: Int)
     operator fun set(pos: Int, f: Float)
 
     fun get(): Float
+    fun get(floatArray: FloatArray)
+    fun get(floatArray: FloatArray, offset: Int, length: Int)
     operator fun get(pos: Int): Float
 }
 
@@ -25,10 +27,12 @@ expect class ByteBuffer : Buffer {
 
     fun put(b: Byte)
     fun put(byteArray: ByteArray)
-    fun put(byteArray: ByteArray, length: Int)
+    fun put(byteArray: ByteArray, offset: Int, length: Int)
     operator fun set(pos: Int, b: Byte)
 
     fun get(): Byte
+    fun get(byteArray: ByteArray)
+    fun get(byteArray: ByteArray, offset: Int, length: Int)
     operator fun get(pos: Int): Byte
 }
 
