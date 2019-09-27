@@ -35,6 +35,15 @@ interface Kgl {
 
     fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
 
+    fun uniform(location: UniformLocation, f: Float) = uniform1f(location, f)
+    fun uniform(location: UniformLocation, x: Float, y: Float) = uniform2f(location, x, y)
+    fun uniform(location: UniformLocation, x: Float, y: Float, z: Float) = uniform3f(location, x, y, z)
+    fun uniform(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) = uniform4f(location, x, y, z, w)
+    fun uniform(location: UniformLocation, i: Int) = uniform1i(location, i)
+    fun uniform(location: UniformLocation, x: Int, y: Int) = uniform2i(location, x, y)
+    fun uniform(location: UniformLocation, x: Int, y: Int, z: Int) = uniform3i(location, x, y, z)
+    fun uniform(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) = uniform4i(location, x, y, z, w)
+
     fun uniform1f(location: UniformLocation, f: Float)
     fun uniform1i(location: UniformLocation, i: Int)
 
