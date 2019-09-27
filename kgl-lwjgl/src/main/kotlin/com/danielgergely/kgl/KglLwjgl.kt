@@ -256,7 +256,7 @@ class KglLwjgl : Kgl {
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean = GL.glIsFramebuffer(framebuffer)
 
     override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = GL.glBindRenderbuffer(target, renderbuffer ?: 0)
-    override fun createRenderbuffer(): Renderbuffer? = GL.glGenFramebuffers()
+    override fun createRenderbuffer(): Renderbuffer? = GL.glGenRenderbuffers()
     override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = GL.glDeleteRenderbuffers(renderbuffer)
     override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = GL.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
