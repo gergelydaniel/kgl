@@ -188,6 +188,17 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.glTexParameteri(target, pname, value)
 
+    override fun createVertexArray(): VertexArrayObject?
+    {
+        val ints = IntArray(1)
+        gl.glGenVertexArrays(1, ints, 0)
+        return ints[0]
+    }
+    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
+            = gl.glBindVertexArray(vertexArrayObject ?: 0)
+    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
+            = gl.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
+
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
 
     override fun getError(): Int = gl.glGetError()

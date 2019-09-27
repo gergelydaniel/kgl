@@ -68,6 +68,10 @@ interface Kgl {
     fun generateMipmap(target: Int)
     fun texParameteri(target: Int, pname: Int, value: Int)
 
+    fun createVertexArray(): VertexArrayObject?
+    fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
+    fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
+
     fun drawArrays(mode: Int, first: Int, count: Int)
 
     fun getError(): Int

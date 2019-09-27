@@ -248,6 +248,10 @@ class KglLwjgl : Kgl {
         GL.glViewport(x, y, width, height)
     }
 
+    override fun createVertexArray(): VertexArrayObject? = GL.glGenVertexArrays()
+    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?) = GL.glBindVertexArray(vertexArrayObject ?: 0)
+    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject) = GL.glDeleteVertexArrays(vertexArrayObject)
+
     override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = GL.glBindFramebuffer(target, framebuffer ?: 0)
     override fun createFramebuffer(): Framebuffer? = GL.glGenFramebuffers()
     override fun deleteFramebuffer(framebuffer: Framebuffer) = GL.glDeleteFramebuffers(framebuffer)

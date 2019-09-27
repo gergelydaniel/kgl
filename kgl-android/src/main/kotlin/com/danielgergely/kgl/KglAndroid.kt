@@ -2,6 +2,7 @@ package com.danielgergely.kgl
 
 import android.graphics.BitmapFactory
 import android.opengl.GLES20
+import android.opengl.GLES30
 import android.opengl.GLUtils
 
 typealias GL = GLES20
@@ -120,6 +121,17 @@ class KglAndroid : Kgl {
     override fun bindTexture(target: Int, texture: Texture?) = GL.glBindTexture(target, texture ?: 0)
     override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = GL.glTexParameteri(target, pname, value)
+
+    override fun createVertexArray(): VertexArrayObject?
+    {
+        val ints = IntArray(1)
+        GLES30.glGenVertexArrays(1, ints, 0)
+        return ints[0]
+    }
+    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
+            = GLES30.glBindVertexArray(vertexArrayObject ?: 0)
+    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
+            = GLES30.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = GL.glDrawArrays(mode, first, count)
 
