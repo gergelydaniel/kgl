@@ -68,6 +68,12 @@ class KglLwjgl : Kgl {
         GL.glCompileShader(shaderId)
     }
 
+    override fun createBuffer(): GlBuffer {
+        val array = IntArray(1)
+        GL.glGenBuffers(array)
+        return array[0]
+    }
+
     override fun createBuffers(count: Int): Array<GlBuffer> {
         val array = IntArray(count)
         GL.glGenBuffers(array)
@@ -85,6 +91,12 @@ class KglLwjgl : Kgl {
         } else {
             shader
         }
+    }
+
+    override fun createTexture(): Texture {
+        val array = IntArray(1)
+        GL.glGenTextures(array)
+        return array[0]
     }
 
     override fun createTextures(n: Int): Array<Texture> {
@@ -255,14 +267,14 @@ class KglLwjgl : Kgl {
     override fun deleteVertexArray(vertexArrayObject: VertexArrayObject) = GL.glDeleteVertexArrays(vertexArrayObject)
 
     override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = GL.glBindFramebuffer(target, framebuffer ?: 0)
-    override fun createFramebuffer(): Framebuffer? = GL.glGenFramebuffers()
+    override fun createFramebuffer(): Framebuffer = GL.glGenFramebuffers()
     override fun deleteFramebuffer(framebuffer: Framebuffer) = GL.glDeleteFramebuffers(framebuffer)
     override fun checkFramebufferStatus(target: Int): Int = GL.glCheckFramebufferStatus(target)
     override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = GL.glFramebufferTexture2D(target, attachment, textarget, texture, level)
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean = GL.glIsFramebuffer(framebuffer)
 
     override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = GL.glBindRenderbuffer(target, renderbuffer ?: 0)
-    override fun createRenderbuffer(): Renderbuffer? = GL.glGenRenderbuffers()
+    override fun createRenderbuffer(): Renderbuffer = GL.glGenRenderbuffers()
     override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = GL.glDeleteRenderbuffers(renderbuffer)
     override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = GL.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)

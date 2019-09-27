@@ -28,6 +28,7 @@ interface Kgl {
     fun enableVertexAttribArray(location: Int)
     fun disableVertexAttribArray(location: Int)
 
+    fun createBuffer(): GlBuffer
     fun createBuffers(count: Int): Array<GlBuffer>
     fun bindBuffer(target: Int, bufferId: GlBuffer?)
     fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int = 0)
@@ -59,6 +60,7 @@ interface Kgl {
     fun clearColor(r: Float, g: Float, b: Float, a: Float)
     fun clear(mask: Int)
 
+    fun createTexture(): Texture
     fun createTextures(n: Int) : Array<Texture>
     fun deleteTexture(texture: Texture)
     fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
@@ -78,14 +80,14 @@ interface Kgl {
     fun finish()
 
     fun bindFramebuffer(target: Int, framebuffer: Framebuffer?)
-    fun createFramebuffer(): Framebuffer?
+    fun createFramebuffer(): Framebuffer
     fun deleteFramebuffer(framebuffer: Framebuffer)
     fun checkFramebufferStatus(target: Int): Int
     fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int)
     fun isFramebuffer(framebuffer: Framebuffer): Boolean
 
     fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?)
-    fun createRenderbuffer(): Renderbuffer?
+    fun createRenderbuffer(): Renderbuffer
     fun deleteRenderbuffer(renderbuffer: Renderbuffer)
     fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer)
     fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean

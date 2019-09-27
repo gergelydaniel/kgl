@@ -88,6 +88,12 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun enableVertexAttribArray(location: Int) = gl.glEnableVertexAttribArray(location)
     override fun disableVertexAttribArray(location: Int) = gl.glDisableVertexAttribArray(location)
 
+    override fun createBuffer(): GlBuffer {
+        val buffers = IntArray(1)
+        gl.glGenBuffers(1, buffers, 0)
+        return buffers[0]
+    }
+
     override fun createBuffers(count: Int): Array<GlBuffer> {
         val buffers = IntArray(count)
         gl.glGenBuffers(count, buffers, 0)
@@ -164,6 +170,12 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun clear(mask: Int) = gl.glClear(mask)
 
+    override fun createTexture(): Texture {
+        val buffer = IntBuffer.allocate(1)
+        gl.glGenTextures(1, buffer)
+        return buffer[0]
+    }
+
     override fun createTextures(n: Int): Array<Texture> {
         val buffer = IntBuffer.allocate(n)
         gl.glGenTextures(n, buffer)
@@ -208,7 +220,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun finish() = gl.glFinish()
 
     override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = gl.glBindFramebuffer(target, framebuffer ?: 0)
-    override fun createFramebuffer(): Framebuffer? {
+    override fun createFramebuffer(): Framebuffer {
         val ints = IntArray(1)
         gl.glGenFramebuffers(1, ints, 0)
         return ints[0]
@@ -219,7 +231,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean = gl.glIsFramebuffer(framebuffer)
 
     override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = gl.glBindRenderbuffer(target, renderbuffer ?: 0)
-    override fun createRenderbuffer(): Renderbuffer? {
+    override fun createRenderbuffer(): Renderbuffer {
         val ints = IntArray(1)
         gl.glGenRenderbuffers(1, ints, 0)
         return ints[0]

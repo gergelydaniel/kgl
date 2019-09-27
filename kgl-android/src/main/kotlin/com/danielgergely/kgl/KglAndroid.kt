@@ -50,6 +50,13 @@ class KglAndroid : Kgl {
 
     override fun getAttribLocation(programId: Program, name: String) = GL.glGetAttribLocation(programId, name)
     override fun bindAttribLocation(programId: Program, index: Int, name: String) = GL.glBindAttribLocation(programId, index, name)
+
+    override fun createBuffer(): GlBuffer {
+        val buffers = IntArray(1)
+        GL.glGenBuffers(1, buffers, 0)
+        return buffers[0]
+    }
+
     override fun createBuffers(count: Int): Array<GlBuffer> {
         val buffers = IntArray(count)
         GL.glGenBuffers(count, buffers, 0)
@@ -101,6 +108,12 @@ class KglAndroid : Kgl {
 
     override fun clearColor(r: Float, g: Float, b: Float, a: Float) = GL.glClearColor(r, g, b, a)
 
+    override fun createTexture(): Texture {
+        val ints = IntArray(1)
+        GL.glGenTextures(1, ints, 0)
+        return ints[0]
+    }
+
     override fun createTextures(n: Int) : Array<Texture> {
         val ints = IntArray(n)
         GL.glGenTextures(n, ints, 0)
@@ -142,7 +155,7 @@ class KglAndroid : Kgl {
     override fun finish() = GL.glFinish()
 
     override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = GL.glBindFramebuffer(target, framebuffer ?: 0)
-    override fun createFramebuffer(): Framebuffer? {
+    override fun createFramebuffer(): Framebuffer {
         val ints = IntArray(1)
         GL.glGenFramebuffers(1, ints, 0)
         return ints[0]
@@ -153,7 +166,7 @@ class KglAndroid : Kgl {
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean = GL.glIsFramebuffer(framebuffer)
 
     override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = GL.glBindRenderbuffer(target, renderbuffer ?: 0)
-    override fun createRenderbuffer(): Renderbuffer? {
+    override fun createRenderbuffer(): Renderbuffer {
         val ints = IntArray(1)
         GL.glGenRenderbuffers(1, ints, 0)
         return ints[0]
