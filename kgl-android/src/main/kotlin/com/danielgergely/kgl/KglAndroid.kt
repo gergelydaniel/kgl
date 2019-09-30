@@ -126,8 +126,7 @@ class KglAndroid : Kgl {
     override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = GL.glTexParameteri(target, pname, value)
 
-    override fun createVertexArray(): VertexArrayObject?
-    {
+    override fun createVertexArray(): VertexArrayObject {
         val ints = IntArray(1)
         GLES30.glGenVertexArrays(1, ints, 0)
         return ints[0]

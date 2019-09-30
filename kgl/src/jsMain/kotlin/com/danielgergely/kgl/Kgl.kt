@@ -104,8 +104,7 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun generateMipmap(target: Int) = gl.generateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.texParameteri(target, pname, value)
 
-    override fun createVertexArray(): VertexArrayObject?
-            = (gl as WebGL2RenderingContext).createVertexArray()
+    override fun createVertexArray(): VertexArrayObject = (gl as WebGL2RenderingContext).createVertexArray() ?: throw Exception()
     override fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
             = (gl as WebGL2RenderingContext).bindVertexArray(vertexArrayObject.unsafeCast<WebGLVertexArrayObject>())
     override fun deleteVertexArray(vertexArrayObject: VertexArrayObject)

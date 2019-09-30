@@ -192,8 +192,7 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.glTexParameteri(target, pname, value)
 
-    override fun createVertexArray(): VertexArrayObject?
-    {
+    override fun createVertexArray(): VertexArrayObject {
         val ints = IntArray(1)
         gl.glGenVertexArrays(1, ints, 0)
         return ints[0]

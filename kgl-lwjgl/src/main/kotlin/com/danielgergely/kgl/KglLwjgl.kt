@@ -250,7 +250,7 @@ class KglLwjgl : Kgl {
         GL.glViewport(x, y, width, height)
     }
 
-    override fun createVertexArray(): VertexArrayObject? = GL.glGenVertexArrays()
+    override fun createVertexArray(): VertexArrayObject = GL.glGenVertexArrays()
     override fun bindVertexArray(vertexArrayObject: VertexArrayObject?) = GL.glBindVertexArray(vertexArrayObject ?: 0)
     override fun deleteVertexArray(vertexArrayObject: VertexArrayObject) = GL.glDeleteVertexArrays(vertexArrayObject)
 
