@@ -45,13 +45,14 @@ class KglLwjgl : Kgl {
         GL.glBindTexture(target, texture ?: 0)
     }
 
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        //TODO this may be problematic
-        val buffer = sourceData.buffer
-        when (buffer) {
-            is ByteBuffer -> GL.glBufferData(target, buffer, usage)
-            is FloatBuffer -> GL.glBufferData(target, buffer, usage)
-            else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+        sourceData.withIoBuffer(offset) { buffer ->
+            //TODO this may be problematic
+            when (buffer) {
+                is ByteBuffer -> GL.glBufferData(target, buffer, usage)
+                is FloatBuffer -> GL.glBufferData(target, buffer, usage)
+                else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
+            }
         }
     }
 
@@ -170,15 +171,16 @@ class KglLwjgl : Kgl {
         GL.glTexImage2D(target, level, internalFormat, width.get(), height.get(), border, GL_RGBA, GL_UNSIGNED_BYTE, data)
     }
 
-    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer) {
-        val wrappedBuffer = buffer.buffer
-        when (wrappedBuffer) {
-            is ByteBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, wrappedBuffer)
-            is ShortBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, wrappedBuffer)
-            is IntBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, wrappedBuffer)
-            is FloatBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, wrappedBuffer)
-            is DoubleBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, wrappedBuffer)
-            else -> throw IllegalArgumentException("unknown buffer type ${wrappedBuffer.javaClass}")
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            when (ioBuffer) {
+                is ByteBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+                is ShortBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+                is IntBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+                is FloatBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+                is DoubleBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+                else -> throw IllegalArgumentException("unknown buffer type ${ioBuffer.javaClass}")
+            }
         }
     }
 
@@ -266,14 +268,15 @@ class KglLwjgl : Kgl {
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
     override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = GL.glRenderbufferStorage(target, internalformat, width, height)
 
-    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
-        val wrappedBuffer = buffer.buffer
-        when (wrappedBuffer) {
-            is ByteBuffer -> GL.glReadPixels(x, y, width, height, format, type, wrappedBuffer)
-            is ShortBuffer -> GL.glReadPixels(x, y, width, height, format, type, wrappedBuffer)
-            is IntBuffer -> GL.glReadPixels(x, y, width, height, format, type, wrappedBuffer)
-            is FloatBuffer -> GL.glReadPixels(x, y, width, height, format, type, wrappedBuffer)
-            else -> throw IllegalArgumentException("unknown buffer type ${wrappedBuffer.javaClass}")
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            when (ioBuffer) {
+                is ByteBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+                is ShortBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+                is IntBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+                is FloatBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+                else -> throw IllegalArgumentException("unknown buffer type ${ioBuffer.javaClass}")
+            }
         }
     }
 

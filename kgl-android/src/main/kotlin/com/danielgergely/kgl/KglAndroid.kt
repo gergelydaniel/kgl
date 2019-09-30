@@ -57,8 +57,10 @@ class KglAndroid : Kgl {
     }
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer?) = GL.glBindBuffer(target, bufferId ?: 0)
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        GL.glBufferData(target, size, sourceData.buffer, usage)
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+        sourceData.withIoBuffer(offset) { ioBuffer ->
+            GL.glBufferData(target, size, ioBuffer, usage)
+        }
     }
     override fun deleteBuffer(buffer: GlBuffer) = GL.glDeleteBuffers(1, intArrayOf(buffer), 0)
 
@@ -113,8 +115,10 @@ class KglAndroid : Kgl {
         GLUtils.texImage2D(target, level, internalFormat, bmp, border)
     }
 
-    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer) {
-        GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, buffer.buffer)
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+        }
     }
 
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)
@@ -160,7 +164,9 @@ class KglAndroid : Kgl {
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
     override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = GL.glRenderbufferStorage(target, internalformat, width, height)
 
-    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
-        GL.glReadPixels(x, y, width, height, format, type, buffer.buffer)
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+        }
     }
 }

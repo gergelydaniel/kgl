@@ -113,8 +113,10 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer?) = gl.glBindBuffer(target, bufferId ?: 0)
 
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        return gl.glBufferData(target, size.toLong(), sourceData.buffer, usage)
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+        sourceData.withIoBuffer(offset) { ioBuffer ->
+            gl.glBufferData(target, size.toLong(), ioBuffer, usage)
+        }
     }
 
     override fun deleteBuffer(buffer: GlBuffer) = gl.glDeleteBuffers(1, intArrayOf(buffer), 0)
@@ -176,8 +178,10 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         gl.glTexImage2D(target, level, internalFormat, image.width, image.height, border, GL_RGBA, GL_UNSIGNED_BYTE, imageToByteBuffer(image))
     }
 
-    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer) {
-        gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, buffer.buffer)
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+        }
     }
 
     override fun activeTexture(texture: Int) = gl.glActiveTexture(texture)
@@ -226,8 +230,10 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = gl.glIsRenderbuffer(renderbuffer)
     override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = gl.glRenderbufferStorage(target, internalformat, width, height)
 
-    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
-        gl.glReadPixels(x, y, width, height, format, type, buffer.buffer)
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { glBuffer ->
+            gl.glReadPixels(x, y, width, height, format, type, glBuffer)
+        }
     }
 }
 

@@ -49,9 +49,10 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun createBuffers(count: Int): Array<GlBuffer> = Array(count) { gl.createBuffer() ?: throw Exception() }
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer?) = gl.bindBuffer(target, bufferId.unsafeCast<WebGLBuffer>())
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        val buffer: dynamic = sourceData.buffer
-        gl.bufferData(target, buffer.unsafeCast<BufferDataSource>(), usage)
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+        sourceData.withGlBuffer(offset) { glBuffer ->
+            gl.bufferData(target, glBuffer, usage)
+        }
     }
 
     override fun deleteBuffer(buffer: GlBuffer) = gl.deleteBuffer(buffer.unsafeCast<WebGLBuffer>())
@@ -91,8 +92,11 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun deleteTexture(texture: Texture) = gl.deleteTexture(texture.unsafeCast<WebGLTexture>())
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
             = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource.image)
-    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer)
-            = gl.texImage2D(target, level, internalFormat, width, height, border, format, type, buffer.buffer.asDynamic().subarray(buffer.position))
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withGlBuffer(offset) { glBuffer ->
+            gl.texImage2D(target, level, internalFormat, width, height, border, format, type, glBuffer)
+        }
+    }
 
 
     override fun activeTexture(texture: Int) = gl.activeTexture(texture)
@@ -126,6 +130,9 @@ class KglJs(private val gl: WebGLRenderingContext) : Kgl  {
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = gl.isRenderbuffer(renderbuffer.unsafeCast<WebGLRenderbuffer>())
     override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = gl.renderbufferStorage(target, internalformat, width, height)
 
-    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer)
-            = gl.readPixels(x, y, width, height, format, type, buffer.buffer.unsafeCast<ArrayBufferView>())
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withGlBuffer(offset) { glBuffer ->
+            gl.readPixels(x, y, width, height, format, type, glBuffer)
+        }
+    }
 }

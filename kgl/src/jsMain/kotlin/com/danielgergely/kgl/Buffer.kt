@@ -2,8 +2,12 @@ package com.danielgergely.kgl
 
 import org.khronos.webgl.*
 
-actual abstract class Buffer(internal val buffer: ArrayBufferView) {
+actual abstract class Buffer(private val buffer: ArrayBufferView) {
     actual var position: Int = 0
+
+    fun <T> withGlBuffer(offset: Int, fn: (buffer: ArrayBufferView) -> T): T {
+        return fn(buffer.asDynamic().subarray(offset))
+    }
 }
 
 actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
@@ -43,12 +47,12 @@ actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
     actual operator fun get(pos: Int): Float = floatBuffer[pos]
 }
 
-actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
-    actual constructor(buffer: Array<Byte>) : this(Uint8Array(buffer))
-    actual constructor(buffer: ByteArray) : this(Uint8Array(buffer.toTypedArray()))
+actual class ByteBuffer constructor(buffer: Int8Array) : Buffer(buffer) {
+    actual constructor(buffer: Array<Byte>) : this(Int8Array(buffer))
+    actual constructor(buffer: ByteArray) : this(Int8Array(buffer.toTypedArray()))
     actual constructor(size: Int) : this(ByteArray(size))
 
-    private val byteBuffer: Uint8Array = buffer
+    private val byteBuffer: Int8Array = buffer
 
     actual fun put(b: Byte) {
         byteBuffer[position] = b
@@ -58,7 +62,7 @@ actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
     actual fun put(byteArray: ByteArray) = put(byteArray, 0, byteArray.size)
 
     actual fun put(byteArray: ByteArray, offset: Int, length: Int) {
-        buffer.asDynamic().set(byteArray.asDynamic().subarray(0, length), position)
+        byteBuffer.set(byteArray.unsafeCast<Int8Array>().subarray(offset, length), position)
         position += length
     }
 
@@ -75,7 +79,7 @@ actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
     }
 
     actual fun get(byteArray: ByteArray, offset: Int, length: Int) {
-        val dest = byteArray.unsafeCast<Uint8Array>()
+        val dest = byteArray.unsafeCast<Int8Array>()
         dest.subarray(offset, length).set(byteBuffer, position)
     }
 
