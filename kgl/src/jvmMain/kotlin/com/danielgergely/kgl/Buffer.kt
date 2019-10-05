@@ -41,7 +41,7 @@ actual class FloatBuffer private constructor(buffer: FloatBuffer): Buffer(buffer
     actual fun put(floatArray: FloatArray) = put(floatArray, 0, floatArray.size)
 
     actual fun put(floatArray: FloatArray, offset: Int, length: Int) {
-        floatBuffer.put(floatArray, 0, floatArray.size)
+        floatBuffer.put(floatArray, offset, length)
     }
 
     actual operator fun set(pos: Int, f: Float) {
@@ -80,7 +80,7 @@ actual class ByteBuffer private constructor(buffer: ByteBuffer): Buffer(buffer) 
     actual fun put(byteArray: ByteArray) = put(byteArray, 0, byteArray.size)
 
     actual fun put(byteArray: ByteArray, offset: Int, length: Int) {
-        byteBuffer.put(byteArray, 0, byteArray.size)
+        byteBuffer.put(byteArray, offset, length)
     }
 
     actual operator fun set(pos: Int, b: Byte) {
