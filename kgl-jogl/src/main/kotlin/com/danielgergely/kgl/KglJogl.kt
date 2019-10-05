@@ -113,8 +113,10 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer?) = gl.glBindBuffer(target, bufferId ?: 0)
 
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        return gl.glBufferData(target, size.toLong(), sourceData.buffer, usage)
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+        sourceData.withIoBuffer(offset) { ioBuffer ->
+            gl.glBufferData(target, size.toLong(), ioBuffer, usage)
+        }
     }
 
     override fun deleteBuffer(buffer: GlBuffer) = gl.glDeleteBuffers(1, intArrayOf(buffer), 0)
@@ -176,6 +178,12 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
         gl.glTexImage2D(target, level, internalFormat, image.width, image.height, border, GL_RGBA, GL_UNSIGNED_BYTE, imageToByteBuffer(image))
     }
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+        }
+    }
+
     override fun activeTexture(texture: Int) = gl.glActiveTexture(texture)
 
     override fun bindTexture(target: Int, texture: Texture?) = gl.glBindTexture(target, texture ?: 0)
@@ -184,10 +192,48 @@ class KglJogl(@JvmField private val gl: GL) : Kgl {
 
     override fun texParameteri(target: Int, pname: Int, value: Int) = gl.glTexParameteri(target, pname, value)
 
+    override fun createVertexArray(): VertexArrayObject {
+        val ints = IntArray(1)
+        gl.glGenVertexArrays(1, ints, 0)
+        return ints[0]
+    }
+    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
+            = gl.glBindVertexArray(vertexArrayObject ?: 0)
+    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
+            = gl.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
+
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
 
     override fun getError(): Int = gl.glGetError()
     override fun finish() = gl.glFinish()
+
+    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = gl.glBindFramebuffer(target, framebuffer ?: 0)
+    override fun createFramebuffer(): Framebuffer? {
+        val ints = IntArray(1)
+        gl.glGenFramebuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteFramebuffer(framebuffer: Framebuffer) = gl.glDeleteFramebuffers(1, intArrayOf(framebuffer), 0)
+    override fun checkFramebufferStatus(target: Int): Int = gl.glCheckFramebufferStatus(target)
+    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = gl.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+    override fun isFramebuffer(framebuffer: Framebuffer): Boolean = gl.glIsFramebuffer(framebuffer)
+
+    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = gl.glBindRenderbuffer(target, renderbuffer ?: 0)
+    override fun createRenderbuffer(): Renderbuffer? {
+        val ints = IntArray(1)
+        gl.glGenRenderbuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = gl.glDeleteRenderbuffers(1, intArrayOf(renderbuffer), 0)
+    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = gl.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+    override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = gl.glIsRenderbuffer(renderbuffer)
+    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = gl.glRenderbufferStorage(target, internalformat, width, height)
+
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { glBuffer ->
+            gl.glReadPixels(x, y, width, height, format, type, glBuffer)
+        }
+    }
 }
 
 fun imageToByteBuffer(image: BufferedImage) : ByteBuffer {

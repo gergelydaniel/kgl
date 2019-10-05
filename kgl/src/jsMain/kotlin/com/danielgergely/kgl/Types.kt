@@ -31,3 +31,12 @@ actual typealias GlBuffer = Any
  * Must be [WebGLTexture]
  */
 actual typealias Texture = Any
+
+/** Must be [WebGLVertexArrayObject] */
+actual typealias VertexArrayObject = Any
+
+/** Must be [WebGLFramebuffer] */
+actual typealias Framebuffer = Any
+
+/** Must be [WebGLRenderbuffer] */
+actual typealias Renderbuffer = Any

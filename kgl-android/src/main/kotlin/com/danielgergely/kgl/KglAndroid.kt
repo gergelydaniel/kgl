@@ -2,6 +2,7 @@ package com.danielgergely.kgl
 
 import android.graphics.BitmapFactory
 import android.opengl.GLES20
+import android.opengl.GLES30
 import android.opengl.GLUtils
 
 typealias GL = GLES20
@@ -56,8 +57,10 @@ class KglAndroid : Kgl {
     }
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer?) = GL.glBindBuffer(target, bufferId ?: 0)
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
-        GL.glBufferData(target, size, sourceData.buffer, usage)
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+        sourceData.withIoBuffer(offset) { ioBuffer ->
+            GL.glBufferData(target, size, ioBuffer, usage)
+        }
     }
     override fun deleteBuffer(buffer: GlBuffer) = GL.glDeleteBuffers(1, intArrayOf(buffer), 0)
 
@@ -112,13 +115,57 @@ class KglAndroid : Kgl {
         GLUtils.texImage2D(target, level, internalFormat, bmp, border)
     }
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+        }
+    }
+
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)
     override fun bindTexture(target: Int, texture: Texture?) = GL.glBindTexture(target, texture ?: 0)
     override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
     override fun texParameteri(target: Int, pname: Int, value: Int) = GL.glTexParameteri(target, pname, value)
 
+    override fun createVertexArray(): VertexArrayObject {
+        val ints = IntArray(1)
+        GLES30.glGenVertexArrays(1, ints, 0)
+        return ints[0]
+    }
+    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
+            = GLES30.glBindVertexArray(vertexArrayObject ?: 0)
+    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
+            = GLES30.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
+
     override fun drawArrays(mode: Int, first: Int, count: Int) = GL.glDrawArrays(mode, first, count)
 
     override fun getError(): Int = GL.glGetError()
     override fun finish() = GL.glFinish()
+
+    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = GL.glBindFramebuffer(target, framebuffer ?: 0)
+    override fun createFramebuffer(): Framebuffer? {
+        val ints = IntArray(1)
+        GL.glGenFramebuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteFramebuffer(framebuffer: Framebuffer) = GL.glDeleteFramebuffers(1, intArrayOf(framebuffer), 0)
+    override fun checkFramebufferStatus(target: Int): Int = GL.glCheckFramebufferStatus(target)
+    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = GL.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+    override fun isFramebuffer(framebuffer: Framebuffer): Boolean = GL.glIsFramebuffer(framebuffer)
+
+    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = GL.glBindRenderbuffer(target, renderbuffer ?: 0)
+    override fun createRenderbuffer(): Renderbuffer? {
+        val ints = IntArray(1)
+        GL.glGenRenderbuffers(1, ints, 0)
+        return ints[0]
+    }
+    override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = GL.glDeleteRenderbuffers(1, intArrayOf(renderbuffer), 0)
+    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = GL.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+    override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
+    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = GL.glRenderbufferStorage(target, internalformat, width, height)
+
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+        buffer.withIoBuffer(offset) { ioBuffer ->
+            GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+        }
+    }
 }

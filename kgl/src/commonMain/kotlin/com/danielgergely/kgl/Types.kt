@@ -12,3 +12,9 @@ expect class TextureResource
 expect fun TextureResource.dispose()
 
 expect class Texture
+
+expect class VertexArrayObject
+
+expect class Framebuffer
+
+expect class Renderbuffer
