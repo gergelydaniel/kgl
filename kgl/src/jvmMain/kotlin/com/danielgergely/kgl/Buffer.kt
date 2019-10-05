@@ -4,14 +4,14 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-actual abstract class Buffer(@JvmField private val buffer: java.nio.Buffer) {
+actual abstract class Buffer(@JvmField val buffer: java.nio.Buffer) {
     actual var position: Int
         get() = buffer.position()
         set(value) {
             buffer.position(value)
         }
 
-    fun <T> withIoBuffer(offset: Int, fn: (buffer: java.nio.Buffer) -> T): T {
+    inline fun <T> withIoBuffer(offset: Int, fn: (buffer: java.nio.Buffer) -> T): T {
         val origPosition = this.position
         this.position = offset
         try {

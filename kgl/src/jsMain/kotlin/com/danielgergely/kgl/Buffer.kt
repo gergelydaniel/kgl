@@ -2,10 +2,10 @@ package com.danielgergely.kgl
 
 import org.khronos.webgl.*
 
-actual abstract class Buffer(private val buffer: ArrayBufferView) {
+actual abstract class Buffer(val buffer: ArrayBufferView) {
     actual var position: Int = 0
 
-    fun <T> withGlBuffer(offset: Int, fn: (buffer: ArrayBufferView) -> T): T {
+    inline fun <T> withGlBuffer(offset: Int, fn: (buffer: ArrayBufferView) -> T): T {
         return fn(buffer.asDynamic().subarray(offset))
     }
 }
