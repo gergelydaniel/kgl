@@ -1,9 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id 'maven-publish'
 }
-
-group 'com.danielgergely.kgl'
-version '0.4'
 
 repositories {
     mavenCentral()
@@ -16,4 +14,34 @@ dependencies {
     implementation "org.jogamp.jogl:jogl-all:2.3.2"
 
     implementation project(':kgl')
+}
+
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveClassifier = 'sources'
+}
+
+publishing {
+    publications {
+        all {
+            pom.withXml {
+                Node pomNode = asNode()
+                pomNode.dependencies.'*'.findAll() {
+                    it.artifactId.text() == 'kgl'
+                }.each() {
+                    it.parent().remove(it)
+                }
+            }
+        }
+
+        maven(MavenPublication) {
+            groupId = 'com.danielgergely.kgl'
+            artifactId = 'kgl-jogl'
+            version = "$rootProject.ext.currentVersion"
+
+            from components.java
+            artifact sourcesJar
+        }
+    }
 }
