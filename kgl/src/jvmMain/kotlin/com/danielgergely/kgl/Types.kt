@@ -2,21 +2,22 @@ package com.danielgergely.kgl
 
 import java.io.InputStream
 
-actual typealias Shader = Int
+public actual typealias Shader = Int
 
-actual typealias Program = Int
+public actual typealias Program = Int
 
-actual typealias UniformLocation = Int
+public actual typealias UniformLocation = Int
 
-actual typealias GlBuffer = Int
+public actual typealias GlBuffer = Int
 
-actual typealias Texture = Int
+public actual typealias Texture = Int
 
-actual class TextureResource(@JvmField val encodedPng: InputStream)
-actual fun TextureResource.dispose() = encodedPng.close()
+public actual class TextureResource(@JvmField public val encodedPng: InputStream)
 
-actual typealias VertexArrayObject = Int
+public actual fun TextureResource.dispose(): Unit = encodedPng.close()
 
-actual typealias Framebuffer = Int
+public actual typealias VertexArrayObject = Int
 
-actual typealias Renderbuffer = Int
+public actual typealias Framebuffer = Int
+
+public actual typealias Renderbuffer = Int

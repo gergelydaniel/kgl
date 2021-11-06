@@ -3,11 +3,10 @@ package com.danielgergely.kgl
 import org.khronos.webgl.WebGLObject
 import org.khronos.webgl.WebGLRenderingContext
 
-public external abstract class WebGL2RenderingContext : WebGLRenderingContext {
-    fun createVertexArray(): WebGLVertexArrayObject?
-    fun bindVertexArray(vertexArray: WebGLVertexArrayObject)
-    fun deleteVertexArray(vertexArray: WebGLVertexArrayObject)
+public abstract external class WebGL2RenderingContext : WebGLRenderingContext {
+    public fun createVertexArray(): WebGLVertexArrayObject?
+    public fun bindVertexArray(vertexArray: WebGLVertexArrayObject)
+    public fun deleteVertexArray(vertexArray: WebGLVertexArrayObject)
 }
 
-public external class WebGLVertexArrayObject : WebGLObject {
-}
+public external class WebGLVertexArrayObject : WebGLObject

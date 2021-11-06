@@ -1,41 +1,41 @@
 package com.danielgergely.kgl
 
-expect abstract class Buffer {
-    var position: Int
+public expect abstract class Buffer {
+    public var position: Int
 }
 
-expect class FloatBuffer : Buffer {
-    constructor(buffer: Array<Float>)
-    constructor(buffer: FloatArray)
-    constructor(size: Int)
+public expect class FloatBuffer : Buffer {
+    public constructor(buffer: Array<Float>)
+    public constructor(buffer: FloatArray)
+    public constructor(size: Int)
 
-    fun put(f: Float)
-    fun put(floatArray: FloatArray)
-    fun put(floatArray: FloatArray, offset: Int, length: Int)
-    operator fun set(pos: Int, f: Float)
+    public fun put(f: Float)
+    public fun put(floatArray: FloatArray)
+    public fun put(floatArray: FloatArray, offset: Int, length: Int)
+    public operator fun set(pos: Int, f: Float)
 
-    fun get(): Float
-    fun get(floatArray: FloatArray)
-    fun get(floatArray: FloatArray, offset: Int, length: Int)
-    operator fun get(pos: Int): Float
+    public fun get(): Float
+    public fun get(floatArray: FloatArray)
+    public fun get(floatArray: FloatArray, offset: Int, length: Int)
+    public operator fun get(pos: Int): Float
 }
 
-expect class ByteBuffer : Buffer {
-    constructor(buffer: Array<Byte>)
-    constructor(buffer: ByteArray)
-    constructor(size: Int)
+public expect class ByteBuffer : Buffer {
+    public constructor(buffer: Array<Byte>)
+    public constructor(buffer: ByteArray)
+    public constructor(size: Int)
 
-    fun put(b: Byte)
-    fun put(byteArray: ByteArray)
-    fun put(byteArray: ByteArray, offset: Int, length: Int)
-    operator fun set(pos: Int, b: Byte)
+    public fun put(b: Byte)
+    public fun put(byteArray: ByteArray)
+    public fun put(byteArray: ByteArray, offset: Int, length: Int)
+    public operator fun set(pos: Int, b: Byte)
 
-    fun get(): Byte
-    fun get(byteArray: ByteArray)
-    fun get(byteArray: ByteArray, offset: Int, length: Int)
-    operator fun get(pos: Int): Byte
+    public fun get(): Byte
+    public fun get(byteArray: ByteArray)
+    public fun get(byteArray: ByteArray, offset: Int, length: Int)
+    public operator fun get(pos: Int): Byte
 }
 
 @Deprecated("Use FloatBuffer() or ByteBuffer() instead.",
-        ReplaceWith("FloatBuffer(sizeInBytes / 4)", "com.danielgergely.kgl.FloatBuffer"))
-fun allocate(sizeInBytes: Int): FloatBuffer = FloatBuffer(sizeInBytes / 4)
+    ReplaceWith("FloatBuffer(sizeInBytes / 4)", "FloatBuffer"))
+public fun allocate(sizeInBytes: Int): FloatBuffer = FloatBuffer(sizeInBytes / 4)

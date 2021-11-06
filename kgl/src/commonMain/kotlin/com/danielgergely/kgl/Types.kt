@@ -1,20 +1,20 @@
 package com.danielgergely.kgl
 
-expect class Shader
+public expect class Shader
 
-expect class Program
+public expect class Program
 
-expect class UniformLocation
+public expect class UniformLocation
 
-expect class GlBuffer
+public expect class GlBuffer
 
-expect class TextureResource
-expect fun TextureResource.dispose()
+public expect class TextureResource
+public expect fun TextureResource.dispose()
 
-expect class Texture
+public expect class Texture
 
-expect class VertexArrayObject
+public expect class VertexArrayObject
 
-expect class Framebuffer
+public expect class Framebuffer
 
-expect class Renderbuffer
+public expect class Renderbuffer

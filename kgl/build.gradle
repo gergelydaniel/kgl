@@ -1,22 +1,19 @@
-group 'com.danielgergely'
-version '0.0.1'
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform'
+}
 
-apply plugin: "kotlin-multiplatform"
-apply plugin: 'maven-publish'
-apply plugin: 'kotlin-android-extensions'
+group 'com.danielgergely'
+version '0.4'
 
 repositories {
     mavenCentral()
 }
 
-group 'com.danielgergely.kgl'
-version "$current_version"
-
 
 def compilerArgs = [
-        '-Xno-param-assertions',
-        '-Xno-call-assertions',
-        '-Xno-receiver-assertions'
+        //'-Xno-param-assertions',
+        //'-Xno-call-assertions',
+        //'-Xno-receiver-assertions'
 ]
 
 kotlin {
@@ -27,7 +24,9 @@ kotlin {
     js() {
         compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
     }
-    
+
+    explicitApi()
+
     sourceSets {
         commonMain {
             dependencies {
@@ -68,22 +67,6 @@ kotlin {
         jsTest {
             dependencies {
                 implementation kotlin('test-js')
-            }
-        }
-    }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.freeCompilerArgs = compilerArgs
-}
-
-publishing {
-    repositories {
-        maven {
-            url = getPublishUrl()
-            credentials {
-                username = System.getenv("MAVEN_USER")
-                password = System.getenv("MAVEN_PASS")
             }
         }
     }

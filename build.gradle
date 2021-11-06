@@ -1,52 +1,34 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = '1.3.50'
-        coroutines_version = '1.1.1'
-        current_version = '0.3'
-
-        getPublishUrl = { ->
-            String base = "https://maven.danielgergely.com/repository/"
-            String repository
-            if (current_version.toUpperCase().contains("SNAPSHOT")) {
-                repository = "snapshots"
-            } else {
-                repository = "releases"
-            }
-            return base + repository
-        }
+        kotlin_version = '1.5.31'
     }
-
     repositories {
-        google()
-        mavenCentral()
-        jcenter()
-        maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
-        }
         maven {
             url "https://plugins.gradle.org/m2/"
         }
         maven {
-            url "https://dl.bintray.com/kotlin/kotlin-eap"
+            url "https://repo1.maven.org/maven2/"
         }
-        maven {
-            url 'https://maven.danielgergely.com/repository/snapshots'
-        }
+        google()
+        mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
-        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.31"
+        classpath 'com.android.tools.build:gradle:4.2.2'
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
-        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url "https://repo1.maven.org/maven2/"
+        }
         google()
+        mavenCentral()
     }
 }
+
+apply plugin: "org.jetbrains.kotlin.jvm"

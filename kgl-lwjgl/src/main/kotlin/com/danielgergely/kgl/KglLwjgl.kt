@@ -11,6 +11,7 @@ import java.nio.FloatBuffer
 typealias GL = GL33
 
 class KglLwjgl : Kgl {
+
     override fun cullFace(mode: Int) {
         GL.glCullFace(mode)
     }
@@ -180,17 +181,88 @@ class KglLwjgl : Kgl {
 
         val data = STBImage.stbi_load_from_memory(streamToByteBuffer(resource.encodedPng), width, height, components, 4)
 
-        GL.glTexImage2D(target, level, internalFormat, width.get(), height.get(), border, GL_RGBA, GL_UNSIGNED_BYTE, data)
+        GL.glTexImage2D(
+            target,
+            level,
+            internalFormat,
+            width.get(),
+            height.get(),
+            border,
+            GL_RGBA,
+            GL_UNSIGNED_BYTE,
+            data
+        )
     }
 
-    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+    override fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer,
+        offset: Int
+    ) {
         buffer.withIoBuffer(offset) { ioBuffer ->
             when (ioBuffer) {
-                is ByteBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
-                is ShortBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
-                is IntBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
-                is FloatBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
-                is DoubleBuffer -> GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+                is ByteBuffer -> GL.glTexImage2D(
+                    target,
+                    level,
+                    internalFormat,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type,
+                    ioBuffer
+                )
+                is ShortBuffer -> GL.glTexImage2D(
+                    target,
+                    level,
+                    internalFormat,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type,
+                    ioBuffer
+                )
+                is IntBuffer -> GL.glTexImage2D(
+                    target,
+                    level,
+                    internalFormat,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type,
+                    ioBuffer
+                )
+                is FloatBuffer -> GL.glTexImage2D(
+                    target,
+                    level,
+                    internalFormat,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type,
+                    ioBuffer
+                )
+                is DoubleBuffer -> GL.glTexImage2D(
+                    target,
+                    level,
+                    internalFormat,
+                    width,
+                    height,
+                    border,
+                    format,
+                    type,
+                    ioBuffer
+                )
                 else -> throw IllegalArgumentException("unknown buffer type ${ioBuffer.javaClass}")
             }
         }
@@ -254,7 +326,14 @@ class KglLwjgl : Kgl {
         return arr[0]
     }
 
-    override fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int) {
+    override fun vertexAttribPointer(
+        location: Int,
+        size: Int,
+        type: Int,
+        normalized: Boolean,
+        stride: Int,
+        offset: Int
+    ) {
         GL.glVertexAttribPointer(location, size, type, normalized, stride, offset.toLong())
     }
 
@@ -266,21 +345,43 @@ class KglLwjgl : Kgl {
     override fun bindVertexArray(vertexArrayObject: VertexArrayObject?) = GL.glBindVertexArray(vertexArrayObject ?: 0)
     override fun deleteVertexArray(vertexArrayObject: VertexArrayObject) = GL.glDeleteVertexArrays(vertexArrayObject)
 
-    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = GL.glBindFramebuffer(target, framebuffer ?: 0)
+    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) =
+        GL.glBindFramebuffer(target, framebuffer ?: 0)
+
     override fun createFramebuffer(): Framebuffer = GL.glGenFramebuffers()
     override fun deleteFramebuffer(framebuffer: Framebuffer) = GL.glDeleteFramebuffers(framebuffer)
     override fun checkFramebufferStatus(target: Int): Int = GL.glCheckFramebufferStatus(target)
-    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = GL.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) =
+        GL.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean = GL.glIsFramebuffer(framebuffer)
 
-    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = GL.glBindRenderbuffer(target, renderbuffer ?: 0)
+    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) =
+        GL.glBindRenderbuffer(target, renderbuffer ?: 0)
+
     override fun createRenderbuffer(): Renderbuffer = GL.glGenRenderbuffers()
     override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = GL.glDeleteRenderbuffers(renderbuffer)
-    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = GL.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
-    override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
-    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = GL.glRenderbufferStorage(target, internalformat, width, height)
+    override fun framebufferRenderbuffer(
+        target: Int,
+        attachment: Int,
+        renderbuffertarget: Int,
+        renderbuffer: Renderbuffer
+    ) = GL.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
 
-    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+    override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = GL.glIsRenderbuffer(renderbuffer)
+    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) =
+        GL.glRenderbufferStorage(target, internalformat, width, height)
+
+    override fun readPixels(
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer,
+        offset: Int
+    ) {
         buffer.withIoBuffer(offset) { ioBuffer ->
             when (ioBuffer) {
                 is ByteBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
