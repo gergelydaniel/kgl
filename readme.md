@@ -24,11 +24,10 @@ The following artifacts can be imported:
 
 ## Install
 
-Since the project is in alpha stage, it is only available from my own maven repository:
 ```groovy
-maven { url 'https://maven.danielgergely.com/repository/releases' }
+maven { url '"https://jitpack.io"' }
 
-implementation "com.danielgergely.kgl:kgl-metadata:0.2"
+implementation 'com.github.gergelydaniel.kgl:$artifactName:0.4'
 ```
 
 ## Build

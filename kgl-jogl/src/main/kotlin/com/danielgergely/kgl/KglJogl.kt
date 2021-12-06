@@ -9,7 +9,7 @@ import javax.imageio.ImageIO
 
 typealias GL = GL3ES3
 
-class KglJogl(@JvmField private val gl: GL) : Kgl {
+class KglJogl(private val gl: GL) : Kgl {
 
     override fun createShader(type: Int): Shader? {
         val shader = gl.glCreateShader(type)
