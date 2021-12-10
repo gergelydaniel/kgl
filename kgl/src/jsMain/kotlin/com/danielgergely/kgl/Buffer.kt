@@ -10,7 +10,7 @@ public actual abstract class Buffer(@PublishedApi internal val buffer: ArrayBuff
     }
 }
 
-public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
+public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) { //TODO why copy?
     public actual constructor(buffer: Array<Float>) : this(Float32Array(buffer))
     public actual constructor(buffer: FloatArray) : this(Float32Array(buffer.toTypedArray()))
     public actual constructor(size: Int) : this(FloatArray(size))
