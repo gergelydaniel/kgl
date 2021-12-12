@@ -86,14 +86,14 @@ class KglGlfw : Kgl {
     }
 
     override fun createBuffer(): GlBuffer {
-        return glCreateBuffer().toInt()
+        return glGenBuffer().toInt()
     }
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun createBuffers(count: Int): Array<GlBuffer> {
         val buffers = UIntArray(count)
         buffers.usePinned {
-            glCreateBuffers(count, it.addressOf(0))
+            glGenBuffers(count, it.addressOf(0))
         }
         return Array(count) { buffers[it].toInt() }
     }
@@ -242,7 +242,7 @@ class KglGlfw : Kgl {
     }
 
     override fun createVertexArray(): VertexArrayObject {
-        return glCreateVertexArray().toInt()
+        return glGenVertexArray().toInt()
     }
 
     override fun bindVertexArray(vertexArrayObject: VertexArrayObject?) {

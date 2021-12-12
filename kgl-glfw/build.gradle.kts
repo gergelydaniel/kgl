@@ -30,6 +30,9 @@ kotlin {
 
     linuxX64()
     mingwX64()
+    if (org.gradle.internal.os.OperatingSystem.current().isMacOsX) {
+        macosX64()
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -48,10 +51,12 @@ kotlin {
         }
         val linuxX64Main by getting { }
         val mingwX64Main by getting { }
+        val macosX64Main by getting { }
         val nativeMain by sourceSets.creating {
             dependsOn(commonMain)
             linuxX64Main.dependsOn(this)
             mingwX64Main.dependsOn(this)
+            macosX64Main.dependsOn(this)
 
             dependencies {
 
