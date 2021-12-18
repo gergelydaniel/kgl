@@ -179,7 +179,7 @@ class KglIos : Kgl {
         stride: Int,
         offset: Int
     ) {
-        glVertexAttribPointer(location.toUInt(), size, type.toUInt(), normalized.toGl(), stride, null)
+        glVertexAttribPointer(location.toUInt(), size, type.toUInt(), normalized.toGl(), stride, offset.toLong().toCPointer<COpaque>())
     }
 
     override fun uniform1f(location: UniformLocation, f: Float) {
@@ -267,7 +267,18 @@ class KglIos : Kgl {
     }
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
-        TODO("Not yet implemented")
+        texImage2D(
+            target = target,
+            level = level,
+            internalFormat = internalFormat,
+            width = resource.width,
+            height = resource.height,
+            border = 0,
+            format = resource.format,
+            type = resource.type,
+            buffer = resource.data,
+            offset = 0
+        )
     }
 
     override fun texImage2D(
@@ -282,7 +293,17 @@ class KglIos : Kgl {
         buffer: Buffer,
         offset: Int
     ) {
-        TODO("Not yet implemented")
+        glTexImage2D(
+            target.toUInt(),
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format.toUInt(),
+            type.toUInt(),
+            buffer.refTo(offset)
+        )
     }
 
     override fun activeTexture(texture: Int) {
@@ -359,6 +380,7 @@ class KglIos : Kgl {
         return buffer[0].toInt()
     }
 
+    @OptIn(ExperimentalUnsignedTypes::class)
     override fun deleteFramebuffer(framebuffer: Framebuffer) {
         val buffer = uintArrayOf(framebuffer.toUInt())
         buffer.usePinned {
@@ -371,7 +393,7 @@ class KglIos : Kgl {
     }
 
     override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) {
-        TODO("Not yet implemented")
+        glFramebufferTexture2D(target.toUInt(), attachment.toUInt(), textarget.toUInt(), texture.toUInt(), level)
     }
 
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean {

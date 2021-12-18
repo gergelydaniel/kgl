@@ -1,9 +1,7 @@
 package com.danielgergely.kgl
 
 import com.kgl.opengl.*
-import kotlinx.cinterop.addressOf
-import kotlinx.cinterop.refTo
-import kotlinx.cinterop.usePinned
+import kotlinx.cinterop.*
 
 class KglGlfw : Kgl {
 
@@ -118,7 +116,7 @@ class KglGlfw : Kgl {
         stride: Int,
         offset: Int
     ) {
-        glVertexAttribPointer(location.toUInt(), size, type.toUInt(), normalized, stride, null)
+        glVertexAttribPointer(location.toUInt(), size, type.toUInt(), normalized, stride, offset.toLong().toCPointer<COpaque>())
     }
 
     override fun uniform1f(location: UniformLocation, f: Float) {
