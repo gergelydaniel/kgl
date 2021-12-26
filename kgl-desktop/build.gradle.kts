@@ -13,6 +13,8 @@ version = rootProject.ext["currentVersion"] as String
 repositories {
     mavenCentral()
 
+    maven(url = "https://maven.danielgergely.com/repository/mirror")
+
     maven(url = "https://maven.pkg.github.com/Dominaezzz/kgl") {
         credentials {
             username = getLocalProperty("GITHUB_USER")
