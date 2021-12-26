@@ -25,8 +25,8 @@ public actual abstract class Buffer(@JvmField @PublishedApi internal val buffer:
 
 public actual class FloatBuffer private constructor(buffer: FloatBuffer) : Buffer(buffer) {
 
-    public actual constructor(buffer: Array<Float>) : this(alloc(buffer.size).also { it.put(buffer.toFloatArray()) })
-    public actual constructor(buffer: FloatArray) : this(alloc(buffer.size).also { it.put(buffer) })
+    public actual constructor(buffer: Array<Float>) : this(buffer.toFloatArray())
+    public actual constructor(buffer: FloatArray) : this(FloatBuffer.wrap(buffer))
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
@@ -64,8 +64,8 @@ public actual class FloatBuffer private constructor(buffer: FloatBuffer) : Buffe
 }
 
 public actual class ByteBuffer private constructor(buffer: ByteBuffer) : Buffer(buffer) {
-    public actual constructor(buffer: Array<Byte>) : this(alloc(buffer.size).also { it.put(buffer.toByteArray()) })
-    public actual constructor(buffer: ByteArray) : this(alloc(buffer.size).also { it.put(buffer) })
+    public actual constructor(buffer: Array<Byte>) : this(buffer.toByteArray())
+    public actual constructor(buffer: ByteArray) : this(ByteBuffer.wrap(buffer))
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {

@@ -3,7 +3,7 @@ package com.danielgergely.kgl
 import com.kgl.opengl.*
 import kotlinx.cinterop.*
 
-class KglGlfw : Kgl {
+class KglDesktop : Kgl {
 
     override fun createShader(type: Int): Shader? {
         val shader = glCreateShader(type.toUInt()).toInt()

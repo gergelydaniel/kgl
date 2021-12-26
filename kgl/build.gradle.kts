@@ -23,6 +23,10 @@ kotlin {
 
     js {
         //compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
+
+        browser {
+            testTask {} // To run tests with browser.
+        }
     }
 
     linuxX64()

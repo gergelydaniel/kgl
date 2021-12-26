@@ -12,8 +12,8 @@ public actual abstract class Buffer(@PublishedApi internal val buffer: ArrayBuff
 
 public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) { //TODO why copy?
     public actual constructor(buffer: Array<Float>) : this(Float32Array(buffer))
-    public actual constructor(buffer: FloatArray) : this(Float32Array(buffer.toTypedArray()))
-    public actual constructor(size: Int) : this(FloatArray(size))
+    public actual constructor(buffer: FloatArray) : this(buffer.unsafeCast<Float32Array>())
+    public actual constructor(size: Int) : this(Float32Array(size))
 
     private val floatBuffer: Float32Array = buffer
 
@@ -51,7 +51,7 @@ public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffe
 
 public actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
     public actual constructor(buffer: Array<Byte>) : this(Uint8Array(buffer))
-    public actual constructor(buffer: ByteArray) : this(Uint8Array(buffer.toTypedArray()))
+    public actual constructor(buffer: ByteArray) : this(buffer.unsafeCast<Uint8Array>())
     public actual constructor(size: Int) : this(ByteArray(size))
 
     private val byteBuffer: Uint8Array = buffer
