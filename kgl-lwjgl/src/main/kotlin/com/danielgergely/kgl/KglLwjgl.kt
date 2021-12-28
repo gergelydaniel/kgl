@@ -10,7 +10,7 @@ import java.nio.FloatBuffer
 
 typealias GL = GL33
 
-class KglLwjgl : Kgl {
+object KglLwjgl : Kgl {
 
     override fun cullFace(mode: Int) {
         GL.glCullFace(mode)

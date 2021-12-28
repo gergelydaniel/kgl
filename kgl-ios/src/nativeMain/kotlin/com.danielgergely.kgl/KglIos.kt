@@ -28,7 +28,7 @@ private object VirtualStack : NativePlacement {
     }
 }
 
-class KglIos : Kgl {
+object KglIos : Kgl {
 
     override fun createShader(type: Int): Shader? {
         val shader = glCreateShader(type.toUInt()).toInt()
