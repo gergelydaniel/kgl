@@ -160,9 +160,9 @@ public class DebugKgl(
         return ret
     }
 
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
         runBefore("bufferData")
-        val ret = kgl.bufferData(target, sourceData, size, usage, offset)
+        val ret = kgl.bufferData(target, sourceData, size, usage)
         runAfter("bufferData")
         return ret
     }
@@ -321,9 +321,19 @@ public class DebugKgl(
         return ret
     }
 
-    override fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+    override fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
         runBefore("texImage2D")
-        val ret = kgl.texImage2D(target, level, internalFormat, width, height, border, format, type, buffer, offset)
+        val ret = kgl.texImage2D(target, level, internalFormat, width, height, border, format, type, buffer)
         runAfter("texImage2D")
         return ret
     }
@@ -482,9 +492,9 @@ public class DebugKgl(
         return ret
     }
 
-    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int) {
+    override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
         runBefore("readPixels")
-        val ret = kgl.readPixels(x, y, width, height, format, type, buffer, offset)
+        val ret = kgl.readPixels(x, y, width, height, format, type, buffer)
         runAfter("readPixels")
         return ret
     }

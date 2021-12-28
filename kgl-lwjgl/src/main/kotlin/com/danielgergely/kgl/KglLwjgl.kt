@@ -46,9 +46,8 @@ object KglLwjgl : Kgl {
         GL.glBindTexture(target, texture ?: 0)
     }
 
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
-        sourceData.withIoBuffer(offset) { buffer ->
-            //TODO this may be problematic
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
+        sourceData.withJavaBuffer { buffer ->
             when (buffer) {
                 is ByteBuffer -> GL.glBufferData(target, buffer, usage)
                 is FloatBuffer -> GL.glBufferData(target, buffer, usage)
@@ -203,11 +202,10 @@ object KglLwjgl : Kgl {
         border: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        buffer.withIoBuffer(offset) { ioBuffer ->
-            when (ioBuffer) {
+        buffer.withJavaBuffer { javaBuffer ->
+            when (javaBuffer) {
                 is ByteBuffer -> GL.glTexImage2D(
                     target,
                     level,
@@ -217,7 +215,7 @@ object KglLwjgl : Kgl {
                     border,
                     format,
                     type,
-                    ioBuffer
+                    javaBuffer
                 )
                 is ShortBuffer -> GL.glTexImage2D(
                     target,
@@ -228,7 +226,7 @@ object KglLwjgl : Kgl {
                     border,
                     format,
                     type,
-                    ioBuffer
+                    javaBuffer
                 )
                 is IntBuffer -> GL.glTexImage2D(
                     target,
@@ -239,7 +237,7 @@ object KglLwjgl : Kgl {
                     border,
                     format,
                     type,
-                    ioBuffer
+                    javaBuffer
                 )
                 is FloatBuffer -> GL.glTexImage2D(
                     target,
@@ -250,7 +248,7 @@ object KglLwjgl : Kgl {
                     border,
                     format,
                     type,
-                    ioBuffer
+                    javaBuffer
                 )
                 is DoubleBuffer -> GL.glTexImage2D(
                     target,
@@ -261,9 +259,9 @@ object KglLwjgl : Kgl {
                     border,
                     format,
                     type,
-                    ioBuffer
+                    javaBuffer
                 )
-                else -> throw IllegalArgumentException("unknown buffer type ${ioBuffer.javaClass}")
+                else -> throw IllegalArgumentException("unknown buffer type ${javaBuffer.javaClass}")
             }
         }
     }
@@ -379,16 +377,15 @@ object KglLwjgl : Kgl {
         height: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        buffer.withIoBuffer(offset) { ioBuffer ->
-            when (ioBuffer) {
-                is ByteBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
-                is ShortBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
-                is IntBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
-                is FloatBuffer -> GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
-                else -> throw IllegalArgumentException("unknown buffer type ${ioBuffer.javaClass}")
+        buffer.withJavaBuffer { javaBuffer ->
+            when (javaBuffer) {
+                is ByteBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
+                is ShortBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
+                is IntBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
+                is FloatBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
+                else -> throw IllegalArgumentException("unknown buffer type ${javaBuffer.javaClass}")
             }
         }
     }

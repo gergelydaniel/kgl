@@ -4,23 +4,12 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-public actual abstract class Buffer(@JvmField @PublishedApi internal val buffer: java.nio.Buffer) {
+public actual abstract class Buffer internal constructor(@JvmField @PublishedApi internal val javaBuffer: java.nio.Buffer) {
 
-    @PublishedApi
-    internal var abstractPosition: Int
-        get() = buffer.position()
-        set(value) {
-            buffer.position(value)
-        }
-
-    public inline fun <T> withIoBuffer(offset: Int, fn: (buffer: java.nio.Buffer) -> T): T {
-        val origPosition = this.abstractPosition
-        this.abstractPosition = offset
-        try {
-            return fn(this.buffer)
-        } finally {
-            this.abstractPosition = origPosition
-        }
+    public inline fun withJavaBuffer(block: (java.nio.Buffer) -> Unit) {
+        val positionBefore = javaBuffer.position()
+        block(javaBuffer)
+        javaBuffer.position(positionBefore)
     }
 }
 
@@ -36,9 +25,9 @@ public actual class FloatBuffer private constructor(buffer: FloatBuffer) : Buffe
     }
 
     public actual var position: Int
-        get() = abstractPosition
+        get() = floatBuffer.position()
         set(value) {
-            abstractPosition = value
+            floatBuffer.position(value)
         }
 
     private val floatBuffer: FloatBuffer = buffer
@@ -80,9 +69,9 @@ public actual class ByteBuffer private constructor(buffer: ByteBuffer) : Buffer(
     }
 
     public actual var position: Int
-        get() = abstractPosition
+        get() = byteBuffer.position()
         set(value) {
-            abstractPosition = value
+            byteBuffer.position(value)
         }
 
     private val byteBuffer: ByteBuffer = buffer

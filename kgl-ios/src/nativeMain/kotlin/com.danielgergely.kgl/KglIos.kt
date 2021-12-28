@@ -159,8 +159,8 @@ object KglIos : Kgl {
         glBindBuffer(target.toUInt(), bufferId?.toUInt() ?: 0u)
     }
 
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
-        glBufferData(target.toUInt(), size.toLong(), sourceData.refTo(offset), usage.toUInt())
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
+        glBufferData(target.toUInt(), size.toLong(), sourceData.ref(), usage.toUInt())
     }
 
     @OptIn(ExperimentalUnsignedTypes::class)
@@ -276,8 +276,7 @@ object KglIos : Kgl {
             border = 0,
             format = resource.format,
             type = resource.type,
-            buffer = resource.data,
-            offset = 0
+            buffer = resource.data
         )
     }
 
@@ -290,8 +289,7 @@ object KglIos : Kgl {
         border: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
         glTexImage2D(
             target.toUInt(),
@@ -302,7 +300,7 @@ object KglIos : Kgl {
             border,
             format.toUInt(),
             type.toUInt(),
-            buffer.refTo(offset)
+            buffer.ref()
         )
     }
 
@@ -449,10 +447,9 @@ object KglIos : Kgl {
         height: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        glReadPixels(x, y, width, height, format.toUInt(), type.toUInt(), buffer.refTo(offset))
+        glReadPixels(x, y, width, height, format.toUInt(), type.toUInt(), buffer.ref())
     }
 }
 

@@ -66,9 +66,9 @@ object KglAndroid : Kgl {
     }
 
     override fun bindBuffer(target: Int, bufferId: GlBuffer?) = GL.glBindBuffer(target, bufferId ?: 0)
-    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
-        sourceData.withIoBuffer(offset) { ioBuffer ->
-            GL.glBufferData(target, size, ioBuffer, usage)
+    override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
+        sourceData.withJavaBuffer { javaBuffer ->
+            GL.glBufferData(target, size, javaBuffer, usage)
         }
     }
 
@@ -149,11 +149,10 @@ object KglAndroid : Kgl {
         border: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        buffer.withIoBuffer(offset) { ioBuffer ->
-            GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, ioBuffer)
+        buffer.withJavaBuffer { javaBuffer ->
+            GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, javaBuffer)
         }
     }
 
@@ -225,11 +224,10 @@ object KglAndroid : Kgl {
         height: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        buffer.withIoBuffer(offset) { ioBuffer ->
-            GL.glReadPixels(x, y, width, height, format, type, ioBuffer)
+        buffer.withJavaBuffer { javaBuffer ->
+            GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
         }
     }
 }

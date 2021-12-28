@@ -31,7 +31,7 @@ public interface Kgl {
     public fun createBuffer(): GlBuffer
     public fun createBuffers(count: Int): Array<GlBuffer>
     public fun bindBuffer(target: Int, bufferId: GlBuffer?)
-    public fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int = 0)
+    public fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int)
     public fun deleteBuffer(buffer: GlBuffer)
 
     public fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
@@ -64,7 +64,7 @@ public interface Kgl {
     public fun createTextures(n: Int) : Array<Texture>
     public fun deleteTexture(texture: Texture)
     public fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
-    public fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer, offset: Int = 0)
+    public fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer)
     public fun activeTexture(texture: Int)
     public fun bindTexture(target: Int, texture: Texture?)
     public fun generateMipmap(target: Int)
@@ -93,5 +93,5 @@ public interface Kgl {
     public fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean
     public fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int)
 
-    public fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer, offset: Int = 0)
+    public fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer)
 }

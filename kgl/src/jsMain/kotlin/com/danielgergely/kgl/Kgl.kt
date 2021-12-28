@@ -65,10 +65,8 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
     public override fun bindBuffer(target: Int, bufferId: GlBuffer?): Unit =
         gl.bindBuffer(target, bufferId.unsafeCast<WebGLBuffer>())
 
-    public override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int, offset: Int) {
-        sourceData.withGlBuffer(offset) { glBuffer ->
-            gl.bufferData(target, glBuffer, usage)
-        }
+    public override fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int) {
+        gl.bufferData(target, sourceData.getJsBufferWithOffset(), usage)
     }
 
     public override fun deleteBuffer(buffer: GlBuffer): Unit = gl.deleteBuffer(buffer.unsafeCast<WebGLBuffer>())
@@ -144,12 +142,9 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
         border: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        buffer.withGlBuffer(offset) { glBuffer ->
-            gl.texImage2D(target, level, internalFormat, width, height, border, format, type, glBuffer)
-        }
+        gl.texImage2D(target, level, internalFormat, width, height, border, format, type, buffer.getJsBufferWithOffset())
     }
 
 
@@ -222,11 +217,8 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
         height: Int,
         format: Int,
         type: Int,
-        buffer: Buffer,
-        offset: Int
+        buffer: Buffer
     ) {
-        buffer.withGlBuffer(offset) { glBuffer ->
-            gl.readPixels(x, y, width, height, format, type, glBuffer)
-        }
+        gl.readPixels(x, y, width, height, format, type, buffer.getJsBufferWithOffset())
     }
 }

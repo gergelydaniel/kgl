@@ -2,14 +2,11 @@ package com.danielgergely.kgl
 
 import org.khronos.webgl.*
 
-public actual abstract class Buffer(@PublishedApi internal val buffer: ArrayBufferView) {
-
-    public inline fun <T> withGlBuffer(offset: Int, fn: (buffer: ArrayBufferView) -> T): T {
-        return fn(buffer.asDynamic().subarray(offset))
-    }
+public actual abstract class Buffer {
+    internal abstract fun getJsBufferWithOffset(): ArrayBufferView
 }
 
-public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
+public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer() {
     public actual constructor(buffer: Array<Float>) : this(Float32Array(buffer))
     public actual constructor(buffer: FloatArray) : this(Float32Array(buffer.unsafeCast<Float32Array>()))
     public actual constructor(size: Int) : this(Float32Array(size))
@@ -48,9 +45,13 @@ public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffe
     }
 
     public actual operator fun get(pos: Int): Float = floatBuffer[pos]
+
+    override fun getJsBufferWithOffset(): ArrayBufferView {
+        return floatBuffer.asDynamic().subarray(position)
+    }
 }
 
-public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) : Buffer(byteBuffer) {
+public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) : Buffer() {
     public actual constructor(buffer: Array<Byte>) : this(Uint8Array(buffer))
     public actual constructor(buffer: ByteArray) : this(Uint8Array(buffer.unsafeCast<Uint8Array>()))
     public actual constructor(size: Int) : this(ByteArray(size))
@@ -90,5 +91,9 @@ public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) :
 
     public actual operator fun get(pos: Int): Byte {
         return byteBuffer[pos].toUByte().toByte()
+    }
+
+    override fun getJsBufferWithOffset(): ArrayBufferView {
+        return byteBuffer.asDynamic().subarray(position)
     }
 }

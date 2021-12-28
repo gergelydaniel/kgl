@@ -5,13 +5,12 @@ import kotlinx.cinterop.refTo
 
 
 public actual abstract class Buffer {
-    public abstract fun refTo(index: Int): CValuesRef<*>
+    public abstract fun ref(): CValuesRef<*>
 }
 
 public class PointerBuffer(internal val pointer: CValuesRef<*>) : Buffer() {
 
-    //TODO implement index stuff?
-    override fun refTo(index: Int): CValuesRef<*> {
+    override fun ref(): CValuesRef<*> {
         return pointer
     }
 }
@@ -58,8 +57,8 @@ public actual class FloatBuffer actual constructor(buffer: FloatArray) : Buffer(
         return buffer[pos]
     }
 
-    override fun refTo(index: Int): CValuesRef<*> {
-        return buffer.refTo(index)
+    override fun ref(): CValuesRef<*> {
+        return buffer.refTo(position)
     }
 }
 
@@ -104,7 +103,7 @@ public actual class ByteBuffer actual constructor(buffer: ByteArray) : Buffer() 
         return buffer[pos]
     }
 
-    override fun refTo(index: Int): CValuesRef<*> {
-        return buffer.refTo(index)
+    override fun ref(): CValuesRef<*> {
+        return buffer.refTo(position) //TODO test
     }
 }
