@@ -1,13 +1,13 @@
 package com.danielgergely.kgl
 
-public expect abstract class Buffer {
-    public var position: Int
-}
+public expect abstract class Buffer
 
 public expect class FloatBuffer : Buffer {
     public constructor(buffer: Array<Float>)
     public constructor(buffer: FloatArray)
     public constructor(size: Int)
+
+    public var position: Int
 
     public fun put(f: Float)
     public fun put(floatArray: FloatArray)
@@ -25,6 +25,8 @@ public expect class ByteBuffer : Buffer {
     public constructor(buffer: ByteArray)
     public constructor(size: Int)
 
+    public var position: Int
+
     public fun put(b: Byte)
     public fun put(byteArray: ByteArray)
     public fun put(byteArray: ByteArray, offset: Int, length: Int)
@@ -35,7 +37,3 @@ public expect class ByteBuffer : Buffer {
     public fun get(byteArray: ByteArray, offset: Int, length: Int)
     public operator fun get(pos: Int): Byte
 }
-
-@Deprecated("Use FloatBuffer() or ByteBuffer() instead.",
-    ReplaceWith("FloatBuffer(sizeInBytes / 4)", "FloatBuffer"))
-public fun allocate(sizeInBytes: Int): FloatBuffer = FloatBuffer(sizeInBytes / 4)

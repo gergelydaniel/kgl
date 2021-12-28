@@ -1,5 +1,7 @@
 package com.danielgergely.kgl
 
+import platform.posix.free
+
 
 public actual typealias Shader = Int
 
@@ -19,7 +21,11 @@ public actual class TextureResource(
     public val data: Buffer,
 )
 
-public actual fun TextureResource.dispose() {}
+public actual fun TextureResource.dispose() {
+    if (data is PointerBuffer) {
+        free(data.pointer) //TODO does it work on iOS?
+    }
+}
 
 public actual typealias VertexArrayObject = Int
 

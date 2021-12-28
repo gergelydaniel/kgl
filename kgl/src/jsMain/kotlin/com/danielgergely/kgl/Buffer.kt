@@ -3,17 +3,18 @@ package com.danielgergely.kgl
 import org.khronos.webgl.*
 
 public actual abstract class Buffer(@PublishedApi internal val buffer: ArrayBufferView) {
-    public actual var position: Int = 0
 
     public inline fun <T> withGlBuffer(offset: Int, fn: (buffer: ArrayBufferView) -> T): T {
         return fn(buffer.asDynamic().subarray(offset))
     }
 }
 
-public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) { //TODO why copy?
+public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffer) {
     public actual constructor(buffer: Array<Float>) : this(Float32Array(buffer))
-    public actual constructor(buffer: FloatArray) : this(buffer.unsafeCast<Float32Array>())
+    public actual constructor(buffer: FloatArray) : this(Float32Array(buffer.unsafeCast<Float32Array>()))
     public actual constructor(size: Int) : this(Float32Array(size))
+
+    public actual var position: Int = 0
 
     private val floatBuffer: Float32Array = buffer
 
@@ -49,12 +50,12 @@ public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer(buffe
     public actual operator fun get(pos: Int): Float = floatBuffer[pos]
 }
 
-public actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) {
+public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) : Buffer(byteBuffer) {
     public actual constructor(buffer: Array<Byte>) : this(Uint8Array(buffer))
-    public actual constructor(buffer: ByteArray) : this(buffer.unsafeCast<Uint8Array>())
+    public actual constructor(buffer: ByteArray) : this(Uint8Array(buffer.unsafeCast<Uint8Array>()))
     public actual constructor(size: Int) : this(ByteArray(size))
 
-    private val byteBuffer: Uint8Array = buffer
+    public actual var position: Int = 0
 
     public actual fun put(b: Byte) {
         byteBuffer[position] = b
@@ -75,7 +76,7 @@ public actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) 
     }
 
     public actual fun get(): Byte {
-        return byteBuffer[position]
+        return byteBuffer[position].toUByte().toByte()
     }
 
     public actual fun get(byteArray: ByteArray) {
@@ -88,6 +89,6 @@ public actual class ByteBuffer constructor(buffer: Uint8Array) : Buffer(buffer) 
     }
 
     public actual operator fun get(pos: Int): Byte {
-        return byteBuffer[pos]
+        return byteBuffer[pos].toUByte().toByte()
     }
 }

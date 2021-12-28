@@ -3,7 +3,9 @@ package com.danielgergely.kgl
 import com.kgl.opengl.*
 import kotlinx.cinterop.*
 
-class KglDesktop : Kgl {
+object KglDesktop : Kgl {
+
+    private val scope = MemScope()
 
     override fun createShader(type: Int): Shader? {
         val shader = glCreateShader(type.toUInt()).toInt()
@@ -116,7 +118,14 @@ class KglDesktop : Kgl {
         stride: Int,
         offset: Int
     ) {
-        glVertexAttribPointer(location.toUInt(), size, type.toUInt(), normalized, stride, offset.toLong().toCPointer<COpaque>())
+        glVertexAttribPointer(
+            location.toUInt(),
+            size,
+            type.toUInt(),
+            normalized,
+            stride,
+            offset.toLong().toCPointer<COpaque>()
+        )
     }
 
     override fun uniform1f(location: UniformLocation, f: Float) {
@@ -199,6 +208,7 @@ class KglDesktop : Kgl {
     override fun deleteTexture(texture: Texture) {
         glDeleteTexture(texture.toUInt())
     }
+
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
         texImage2D(
             target = target,
@@ -308,7 +318,7 @@ class KglDesktop : Kgl {
     }
 
     override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) {
-        TODO("Not yet implemented")
+        glFramebufferTexture2D(target.toUInt(), attachment.toUInt(), textarget.toUInt(), texture.toUInt(), level)
     }
 
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean {
@@ -337,7 +347,12 @@ class KglDesktop : Kgl {
         renderbuffertarget: Int,
         renderbuffer: Renderbuffer
     ) {
-        glFramebufferRenderbuffer(target.toUInt(), attachment.toUInt(), renderbuffertarget.toUInt(), renderbuffer.toUInt())
+        glFramebufferRenderbuffer(
+            target.toUInt(),
+            attachment.toUInt(),
+            renderbuffertarget.toUInt(),
+            renderbuffer.toUInt()
+        )
     }
 
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean {
@@ -348,6 +363,7 @@ class KglDesktop : Kgl {
         glRenderbufferStorage(target.toUInt(), internalformat.toUInt(), width, height)
     }
 
+    //TODO test
     override fun readPixels(
         x: Int,
         y: Int,
@@ -358,6 +374,6 @@ class KglDesktop : Kgl {
         buffer: Buffer,
         offset: Int
     ) {
-        TODO("Not yet implemented")
+        glReadPixels(x, y, width, height, format.toUInt(), type.toUInt(), buffer.refTo(offset).getPointer(scope))
     }
 }

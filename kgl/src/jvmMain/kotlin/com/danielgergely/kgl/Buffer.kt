@@ -6,19 +6,20 @@ import java.nio.FloatBuffer
 
 public actual abstract class Buffer(@JvmField @PublishedApi internal val buffer: java.nio.Buffer) {
 
-    public actual var position: Int
+    @PublishedApi
+    internal var abstractPosition: Int
         get() = buffer.position()
         set(value) {
             buffer.position(value)
         }
 
     public inline fun <T> withIoBuffer(offset: Int, fn: (buffer: java.nio.Buffer) -> T): T {
-        val origPosition = this.position
-        this.position = offset
+        val origPosition = this.abstractPosition
+        this.abstractPosition = offset
         try {
             return fn(this.buffer)
         } finally {
-            this.position = origPosition
+            this.abstractPosition = origPosition
         }
     }
 }
@@ -26,13 +27,19 @@ public actual abstract class Buffer(@JvmField @PublishedApi internal val buffer:
 public actual class FloatBuffer private constructor(buffer: FloatBuffer) : Buffer(buffer) {
 
     public actual constructor(buffer: Array<Float>) : this(buffer.toFloatArray())
-    public actual constructor(buffer: FloatArray) : this(FloatBuffer.wrap(buffer))
+    public actual constructor(buffer: FloatArray) : this(alloc(buffer.size).apply { put(buffer) })
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
         private fun alloc(size: Int) =
             ByteBuffer.allocateDirect(size * 4).order(ByteOrder.nativeOrder()).asFloatBuffer()
     }
+
+    public actual var position: Int
+        get() = abstractPosition
+        set(value) {
+            abstractPosition = value
+        }
 
     private val floatBuffer: FloatBuffer = buffer
 
@@ -65,12 +72,18 @@ public actual class FloatBuffer private constructor(buffer: FloatBuffer) : Buffe
 
 public actual class ByteBuffer private constructor(buffer: ByteBuffer) : Buffer(buffer) {
     public actual constructor(buffer: Array<Byte>) : this(buffer.toByteArray())
-    public actual constructor(buffer: ByteArray) : this(ByteBuffer.wrap(buffer))
+    public actual constructor(buffer: ByteArray) : this(alloc(buffer.size).apply { put(buffer) })
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
         private fun alloc(size: Int) = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder())
     }
+
+    public actual var position: Int
+        get() = abstractPosition
+        set(value) {
+            abstractPosition = value
+        }
 
     private val byteBuffer: ByteBuffer = buffer
 

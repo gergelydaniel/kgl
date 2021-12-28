@@ -441,6 +441,7 @@ class KglIos : Kgl {
         glRenderbufferStorage(target.toUInt(), internalformat.toUInt(), width, height)
     }
 
+    //TODO test
     override fun readPixels(
         x: Int,
         y: Int,
@@ -451,7 +452,7 @@ class KglIos : Kgl {
         buffer: Buffer,
         offset: Int
     ) {
-        TODO("Not yet implemented")
+        glReadPixels(x, y, width, height, format.toUInt(), type.toUInt(), buffer.refTo(offset))
     }
 }
 

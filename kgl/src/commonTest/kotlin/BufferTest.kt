@@ -2,27 +2,25 @@ import com.danielgergely.kgl.ByteBuffer
 import com.danielgergely.kgl.FloatBuffer
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class BufferTest {
 
     @Test
-    fun byteBufferAcceptsValuesLargerThan128() {
+    fun byteBufferStoresValue() {
         val byteBuffer = ByteBuffer(1)
 
-        byteBuffer[0] = 200.toByte()
+        byteBuffer[0] = 98
 
-        assertEquals(200.toUByte(), byteBuffer[0].toUByte())
+        assertEquals(98.toByte(), byteBuffer[0])
     }
 
     @Test
-    fun byteBufferAcceptsNegativeValues() {
-        val byteBuffer = ByteBuffer(1)
+    fun floatBufferStoresValue() {
+        val floatBuffer = FloatBuffer(1)
 
-        byteBuffer[0] = -100
+        floatBuffer[0] = 98f
 
-        // Using assertTrue instead of generic assertEquals
-        assertTrue(byteBuffer[0] == (-100).toByte())
+        assertEquals(98f, floatBuffer[0])
     }
 
     @Test
@@ -86,21 +84,23 @@ class BufferTest {
     }
 
     @Test
-    fun byteBufferWrapsArray() {
+    fun byteBufferDoesntWrapArray() {
         val byteArray = ByteArray(10)
-        val byteBuffer = ByteBuffer(byteArray)
-
         byteArray[5] = 111
+
+        val byteBuffer = ByteBuffer(byteArray)
+        byteArray[5] = 112
 
         assertEquals(111, byteBuffer[5])
     }
 
     @Test
-    fun floatBufferWrapsArray() {
+    fun floatBufferDoesntWrapArray() {
         val floatArray = FloatArray(10)
-        val floatBuffer = FloatBuffer(floatArray)
-
         floatArray[5] = 111f
+
+        val floatBuffer = FloatBuffer(floatArray)
+        floatArray[5] = 112f
 
         assertEquals(111f, floatBuffer[5])
     }
