@@ -12,9 +12,15 @@ public actual typealias GlBuffer = Int
 
 public actual typealias Texture = Int
 
-public actual class TextureResource(@JvmField public val encodedPng: InputStream)
-
-public actual fun TextureResource.dispose(): Unit = encodedPng.close()
+public actual class TextureResource(
+    public val width: Int,
+    public val height: Int,
+    public val format: Int,
+    public val type: Int,
+    public val data: Buffer,
+) {
+    public actual fun dispose() { }
+}
 
 public actual typealias VertexArrayObject = Int
 

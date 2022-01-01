@@ -2,11 +2,11 @@ package com.danielgergely.kgl
 
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL33
-import org.lwjgl.stb.STBImage
 import java.io.InputStream
 import java.nio.*
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
+import java.nio.IntBuffer
 
 typealias GL = GL33
 
@@ -174,22 +174,16 @@ object KglLwjgl : Kgl {
     }
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
-        val width = BufferUtils.createIntBuffer(1)
-        val height = BufferUtils.createIntBuffer(1)
-        val components = BufferUtils.createIntBuffer(1)
-
-        val data = STBImage.stbi_load_from_memory(streamToByteBuffer(resource.encodedPng), width, height, components, 4)
-
-        GL.glTexImage2D(
-            target,
-            level,
-            internalFormat,
-            width.get(),
-            height.get(),
-            border,
-            GL_RGBA,
-            GL_UNSIGNED_BYTE,
-            data
+        texImage2D(
+            target = target,
+            level = level,
+            internalFormat = internalFormat,
+            width = resource.width,
+            height = resource.height,
+            border = 0,
+            format = resource.format,
+            type = resource.type,
+            buffer = resource.data
         )
     }
 
@@ -390,29 +384,4 @@ object KglLwjgl : Kgl {
         }
     }
 
-}
-
-private fun streamToByteBuffer(source: InputStream): ByteBuffer {
-    var buffer = BufferUtils.createByteBuffer(1024)
-    source.use { source ->
-        val buf = ByteArray(1024)
-        while (true) {
-            val bytes = source.read(buf, 0, buf.size)
-            if (bytes == -1)
-                break
-            if (buffer.remaining() < bytes)
-                buffer = resizeBuffer(buffer, buffer.capacity() * 2)
-            buffer.put(buf, 0, bytes)
-        }
-        buffer.flip()
-    }
-
-    return buffer
-}
-
-private fun resizeBuffer(buffer: ByteBuffer, newCapacity: Int): ByteBuffer {
-    val newBuffer = BufferUtils.createByteBuffer(newCapacity)
-    buffer.flip()
-    newBuffer.put(buffer)
-    return newBuffer
 }

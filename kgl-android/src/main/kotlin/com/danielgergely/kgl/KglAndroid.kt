@@ -1,9 +1,7 @@
 package com.danielgergely.kgl
 
-import android.graphics.BitmapFactory
 import android.opengl.GLES20
 import android.opengl.GLES30
-import android.opengl.GLUtils
 
 typealias GL = GLES20
 
@@ -135,9 +133,17 @@ object KglAndroid : Kgl {
     override fun deleteTexture(texture: Texture) = GL.glDeleteTextures(1, intArrayOf(texture), 0)
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
-        val bmp = BitmapFactory.decodeStream(resource.encodedPng)
-
-        GLUtils.texImage2D(target, level, internalFormat, bmp, border)
+        texImage2D(
+            target = target,
+            level = level,
+            internalFormat = internalFormat,
+            width = resource.width,
+            height = resource.height,
+            border = 0,
+            format = resource.format,
+            type = resource.type,
+            buffer = resource.data
+        )
     }
 
     override fun texImage2D(

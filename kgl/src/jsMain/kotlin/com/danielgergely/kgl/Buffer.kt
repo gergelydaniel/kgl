@@ -97,3 +97,47 @@ public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) :
         return byteBuffer.asDynamic().subarray(position)
     }
 }
+
+
+public actual class IntBuffer constructor(private val buffer: Int32Array) : Buffer() {
+    public actual constructor(buffer: Array<Int>) : this(Int32Array(buffer))
+    public actual constructor(buffer: IntArray) : this(Int32Array(buffer.unsafeCast<Int32Array>()))
+    public actual constructor(size: Int) : this(Int32Array(size))
+
+    public actual var position: Int = 0
+
+    public actual fun put(i: Int) {
+        buffer[position] = i
+        position += 1
+    }
+
+    public actual fun put(intArray: IntArray) {
+        put(intArray, 0, intArray.size)
+    }
+
+    public actual fun put(intArray: IntArray, offset: Int, length: Int) {
+        buffer.set((intArray.unsafeCast<Int32Array>()).subarray(offset, length), position)
+        position += length
+    }
+
+    public actual operator fun set(pos: Int, i: Int) {
+        buffer[pos] = i
+    }
+
+    public actual fun get(): Int = buffer[position]
+
+    public actual fun get(intArray: IntArray) {
+        get(intArray, 0, intArray.size)
+    }
+
+    public actual fun get(intArray: IntArray, offset: Int, length: Int) {
+        val dest = intArray.unsafeCast<Int32Array>()
+        dest.subarray(offset, length).set(buffer, position)
+    }
+
+    public actual operator fun get(pos: Int): Int = buffer[pos]
+
+    override fun getJsBufferWithOffset(): ArrayBufferView {
+        return buffer.asDynamic().subarray(position)
+    }
+}

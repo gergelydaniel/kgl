@@ -37,3 +37,21 @@ public expect class ByteBuffer : Buffer {
     public fun get(byteArray: ByteArray, offset: Int, length: Int)
     public operator fun get(pos: Int): Byte
 }
+
+public expect class IntBuffer : Buffer {
+    public constructor(buffer: Array<Int>)
+    public constructor(buffer: IntArray)
+    public constructor(size: Int)
+
+    public var position: Int
+
+    public fun put(i: Int)
+    public fun put(intArray: IntArray)
+    public fun put(intArray: IntArray, offset: Int, length: Int)
+    public operator fun set(pos: Int, i: Int)
+
+    public fun get(): Int
+    public fun get(intArray: IntArray)
+    public fun get(intArray: IntArray, offset: Int, length: Int)
+    public operator fun get(pos: Int): Int
+}

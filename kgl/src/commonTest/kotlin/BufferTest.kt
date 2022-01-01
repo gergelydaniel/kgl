@@ -1,5 +1,6 @@
 import com.danielgergely.kgl.ByteBuffer
 import com.danielgergely.kgl.FloatBuffer
+import com.danielgergely.kgl.IntBuffer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,6 +24,16 @@ class BufferTest {
         assertEquals(98f, floatBuffer[0])
     }
 
+
+    @Test
+    fun intBufferStoresValue() {
+        val intBuffer = IntBuffer(1)
+
+        intBuffer[0] = 98
+
+        assertEquals(98, intBuffer[0])
+    }
+
     @Test
     fun byteBufferPutIndividualChangesPosition() {
         val byteBuffer = ByteBuffer(10)
@@ -42,6 +53,15 @@ class BufferTest {
     }
 
     @Test
+    fun intBufferPutIndividualChangesPosition() {
+        val intBuffer = IntBuffer(10)
+
+        intBuffer.put(3)
+
+        assertEquals(intBuffer.position, 1)
+    }
+
+    @Test
     fun byteBufferPutArrayChangesPosition() {
         val byteBuffer = ByteBuffer(10)
 
@@ -57,6 +77,15 @@ class BufferTest {
         floatBuffer.put(floatArrayOf(3f, 4f))
 
         assertEquals(floatBuffer.position, 2)
+    }
+
+    @Test
+    fun intBufferPutArrayChangesPosition() {
+        val intBuffer = IntBuffer(10)
+
+        intBuffer.put(intArrayOf(3, 4))
+
+        assertEquals(intBuffer.position, 2)
     }
 
     @Test
@@ -84,6 +113,18 @@ class BufferTest {
     }
 
     @Test
+    fun intBufferSetDoesntChangePosition() {
+        val intBuffer = IntBuffer(10)
+
+        intBuffer.put(3)
+        intBuffer.put(3)
+
+        intBuffer[2] = 4
+
+        assertEquals(2, intBuffer.position)
+    }
+
+    @Test
     fun byteBufferDoesntWrapArray() {
         val byteArray = ByteArray(10)
         byteArray[5] = 111
@@ -103,5 +144,16 @@ class BufferTest {
         floatArray[5] = 112f
 
         assertEquals(111f, floatBuffer[5])
+    }
+
+    @Test
+    fun intBufferDoesntWrapArray() {
+        val intArray = IntArray(10)
+        intArray[5] = 111
+
+        val intBuffer = IntBuffer(intArray)
+        intArray[5] = 112
+
+        assertEquals(111, intBuffer[5])
     }
 }

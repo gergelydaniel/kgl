@@ -8,8 +8,9 @@ public expect class UniformLocation
 
 public expect class GlBuffer
 
-public expect class TextureResource
-public expect fun TextureResource.dispose()
+public expect class TextureResource {
+    public fun dispose()
+}
 
 public expect class Texture
 

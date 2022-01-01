@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
 import java.util.*
-import javax.imageio.ImageIO
 
 typealias GL = GL3ES3
 
@@ -20,8 +19,8 @@ class KglJogl(private val gl: GL) : Kgl {
         }
     }
 
-    override fun shaderSource(shaderId: Shader, source: String)
-            = gl.glShaderSource(shaderId, 1, arrayOf(source), null as IntBuffer?)
+    override fun shaderSource(shaderId: Shader, source: String) =
+        gl.glShaderSource(shaderId, 1, arrayOf(source), null as IntBuffer?)
 
     override fun compileShader(shaderId: Shader) = gl.glCompileShader(shaderId)
 
@@ -80,7 +79,8 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun getAttribLocation(programId: Program, name: String): Int = gl.glGetAttribLocation(programId, name)
 
-    override fun bindAttribLocation(programId: Program, index: Int, name: String) = gl.glBindAttribLocation(programId, index, name)
+    override fun bindAttribLocation(programId: Program, index: Int, name: String) =
+        gl.glBindAttribLocation(programId, index, name)
 
     override fun enable(cap: Int) = gl.glEnable(cap)
     override fun disable(cap: Int) = gl.glDisable(cap)
@@ -128,7 +128,14 @@ class KglJogl(private val gl: GL) : Kgl {
     override fun deleteBuffer(buffer: GlBuffer) = gl.glDeleteBuffers(1, intArrayOf(buffer), 0)
 
 
-    override fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int) {
+    override fun vertexAttribPointer(
+        location: Int,
+        size: Int,
+        type: Int,
+        normalized: Boolean,
+        stride: Int,
+        offset: Int
+    ) {
         return gl.glVertexAttribPointer(location, size, type, normalized, stride, offset.toLong())
     }
 
@@ -146,15 +153,17 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) = gl.glUniform3i(location, x, y, z)
 
-    override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) = gl.glUniform4f(location, x, y, z, w)
+    override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) =
+        gl.glUniform4f(location, x, y, z, w)
 
-    override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) = gl.glUniform4i(location, x, y, z, w)
+    override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) =
+        gl.glUniform4i(location, x, y, z, w)
 
-    override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
-            = gl.glUniformMatrix3fv(location, 1, transpose, value, 0)
+    override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
+        gl.glUniformMatrix3fv(location, 1, transpose, value, 0)
 
-    override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
-            = gl.glUniformMatrix4fv(location, 1, transpose, value, 0)
+    override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
+        gl.glUniformMatrix4fv(location, 1, transpose, value, 0)
 
     override fun blendFunc(sFactor: Int, dFactor: Int) = gl.glBlendFunc(sFactor, dFactor)
 
@@ -185,9 +194,17 @@ class KglJogl(private val gl: GL) : Kgl {
     override fun deleteTexture(texture: Texture) = gl.glDeleteTextures(1, intArrayOf(texture), 0)
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
-        val image = ImageIO.read(resource.encodedPng)
-
-        gl.glTexImage2D(target, level, internalFormat, image.width, image.height, border, GL_RGBA, GL_UNSIGNED_BYTE, imageToByteBuffer(image))
+        texImage2D(
+            target = target,
+            level = level,
+            internalFormat = internalFormat,
+            width = resource.width,
+            height = resource.height,
+            border = 0,
+            format = resource.format,
+            type = resource.type,
+            buffer = resource.data
+        )
     }
 
     override fun texImage2D(
@@ -219,37 +236,54 @@ class KglJogl(private val gl: GL) : Kgl {
         gl.glGenVertexArrays(1, ints, 0)
         return ints[0]
     }
-    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?)
-            = gl.glBindVertexArray(vertexArrayObject ?: 0)
-    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
-            = gl.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
+
+    override fun bindVertexArray(vertexArrayObject: VertexArrayObject?) = gl.glBindVertexArray(vertexArrayObject ?: 0)
+    override fun deleteVertexArray(vertexArrayObject: VertexArrayObject) =
+        gl.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
 
     override fun getError(): Int = gl.glGetError()
     override fun finish() = gl.glFinish()
 
-    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) = gl.glBindFramebuffer(target, framebuffer ?: 0)
+    override fun bindFramebuffer(target: Int, framebuffer: Framebuffer?) =
+        gl.glBindFramebuffer(target, framebuffer ?: 0)
+
     override fun createFramebuffer(): Framebuffer {
         val ints = IntArray(1)
         gl.glGenFramebuffers(1, ints, 0)
         return ints[0]
     }
+
     override fun deleteFramebuffer(framebuffer: Framebuffer) = gl.glDeleteFramebuffers(1, intArrayOf(framebuffer), 0)
     override fun checkFramebufferStatus(target: Int): Int = gl.glCheckFramebufferStatus(target)
-    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) = gl.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+    override fun framebufferTexture2D(target: Int, attachment: Int, textarget: Int, texture: Texture, level: Int) =
+        gl.glFramebufferTexture2D(target, attachment, textarget, texture, level)
+
     override fun isFramebuffer(framebuffer: Framebuffer): Boolean = gl.glIsFramebuffer(framebuffer)
 
-    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) = gl.glBindRenderbuffer(target, renderbuffer ?: 0)
+    override fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?) =
+        gl.glBindRenderbuffer(target, renderbuffer ?: 0)
+
     override fun createRenderbuffer(): Renderbuffer {
         val ints = IntArray(1)
         gl.glGenRenderbuffers(1, ints, 0)
         return ints[0]
     }
-    override fun deleteRenderbuffer(renderbuffer: Renderbuffer) = gl.glDeleteRenderbuffers(1, intArrayOf(renderbuffer), 0)
-    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) = gl.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+
+    override fun deleteRenderbuffer(renderbuffer: Renderbuffer) =
+        gl.glDeleteRenderbuffers(1, intArrayOf(renderbuffer), 0)
+
+    override fun framebufferRenderbuffer(
+        target: Int,
+        attachment: Int,
+        renderbuffertarget: Int,
+        renderbuffer: Renderbuffer
+    ) = gl.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean = gl.glIsRenderbuffer(renderbuffer)
-    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) = gl.glRenderbufferStorage(target, internalformat, width, height)
+    override fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int) =
+        gl.glRenderbufferStorage(target, internalformat, width, height)
 
     override fun readPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: Buffer) {
         buffer.withJavaBuffer { javaBuffer ->
@@ -258,7 +292,7 @@ class KglJogl(private val gl: GL) : Kgl {
     }
 }
 
-fun imageToByteBuffer(image: BufferedImage) : ByteBuffer {
+fun imageToByteBuffer(image: BufferedImage): ByteBuffer {
     val width = image.width
     val height = image.height
 

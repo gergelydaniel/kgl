@@ -2,16 +2,28 @@ package com.danielgergely.kgl
 
 import kotlinx.cinterop.CValuesRef
 import kotlinx.cinterop.refTo
+import platform.posix.free
 
 
 public actual abstract class Buffer {
     public abstract fun ref(): CValuesRef<*>
+
+    internal open fun dispose() {}
 }
 
-public class PointerBuffer(internal val pointer: CValuesRef<*>) : Buffer() {
+public class PointerBuffer(
+    private val pointer: CValuesRef<*>,
+    private val freeOnDispose: Boolean
+) : Buffer() {
 
     override fun ref(): CValuesRef<*> {
         return pointer
+    }
+
+    override fun dispose() {
+        if (freeOnDispose) {
+            free(pointer)
+        }
     }
 }
 
@@ -105,5 +117,52 @@ public actual class ByteBuffer actual constructor(buffer: ByteArray) : Buffer() 
 
     override fun ref(): CValuesRef<*> {
         return buffer.refTo(position) //TODO test
+    }
+}
+
+public actual class IntBuffer actual constructor(buffer: IntArray) : Buffer() {
+    public actual constructor(buffer: Array<Int>) : this(buffer.toIntArray())
+    public actual constructor(size: Int) : this(IntArray(size))
+
+    private val buffer: IntArray = buffer.copyOf()
+
+    public actual var position: Int = 0
+
+    public actual fun put(i: Int) {
+        buffer[position++] = i
+    }
+
+    public actual fun put(intArray: IntArray) {
+        intArray.copyInto(buffer, position)
+        position += intArray.size
+    }
+
+    public actual fun put(intArray: IntArray, offset: Int, length: Int) {
+        intArray.copyInto(buffer, position, offset, offset + length)
+        position += length
+    }
+
+    public actual operator fun set(pos: Int, i: Int) {
+        buffer[pos] = i
+    }
+
+    public actual fun get(): Int {
+        return buffer[position]
+    }
+
+    public actual fun get(intArray: IntArray) {
+        get(intArray, 0, intArray.size)
+    }
+
+    public actual fun get(intArray: IntArray, offset: Int, length: Int) {
+        buffer.copyInto(intArray, offset, position, position + length)
+    }
+
+    public actual operator fun get(pos: Int): Int {
+        return buffer[pos]
+    }
+
+    override fun ref(): CValuesRef<*> {
+        return buffer.refTo(position)
     }
 }

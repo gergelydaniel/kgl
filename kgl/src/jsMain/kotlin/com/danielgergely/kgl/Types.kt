@@ -18,10 +18,8 @@ public actual typealias Program = Any
 public actual typealias UniformLocation = Any
 
 public actual open class TextureResource(public val image: TexImageSource) {
-    public open fun disposeInner() {}
+    public actual open fun dispose() {}
 }
-
-public actual fun TextureResource.dispose(): Unit = disposeInner()
 
 /**
  * Must be [WebGLBuffer]
