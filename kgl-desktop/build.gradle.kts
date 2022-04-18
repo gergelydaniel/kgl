@@ -51,18 +51,17 @@ kotlin {
                 implementation("com.kgl:kgl-stb:$kglVersion")
             }
         }
-        val linuxX64Main by getting { }
-        val mingwX64Main by getting { }
-        val macosX64Main by getting { }
-        val nativeMain by sourceSets.creating {
+        val nativeMain by creating {
             dependsOn(commonMain)
-            linuxX64Main.dependsOn(this)
-            mingwX64Main.dependsOn(this)
-            macosX64Main.dependsOn(this)
-
-            dependencies {
-
-            }
+        }
+        val linuxX64Main by getting {
+            dependsOn(nativeMain)
+        }
+        val mingwX64Main by getting {
+            dependsOn(nativeMain)
+        }
+        val macosX64Main by getting {
+            dependsOn(nativeMain)
         }
     }
 }

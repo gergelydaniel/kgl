@@ -1,10 +1,10 @@
 package com.danielgergely.kgl
 
-import com.kgl.opengl.*
 import kotlinx.cinterop.*
 
 object KglDesktop : Kgl {
 
+    // TODO this probably causes memory leak?
     private val scope = MemScope()
 
     override fun createShader(type: Int): Shader? {
