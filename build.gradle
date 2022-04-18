@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = '1.6.20'
-        currentVersion = '0.5-nativetest34'
+        currentVersion = '0.5-ios1'
     }
     repositories {
         maven {
