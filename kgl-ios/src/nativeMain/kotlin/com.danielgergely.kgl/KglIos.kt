@@ -28,6 +28,7 @@ private object VirtualStack : NativePlacement {
     }
 }
 
+@OptIn(ExperimentalUnsignedTypes::class)
 object KglIos : Kgl {
 
     override fun createShader(type: Int): Shader? {
@@ -35,7 +36,7 @@ object KglIos : Kgl {
         return if (shader == 0) null else shader
     }
 
-    fun glShaderSource(shader: UInt, strings: List<String>) {
+    private fun glShaderSource(shader: UInt, strings: List<String>) {
         VirtualStack.push()
         try {
             val input = VirtualStack.allocArray<CPointerVar<ByteVar>>(strings.size) {
@@ -146,7 +147,6 @@ object KglIos : Kgl {
         return createBuffers(1)[0]
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun createBuffers(count: Int): Array<GlBuffer> {
         val buffers = UIntArray(count)
         buffers.usePinned {
@@ -163,10 +163,9 @@ object KglIos : Kgl {
         glBufferData(target.toUInt(), size.toLong(), sourceData.ref(), usage.toUInt())
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun deleteBuffer(buffer: GlBuffer) {
         val buffers = uintArrayOf(buffer.toUInt())
-        buffers.usePinned { it
+        buffers.usePinned {
             glDeleteBuffers(1, it.addressOf(0))
         }
     }
@@ -179,7 +178,14 @@ object KglIos : Kgl {
         stride: Int,
         offset: Int
     ) {
-        glVertexAttribPointer(location.toUInt(), size, type.toUInt(), normalized.toGl(), stride, offset.toLong().toCPointer<COpaque>())
+        glVertexAttribPointer(
+            location.toUInt(),
+            size,
+            type.toUInt(),
+            normalized.toGl(),
+            stride,
+            offset.toLong().toCPointer<COpaque>()
+        )
     }
 
     override fun uniform1f(location: UniformLocation, f: Float) {
@@ -250,7 +256,6 @@ object KglIos : Kgl {
         return createTextures(1)[0]
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun createTextures(n: Int): Array<Texture> {
         val textures = UIntArray(n)
         textures.usePinned {
@@ -261,7 +266,7 @@ object KglIos : Kgl {
 
     override fun deleteTexture(texture: Texture) {
         val textures = uintArrayOf(texture.toUInt())
-        textures.usePinned { it
+        textures.usePinned {
             glDeleteTextures(1, it.addressOf(0))
         }
     }
@@ -324,7 +329,6 @@ object KglIos : Kgl {
         glTexParameteri(target.toUInt(), pname.toUInt(), value)
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun createVertexArray(): VertexArrayObject {
         val buffer = UIntArray(1)
         buffer.usePinned {
@@ -341,7 +345,6 @@ object KglIos : Kgl {
         }
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun deleteVertexArray(vertexArrayObject: VertexArrayObject) {
         val buffer = uintArrayOf(vertexArrayObject.toUInt())
         buffer.usePinned {
@@ -369,7 +372,6 @@ object KglIos : Kgl {
         }
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun createFramebuffer(): Framebuffer {
         val buffer = UIntArray(1)
         buffer.usePinned {
@@ -378,7 +380,6 @@ object KglIos : Kgl {
         return buffer[0].toInt()
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun deleteFramebuffer(framebuffer: Framebuffer) {
         val buffer = uintArrayOf(framebuffer.toUInt())
         buffer.usePinned {
@@ -406,7 +407,6 @@ object KglIos : Kgl {
         }
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override fun createRenderbuffer(): Renderbuffer {
         val buffer = UIntArray(1)
         buffer.usePinned {
@@ -428,7 +428,12 @@ object KglIos : Kgl {
         renderbuffertarget: Int,
         renderbuffer: Renderbuffer
     ) {
-        glFramebufferRenderbuffer(target.toUInt(), attachment.toUInt(), renderbuffertarget.toUInt(), renderbuffer.toUInt())
+        glFramebufferRenderbuffer(
+            target.toUInt(),
+            attachment.toUInt(),
+            renderbuffertarget.toUInt(),
+            renderbuffer.toUInt()
+        )
     }
 
     override fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean {

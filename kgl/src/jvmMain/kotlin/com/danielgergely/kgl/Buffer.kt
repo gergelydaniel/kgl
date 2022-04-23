@@ -5,7 +5,9 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
 
-public actual abstract class Buffer internal constructor(@JvmField @PublishedApi internal val javaBuffer: java.nio.Buffer) {
+public actual abstract class Buffer internal constructor(
+    @JvmField @PublishedApi internal val javaBuffer: java.nio.Buffer
+) {
 
     public inline fun withJavaBuffer(block: (java.nio.Buffer) -> Unit) {
         val positionBefore = javaBuffer.position()

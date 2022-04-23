@@ -1,3 +1,0 @@
-include ':kgl', ':kgl-android', ':kgl-jogl', ':kgl-lwjgl'
-include 'kgl-desktop'
-include 'kgl-ios'
