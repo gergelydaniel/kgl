@@ -1,6 +1,5 @@
 package com.danielgergely.kgl
 
-import java.io.InputStream
 
 public actual typealias Shader = Int
 
@@ -19,7 +18,7 @@ public actual class TextureResource(
     public val type: Int,
     public val data: Buffer,
 ) {
-    public actual fun dispose() { }
+    public actual fun dispose() { data.dispose() }
 }
 
 public actual typealias VertexArrayObject = Int

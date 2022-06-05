@@ -5,38 +5,37 @@ import org.khronos.webgl.*
 /**
  * Must be [WebGLShader]
  */
-actual typealias Shader = Any
+public actual typealias Shader = Any
 
 /**
  * Must be [WebGLProgram]
  */
-actual typealias Program = Any
+public actual typealias Program = Any
 
 /**
  * Must be [WebGLUniformLocation]
  */
-actual typealias UniformLocation = Any
+public actual typealias UniformLocation = Any
 
-actual open class TextureResource(val image: TexImageSource) {
-    open fun disposeInner() {}
+public actual open class TextureResource(public val image: TexImageSource) {
+    public actual open fun dispose() {}
 }
-actual fun TextureResource.dispose() = disposeInner()
 
 /**
  * Must be [WebGLBuffer]
  */
-actual typealias GlBuffer = Any
+public actual typealias GlBuffer = Any
 
 /**
  * Must be [WebGLTexture]
  */
-actual typealias Texture = Any
+public actual typealias Texture = Any
 
 /** Must be [WebGLVertexArrayObject] */
-actual typealias VertexArrayObject = Any
+public actual typealias VertexArrayObject = Any
 
 /** Must be [WebGLFramebuffer] */
-actual typealias Framebuffer = Any
+public actual typealias Framebuffer = Any
 
 /** Must be [WebGLRenderbuffer] */
-actual typealias Renderbuffer = Any
+public actual typealias Renderbuffer = Any
