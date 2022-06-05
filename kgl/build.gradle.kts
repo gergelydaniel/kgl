@@ -32,7 +32,7 @@ kotlin {
     linuxX64()
     mingwX64()
 
-    if (org.gradle.internal.os.OperatingSystem.current().isMacOsX) {
+    if (isMacOs()) {
         macosX64()
         iosArm64()
         iosX64()
@@ -84,18 +84,25 @@ kotlin {
         val linuxX64Main by getting { }
         val mingwX64Main by getting { }
 
-        val macosX64Main by getting { }
-        val iosArm64Main by getting { }
-        val iosX64Main by getting { }
+        val appleOnlySourceSets = if (isMacOs()) {
+            val macosX64Main by getting { }
+            val iosArm64Main by getting { }
+            val iosX64Main by getting { }
+
+            listOf(macosX64Main, iosArm64Main, iosX64Main)
+        } else {
+            listOf()
+        }
 
         val nativeMain by sourceSets.creating {
             dependsOn(commonMain)
 
             linuxX64Main.dependsOn(this)
             mingwX64Main.dependsOn(this)
-            macosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosX64Main.dependsOn(this)
+
+            appleOnlySourceSets.forEach { it.dependsOn(this) }
         }
     }
 }
+
+fun isMacOs() = org.gradle.internal.os.OperatingSystem.current().isMacOsX
