@@ -43,6 +43,9 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
     public override fun linkProgram(programId: Program): Unit = gl.linkProgram(programId.unsafeCast<WebGLProgram>())
     public override fun useProgram(programId: Program): Unit = gl.useProgram(programId.unsafeCast<WebGLProgram>())
 
+    public override fun detachShader(programId: Program, shaderId: Shader): Unit = gl.detachShader(programId.unsafeCast<WebGLProgram>(), shaderId.unsafeCast<WebGLShader>())
+    public override fun deleteProgram(programId: Program): Unit = gl.deleteProgram(programId.unsafeCast<WebGLProgram>())
+
     public override fun getUniformLocation(programId: Program, name: String): UniformLocation? =
         gl.getUniformLocation(programId.unsafeCast<WebGLProgram>(), name)
 
