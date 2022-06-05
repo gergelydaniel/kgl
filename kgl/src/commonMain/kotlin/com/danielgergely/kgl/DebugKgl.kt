@@ -83,6 +83,20 @@ public class DebugKgl(
         return ret
     }
 
+    override fun detachShader(programId: Program, shaderId: Shader) {
+        runBefore("detachShader")
+        val ret = kgl.detachShader(programId, shaderId)
+        runAfter("detachShader")
+        return ret
+    }
+
+    override fun deleteProgram(programId: Program) {
+        runBefore("deleteProgram")
+        val ret = kgl.deleteProgram(programId)
+        runAfter("deleteProgram")
+        return ret
+    }
+
     override fun getProgramParameter(program: Program, pname: Int): Int {
         runBefore("getProgramParameter")
         val ret = kgl.getProgramParameter(program, pname)

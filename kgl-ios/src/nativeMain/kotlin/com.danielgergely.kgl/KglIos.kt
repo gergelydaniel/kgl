@@ -95,6 +95,14 @@ object KglIos : Kgl {
         return if (program == 0u) null else program.toInt()
     }
 
+    override fun deleteProgram(programId: Program) {
+        glDeleteProgram(programId.toUInt())
+    }
+
+    override fun detachShader(programId: Program, shaderId: Shader) {
+        glDetachShader(programId.toUInt(), shaderId.toUInt())
+    }
+
     override fun attachShader(programId: Program, shaderId: Shader) {
         glAttachShader(programId.toUInt(), shaderId.toUInt())
     }
