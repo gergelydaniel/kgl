@@ -1,28 +1,24 @@
 # Kgl - Kotlin Multiplatform OpenGL abstraction
 
-This is an OpenGL wrapper library for Kotlin Multiplatform. The following target platforms are supported: Android, Web, Desktop.
+This is a thin OpenGL wrapper library for Kotlin Multiplatform.
 
 **Note: this library is a work-in-progress, the set of functions is incomplete.** I used it for my multiplatform game [Skyway](https://skyway.danielgergely.com).
 Despite it not being ready I can still recommend using it, since it's designed to be as thin a layer as possible, it might be a good start for other projects as well, it's easy to extend and troubleshoot if necessary. 
 
-## Project structure
-The projects is separated into the following parts:
+## Implemented platforms
 
-<img alt="structure" src="doc/structure.png" width="571">
-
-The following artifacts can be imported:
-
-|Artifact       |Role                                                                                                                           |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------|
-|kgl-metadata   |The Kgl interface itself with multiplatform (expect) types. Use this in your common source set.                                |
-|kgl-js         |The Javascript/WebGL implementation of the interface. Use this in your JS source set.                                          |
-|kgl-jvm        |The Kgl interface with actual JVM types. This is added for extendability, use this to add support for any JVM OpenGL wrapper   |
-|kgl-android    |Android library (AAR) containing the implementation of Kgl adapter for `android.opengl.GLES20`. Use it on your Android app     |
-|kgl-jogl       |Kgl adapter for `com.jogamp.opengl.GL3ES3`. Use this in your JOGL application module.                                          |
-|kgl-lwjgl      |Kgl adapter for `org.lwjgl.opengl.GL33`. Use this in your LWJGL application module.                                            |
-
+| Platform                                       | Artifact      |
+|------------------------------------------------|---------------|
+| Common                                         | `kgl`         |
+| Android                                        | `kgl-android` |
+| iOS                                            | `kgl-ios`     |
+| WebGL                                          | `kgl`         |
+| [LWJGL](https://www.lwjgl.org/) (Java desktop) | `kgl-lwjgl`   |
+| [JOGL](https://jogamp.org/) (Java desktop)     | `kgl-jogl`    |
 
 ## Install
+
+_Latest version is not yet published, publishing from CI/CD will be set up soon™_
 
 ```groovy
 maven { url '"https://jitpack.io"' }
