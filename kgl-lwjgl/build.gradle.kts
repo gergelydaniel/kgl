@@ -34,20 +34,22 @@ dependencies {
 java {
     withSourcesJar()
 }
+val publishEnabled = rootProject.ext["publishEnabled"] as Boolean? == true
 
 publishing {
-    publications {
-        //all {
-        //    pom.withXml {
-        //        val pomNode: Node = asNode()
-        //        pomNode.dependencies.'*'.findAll() {
-        //            it.artifactId.text() == 'kgl'
-        //        }.each() {
-        //            it.parent().remove(it)
-        //        }
-        //    }
-        //}
+    if (publishEnabled) {
+        repositories {
+            maven {
+                url = uri(rootProject.ext["publishUrl"] as String)
+                credentials {
+                    username = rootProject.ext["publishUsername"] as String
+                    password = rootProject.ext["publishPassword"] as String
+                }
+            }
+        }
+    }
 
+    publications {
         create<MavenPublication>("maven") {
             groupId = "com.danielgergely.kgl"
             artifactId = "kgl-lwjgl"

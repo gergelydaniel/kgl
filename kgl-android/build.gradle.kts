@@ -42,9 +42,22 @@ dependencies {
     implementation(project(":kgl"))
 }
 
+val publishEnabled = rootProject.ext["publishEnabled"] as Boolean? == true
 
 afterEvaluate {
     publishing {
+        if (publishEnabled) {
+            repositories {
+                maven {
+                    url = uri(rootProject.ext["publishUrl"] as String)
+                    credentials {
+                        username = rootProject.ext["publishUsername"] as String
+                        password = rootProject.ext["publishPassword"] as String
+                    }
+                }
+            }
+        }
+
         publications {
             create<MavenPublication>("maven") {
                 from(project.components["release"])

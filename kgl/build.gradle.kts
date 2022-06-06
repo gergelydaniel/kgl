@@ -106,3 +106,19 @@ kotlin {
 }
 
 fun isMacOs() = org.gradle.internal.os.OperatingSystem.current().isMacOsX
+
+val publishEnabled = rootProject.ext["publishEnabled"] as Boolean? == true
+
+publishing {
+    if (publishEnabled) {
+        repositories {
+            maven {
+                url = uri(rootProject.ext["publishUrl"] as String)
+                credentials {
+                    username = rootProject.ext["publishUsername"] as String
+                    password = rootProject.ext["publishPassword"] as String
+                }
+            }
+        }
+    }
+}
