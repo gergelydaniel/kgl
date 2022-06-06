@@ -13,7 +13,7 @@ data class VersionInfo(
 
 fun versionInfo(): VersionInfo {
     val pushedTag = System.getenv("PUSHED_TAG")
-    return if (pushedTag.isNotEmpty()) {
+    return if (pushedTag != null && pushedTag.isNotEmpty()) {
         VersionInfo(pushedTag, VersionType.RELEASE)
     } else {
         val version = "git describe --tags --abbrev=0".runCommand()
