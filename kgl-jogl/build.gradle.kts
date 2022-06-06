@@ -20,26 +20,14 @@ java {
     withSourcesJar()
 }
 
-val publishEnabled = rootProject.ext["publishEnabled"] as Boolean? == true
-
 publishing {
-    if (publishEnabled) {
-        repositories {
-            maven {
-                url = uri(rootProject.ext["publishUrl"] as String)
-                credentials {
-                    username = rootProject.ext["publishUsername"] as String
-                    password = rootProject.ext["publishPassword"] as String
-                }
-            }
-        }
-    }
+    addRepositoryIfPresent(project)
 
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.danielgergely.kgl"
             artifactId = "kgl-logl"
-            version = rootProject.ext["currentVersion"] as String
+            version = currentVersion
 
             from(components["java"])
         }

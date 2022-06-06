@@ -10,7 +10,7 @@ repositories {
 val lwjglVersion = "3.3.0"
 val kotlinVersion = rootProject.ext["kotlin_version"] as String
 
-version = rootProject.ext["currentVersion"] as String
+version = currentVersion
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -25,38 +25,20 @@ dependencies {
     implementation(project(":kgl"))
 }
 
-//val sourcesJar by creating(Jar::class) {
-//    //dependsOn(JavaPlugin.CLASSES_TASK_NAME)
-//    classifier = "sources"
-//    from(sourceSets["main"].allSource)
-//}
-
 java {
     withSourcesJar()
 }
-val publishEnabled = rootProject.ext["publishEnabled"] as Boolean? == true
 
 publishing {
-    if (publishEnabled) {
-        repositories {
-            maven {
-                url = uri(rootProject.ext["publishUrl"] as String)
-                credentials {
-                    username = rootProject.ext["publishUsername"] as String
-                    password = rootProject.ext["publishPassword"] as String
-                }
-            }
-        }
-    }
+    addRepositoryIfPresent(project)
 
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.danielgergely.kgl"
             artifactId = "kgl-lwjgl"
-            version = rootProject.ext["currentVersion"] as String
+            version = currentVersion
 
             from(components["java"])
-            //artifact(sourcesJar.get())
         }
     }
 }

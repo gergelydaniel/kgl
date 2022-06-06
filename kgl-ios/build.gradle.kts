@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.danielgergely.kgl"
-version = rootProject.ext["currentVersion"] as String
+version = currentVersion
 
 repositories {
     mavenCentral()
@@ -44,18 +44,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
 }
 
-val publishEnabled = rootProject.ext["publishEnabled"] as Boolean? == true
-
-if (publishEnabled) {
-    publishing {
-        repositories {
-            maven {
-                url = uri(rootProject.ext["publishUrl"] as String)
-                credentials {
-                    username = rootProject.ext["publishUsername"] as String
-                    password = rootProject.ext["publishPassword"] as String
-                }
-            }
-        }
-    }
+publishing {
+    addRepositoryIfPresent(project)
 }
