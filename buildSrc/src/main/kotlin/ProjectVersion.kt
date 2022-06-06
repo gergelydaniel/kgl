@@ -12,9 +12,9 @@ data class VersionInfo(
 )
 
 fun versionInfo(): VersionInfo {
-    val exactTag = "git describe --tags --exact-match".runCommand()
-    return if (exactTag.isNotEmpty()) {
-        VersionInfo(exactTag, VersionType.RELEASE)
+    val pushedTag = System.getenv("PUSHED_TAG")
+    return if (pushedTag.isNotEmpty()) {
+        VersionInfo(pushedTag, VersionType.RELEASE)
     } else {
         val version = "git describe --tags --abbrev=0".runCommand()
         val hash = "git describe --always".runCommand()

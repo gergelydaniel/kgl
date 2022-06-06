@@ -15,7 +15,10 @@ jobs:
           java-version: 11
 
       - name: Fetch tags
-        run: git pull --unshallow && git fetch --all --tags --depth=9999 && git describe --tags --abbrev=0
+        run: git fetch --all --tags --depth=9999
+
+      - name: Set env
+        run: echo "PUSHED_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
