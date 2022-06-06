@@ -16,9 +16,14 @@ fun versionInfo(): VersionInfo {
     return if (pushedTag != null && pushedTag.isNotEmpty()) {
         VersionInfo(pushedTag, VersionType.RELEASE)
     } else {
-        val version = "git describe --tags --abbrev=0".runCommand()
-        val hash = "git describe --always".runCommand()
+        val exactTag = "git describe --tags --exact-match".runCommand()
+        if (exactTag.isNotEmpty()) {
+            VersionInfo(exactTag, VersionType.RELEASE)
+        } else {
+            val version = "git describe --tags --abbrev=0".runCommand()
+            val hash = "git describe --always".runCommand()
 
-        VersionInfo("$version-SNAPSHOT-$hash", VersionType.SNAPSHOT)
+            VersionInfo("$version-SNAPSHOT-$hash", VersionType.SNAPSHOT)
+        }
     }
 }
