@@ -15,7 +15,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            //proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 
@@ -42,17 +41,17 @@ dependencies {
     implementation(project(":kgl"))
 }
 
-
 afterEvaluate {
     publishing {
+        addRepositoryIfPresent(project)
+
         publications {
             create<MavenPublication>("maven") {
                 from(project.components["release"])
 
                 groupId = "com.danielgergely.kgl"
                 artifactId = "kgl-android"
-                version = rootProject.ext["currentVersion"] as String
-
+                version = currentVersion
             }
         }
     }

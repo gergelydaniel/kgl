@@ -11,7 +11,9 @@ buildscript {
     }
 }
 
-rootProject.ext["currentVersion"] = "0.5-ios15"
+val versionInfo = versionInfo()
+println("Version:${versionInfo.versionName}, Type:${versionInfo.type}")
+
 rootProject.ext["kotlin_version"] = "1.6.21"
 
 allprojects {

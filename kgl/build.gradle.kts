@@ -8,22 +8,12 @@ repositories {
 }
 
 group = "com.danielgergely.kgl"
-version = rootProject.ext["currentVersion"] as String
-
-//def compilerArgs = [
-//        //'-Xno-param-assertions',
-//        //'-Xno-call-assertions',
-//        //'-Xno-receiver-assertions'
-//]
+version = currentVersion
 
 kotlin {
-    jvm {
-        //compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
-    }
+    jvm()
 
     js {
-        //compilations.main.kotlinOptions.freeCompilerArgs = compilerArgs
-
         browser {
             testTask {} // To run tests with browser.
         }
@@ -65,14 +55,6 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-js"))
-                //compileKotlinJs {
-                //    kotlinOptions.metaInfo = true
-                //    kotlinOptions.sourceMap = true
-                //    kotlinOptions.suppressWarnings = true
-                //    kotlinOptions.verbose = true
-                //    kotlinOptions.main = "call"
-                //    kotlinOptions.moduleKind = "umd"
-                //}
             }
         }
         val jsTest by getting {
@@ -106,3 +88,7 @@ kotlin {
 }
 
 fun isMacOs() = org.gradle.internal.os.OperatingSystem.current().isMacOsX
+
+publishing {
+    addRepositoryIfPresent(project)
+}

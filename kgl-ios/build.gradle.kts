@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.danielgergely.kgl"
-version = rootProject.ext["currentVersion"] as String
+version = currentVersion
 
 repositories {
     mavenCentral()
@@ -42,4 +42,8 @@ kotlin {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+}
+
+publishing {
+    addRepositoryIfPresent(project)
 }

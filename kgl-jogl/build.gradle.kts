@@ -21,11 +21,13 @@ java {
 }
 
 publishing {
+    addRepositoryIfPresent(project)
+
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.danielgergely.kgl"
             artifactId = "kgl-logl"
-            version = rootProject.ext["currentVersion"] as String
+            version = currentVersion
 
             from(components["java"])
         }
