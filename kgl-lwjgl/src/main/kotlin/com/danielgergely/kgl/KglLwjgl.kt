@@ -1,8 +1,6 @@
 package com.danielgergely.kgl
 
-import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL33
-import java.io.InputStream
 import java.nio.*
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
