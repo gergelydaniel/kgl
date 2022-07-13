@@ -29,6 +29,6 @@ jobs:
       - name: Gradle Publish
         run: ./gradlew publish
         env:
-          MAVEN_PUBLISH_URL: 'https://maven.danielgergely.com/repository/releases'
+          MAVEN_PUBLISH_URL: 'https://maven.danielgergely.com/releases'
           MAVEN_PUBLISH_USER: ${{ secrets.MAVEN_DANIELGERGELY_USER }}
           MAVEN_PUBLISH_PASS: ${{ secrets.MAVEN_DANIELGERGELY_PASSWORD }}
