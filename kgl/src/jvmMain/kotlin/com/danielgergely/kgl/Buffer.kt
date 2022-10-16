@@ -19,7 +19,11 @@ public actual abstract class Buffer internal constructor(
 public actual class FloatBuffer(buffer: FloatBuffer) : Buffer(buffer) {
 
     public actual constructor(buffer: Array<Float>) : this(buffer.toFloatArray())
-    public actual constructor(buffer: FloatArray) : this(alloc(buffer.size).apply { put(buffer) })
+    public actual constructor(buffer: FloatArray) : this(alloc(buffer.size).apply {
+        put(buffer)
+        position(0)
+    })
+
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
@@ -64,7 +68,10 @@ public actual class FloatBuffer(buffer: FloatBuffer) : Buffer(buffer) {
 
 public actual class ByteBuffer(buffer: ByteBuffer) : Buffer(buffer) {
     public actual constructor(buffer: Array<Byte>) : this(buffer.toByteArray())
-    public actual constructor(buffer: ByteArray) : this(alloc(buffer.size).apply { put(buffer) })
+    public actual constructor(buffer: ByteArray) : this(alloc(buffer.size).apply {
+        put(buffer)
+        position(0)
+    })
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
@@ -110,12 +117,14 @@ public actual class ByteBuffer(buffer: ByteBuffer) : Buffer(buffer) {
 public actual class IntBuffer(private val buffer: IntBuffer) : Buffer(buffer) {
 
     public actual constructor(buffer: Array<Int>) : this(buffer.toIntArray())
-    public actual constructor(buffer: IntArray) : this(alloc(buffer.size).apply { put(buffer) })
+    public actual constructor(buffer: IntArray) : this(alloc(buffer.size).apply {
+        put(buffer)
+        position(0)
+    })
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
-        private fun alloc(size: Int) =
-            ByteBuffer.allocateDirect(size * 4).order(ByteOrder.nativeOrder()).asIntBuffer()
+        private fun alloc(size: Int) = ByteBuffer.allocateDirect(size * 4).order(ByteOrder.nativeOrder()).asIntBuffer()
     }
 
     public actual var position: Int
