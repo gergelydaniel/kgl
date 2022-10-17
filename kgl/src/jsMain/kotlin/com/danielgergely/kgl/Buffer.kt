@@ -3,7 +3,7 @@ package com.danielgergely.kgl
 import org.khronos.webgl.*
 
 public actual abstract class Buffer {
-    internal abstract fun getJsBufferWithOffset(): ArrayBufferView
+    public abstract fun getJsBufferWithOffset(): ArrayBufferView
 }
 
 public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer() {
