@@ -18,12 +18,10 @@ Despite it not being ready I can still recommend using it, since it's designed t
 
 ## Install
 
-_Latest version is not yet published, publishing from CI/CD will be set up soon™_
-
 ```groovy
 maven { url '"https://jitpack.io"' }
 
-implementation 'com.github.gergelydaniel.kgl:$artifactName:0.4'
+implementation 'com.github.gergelydaniel.kgl:$artifactName:0.5'
 ```
 
 ## Build
