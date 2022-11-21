@@ -13,7 +13,7 @@ version = currentVersion
 kotlin {
     jvm()
 
-    js {
+    js(BOTH) {
         browser {
             testTask {} // To run tests with browser.
         }
