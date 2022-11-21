@@ -19,9 +19,9 @@ Despite it not being ready I can still recommend using it, since it's designed t
 ## Install
 
 ```groovy
-maven { url '"https://jitpack.io"' }
+maven { url 'https://maven.danielgergely.com/releases' }
 
-implementation 'com.github.gergelydaniel.kgl:$artifactName:0.5'
+implementation 'com.gergelydaniel.kgl:$artifactName:0.6'
 ```
 
 ## Build
