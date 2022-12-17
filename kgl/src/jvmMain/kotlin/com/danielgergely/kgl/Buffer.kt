@@ -72,6 +72,7 @@ public actual class ByteBuffer(buffer: ByteBuffer) : Buffer(buffer) {
         put(buffer)
         position(0)
     })
+
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {
@@ -121,6 +122,7 @@ public actual class IntBuffer(private val buffer: IntBuffer) : Buffer(buffer) {
         put(buffer)
         position(0)
     })
+
     public actual constructor(size: Int) : this(alloc(size))
 
     private companion object {

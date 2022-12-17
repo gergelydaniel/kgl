@@ -1,6 +1,5 @@
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
-import org.gradle.kotlin.dsl.repositories
 import java.net.URI
 
 data class PublishingSetup(

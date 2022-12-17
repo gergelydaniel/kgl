@@ -1,5 +1,3 @@
-import org.gradle.api.Project
-
 val currentVersion: String by lazy {
     versionInfo().versionName
 }

@@ -209,6 +209,7 @@ object KglLwjgl : Kgl {
                     type,
                     javaBuffer
                 )
+
                 is ShortBuffer -> GL.glTexImage2D(
                     target,
                     level,
@@ -220,6 +221,7 @@ object KglLwjgl : Kgl {
                     type,
                     javaBuffer
                 )
+
                 is IntBuffer -> GL.glTexImage2D(
                     target,
                     level,
@@ -231,6 +233,7 @@ object KglLwjgl : Kgl {
                     type,
                     javaBuffer
                 )
+
                 is FloatBuffer -> GL.glTexImage2D(
                     target,
                     level,
@@ -242,6 +245,7 @@ object KglLwjgl : Kgl {
                     type,
                     javaBuffer
                 )
+
                 is DoubleBuffer -> GL.glTexImage2D(
                     target,
                     level,
@@ -253,6 +257,7 @@ object KglLwjgl : Kgl {
                     type,
                     javaBuffer
                 )
+
                 else -> throw IllegalArgumentException("unknown buffer type ${javaBuffer.javaClass}")
             }
         }

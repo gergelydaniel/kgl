@@ -140,3 +140,4 @@ gradle-app.setting
 local.properties
 .idea/misc.xml
 .idea/jarRepositories.xml
+.idea/kotlinc.xml

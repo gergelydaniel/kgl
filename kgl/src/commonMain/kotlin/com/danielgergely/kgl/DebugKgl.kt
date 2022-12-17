@@ -4,7 +4,7 @@ public class DebugKgl(
     private val kgl: Kgl,
     private val runBefore: (String) -> Unit,
     private val runAfter: (String) -> Unit,
-): Kgl {
+) : Kgl {
 
     override fun createShader(type: Int): Shader? {
         runBefore("createShader")
@@ -188,7 +188,14 @@ public class DebugKgl(
         return ret
     }
 
-    override fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int) {
+    override fun vertexAttribPointer(
+        location: Int,
+        size: Int,
+        type: Int,
+        normalized: Boolean,
+        stride: Int,
+        offset: Int
+    ) {
         runBefore("vertexAttribPointer")
         val ret = kgl.vertexAttribPointer(location, size, type, normalized, stride, offset)
         runAfter("vertexAttribPointer")
@@ -485,7 +492,12 @@ public class DebugKgl(
         return ret
     }
 
-    override fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer) {
+    override fun framebufferRenderbuffer(
+        target: Int,
+        attachment: Int,
+        renderbuffertarget: Int,
+        renderbuffer: Renderbuffer
+    ) {
         runBefore("framebufferRenderbuffer")
         val ret = kgl.framebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
         runAfter("framebufferRenderbuffer")

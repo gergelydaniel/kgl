@@ -18,7 +18,9 @@ public actual class TextureResource(
     public val type: Int,
     public val data: Buffer,
 ) {
-    public actual fun dispose() { data.dispose() }
+    public actual fun dispose() {
+        data.dispose()
+    }
 }
 
 public actual typealias VertexArrayObject = Int

@@ -1,6 +1,5 @@
 package com.danielgergely.kgl
 
-import kotlinx.cinterop.cstr
 import kotlinx.cinterop.*
 import platform.gles3.*
 import platform.glescommon.GLboolean

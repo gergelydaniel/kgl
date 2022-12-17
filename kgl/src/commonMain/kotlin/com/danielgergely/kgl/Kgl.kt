@@ -8,8 +8,8 @@ public interface Kgl {
 
     public fun getShaderParameter(shader: Shader, pname: Int): Int
 
-    public fun getProgramInfoLog(program: Program) : String?
-    public fun getShaderInfoLog(shaderId: Shader) : String?
+    public fun getProgramInfoLog(program: Program): String?
+    public fun getShaderInfoLog(shaderId: Shader): String?
 
     public fun createProgram(): Program?
     public fun attachShader(programId: Program, shaderId: Shader)
@@ -63,10 +63,21 @@ public interface Kgl {
     public fun clear(mask: Int)
 
     public fun createTexture(): Texture
-    public fun createTextures(n: Int) : Array<Texture>
+    public fun createTextures(n: Int): Array<Texture>
     public fun deleteTexture(texture: Texture)
     public fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
-    public fun texImage2D(target: Int, level: Int, internalFormat: Int, width: Int, height: Int, border: Int, format: Int, type: Int, buffer: Buffer)
+    public fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    )
+
     public fun activeTexture(texture: Int)
     public fun bindTexture(target: Int, texture: Texture?)
     public fun generateMipmap(target: Int)
@@ -91,7 +102,13 @@ public interface Kgl {
     public fun bindRenderbuffer(target: Int, renderbuffer: Renderbuffer?)
     public fun createRenderbuffer(): Renderbuffer
     public fun deleteRenderbuffer(renderbuffer: Renderbuffer)
-    public fun framebufferRenderbuffer(target: Int, attachment: Int, renderbuffertarget: Int, renderbuffer: Renderbuffer)
+    public fun framebufferRenderbuffer(
+        target: Int,
+        attachment: Int,
+        renderbuffertarget: Int,
+        renderbuffer: Renderbuffer
+    )
+
     public fun isRenderbuffer(renderbuffer: Renderbuffer): Boolean
     public fun renderbufferStorage(target: Int, internalformat: Int, width: Int, height: Int)
 
