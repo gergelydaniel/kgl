@@ -21,7 +21,7 @@ Despite it not being ready I can still recommend using it, since it's designed t
 ```groovy
 maven { url 'https://maven.danielgergely.com/releases' }
 
-implementation 'com.gergelydaniel.kgl:$artifactName:0.6'
+implementation 'com.gergelydaniel.kgl:$artifactName:0.6.1'
 ```
 
 ## Build
