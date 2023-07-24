@@ -209,10 +209,24 @@ public class DebugKgl(
         return ret
     }
 
+    override fun uniform1fv(location: UniformLocation, value: FloatArray) {
+        runBefore("uniform1fv")
+        val ret = kgl.uniform1fv(location, value)
+        runAfter("uniform1fv")
+        return ret
+    }
+
     override fun uniform1i(location: UniformLocation, i: Int) {
         runBefore("uniform1i")
         val ret = kgl.uniform1i(location, i)
         runAfter("uniform1i")
+        return ret
+    }
+
+    override fun uniform1iv(location: UniformLocation, value: IntArray) {
+        runBefore("uniform1iv")
+        val ret = kgl.uniform1iv(location, value)
+        runAfter("uniform1iv")
         return ret
     }
 
@@ -223,10 +237,24 @@ public class DebugKgl(
         return ret
     }
 
+    override fun uniform2fv(location: UniformLocation, value: FloatArray) {
+        runBefore("uniform2fv")
+        val ret = kgl.uniform2fv(location, value)
+        runAfter("uniform2fv")
+        return ret
+    }
+
     override fun uniform2i(location: UniformLocation, x: Int, y: Int) {
         runBefore("uniform2i")
         val ret = kgl.uniform2i(location, x, y)
         runAfter("uniform2i")
+        return ret
+    }
+
+    override fun uniform2iv(location: UniformLocation, value: IntArray) {
+        runBefore("uniform2iv")
+        val ret = kgl.uniform2iv(location, value)
+        runAfter("uniform2iv")
         return ret
     }
 
@@ -251,6 +279,13 @@ public class DebugKgl(
         return ret
     }
 
+    override fun uniform3iv(location: UniformLocation, value: IntArray) {
+        runBefore("uniform3iv")
+        val ret = kgl.uniform3iv(location, value)
+        runAfter("uniform3iv")
+        return ret
+    }
+
     override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) {
         runBefore("uniform4f")
         val ret = kgl.uniform4f(location, x, y, z, w)
@@ -258,10 +293,24 @@ public class DebugKgl(
         return ret
     }
 
+    override fun uniform4fv(location: UniformLocation, value: FloatArray) {
+        runBefore("uniform4fv")
+        val ret = kgl.uniform4fv(location, value)
+        runAfter("uniform4fv")
+        return ret
+    }
+
     override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) {
         runBefore("uniform4i")
         val ret = kgl.uniform4i(location, x, y, z, w)
         runAfter("uniform4i")
+        return ret
+    }
+
+    override fun uniform4iv(location: UniformLocation, value: IntArray) {
+        runBefore("uniform4iv")
+        val ret = kgl.uniform4iv(location, value)
+        runAfter("uniform4iv")
         return ret
     }
 

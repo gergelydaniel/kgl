@@ -271,16 +271,32 @@ object KglLwjgl : Kgl {
         GL.glUniform1f(location, f)
     }
 
+    override fun uniform1fv(location: UniformLocation, value: FloatArray) {
+        GL.glUniform1fv(location, value)
+    }
+
     override fun uniform1i(location: UniformLocation, i: Int) {
         GL.glUniform1i(location, i)
+    }
+
+    override fun uniform1iv(location: UniformLocation, value: IntArray) {
+        GL.glUniform1iv(location, value)
     }
 
     override fun uniform2f(location: UniformLocation, x: Float, y: Float) {
         GL.glUniform2f(location, x, y)
     }
 
+    override fun uniform2fv(location: UniformLocation, value: FloatArray) {
+        GL.glUniform2fv(location, value)
+    }
+
     override fun uniform2i(location: UniformLocation, x: Int, y: Int) {
         GL.glUniform2i(location, x, y)
+    }
+
+    override fun uniform2iv(location: UniformLocation, value: IntArray) {
+        GL.glUniform2iv(location, value)
     }
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) {
@@ -295,12 +311,24 @@ object KglLwjgl : Kgl {
         GL.glUniform3i(location, x, y, z)
     }
 
+    override fun uniform3iv(location: UniformLocation, value: IntArray) {
+        GL.glUniform3iv(location, value)
+    }
+
     override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) {
         GL.glUniform4f(location, x, y, z, w)
     }
 
+    override fun uniform4fv(location: UniformLocation, value: FloatArray) {
+        GL.glUniform4fv(location, value)
+    }
+
     override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) {
         GL.glUniform4i(location, x, y, z, w)
+    }
+
+    override fun uniform4iv(location: UniformLocation, value: IntArray) {
+        GL.glUniform4iv(location, value)
     }
 
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) {
