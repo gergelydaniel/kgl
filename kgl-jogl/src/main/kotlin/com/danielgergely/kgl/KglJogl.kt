@@ -152,29 +152,29 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun uniform2f(location: UniformLocation, x: Float, y: Float) = gl.glUniform2f(location, x, y)
 
-    override fun uniform2fv(location: UniformLocation, value: FloatArray) = gl.glUniform2fv(location, value.size, value, 0)
+    override fun uniform2fv(location: UniformLocation, value: FloatArray) = gl.glUniform2fv(location, value.size / 2, value, 0)
 
     override fun uniform2i(location: UniformLocation, x: Int, y: Int) = gl.glUniform2i(location, x, y)
 
-    override fun uniform2iv(location: UniformLocation, value: IntArray) = gl.glUniform2iv(location, value.size, value, 0)
+    override fun uniform2iv(location: UniformLocation, value: IntArray) = gl.glUniform2iv(location, value.size / 2, value, 0)
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) = gl.glUniform3f(location, x, y, z)
 
-    override fun uniform3fv(location: UniformLocation, value: FloatArray) = gl.glUniform3fv(location, value.size, value, 0)
+    override fun uniform3fv(location: UniformLocation, value: FloatArray) = gl.glUniform3fv(location, value.size / 3, value, 0)
 
     override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) = gl.glUniform3i(location, x, y, z)
 
-    override fun uniform3iv(location: UniformLocation, value: IntArray) = gl.glUniform3iv(location, value.size, value, 0)
+    override fun uniform3iv(location: UniformLocation, value: IntArray) = gl.glUniform3iv(location, value.size / 3, value, 0)
 
     override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) =
         gl.glUniform4f(location, x, y, z, w)
 
-    override fun uniform4fv(location: UniformLocation, value: FloatArray) = gl.glUniform4fv(location, value.size, value, 0)
+    override fun uniform4fv(location: UniformLocation, value: FloatArray) = gl.glUniform4fv(location, value.size / 4, value, 0)
 
     override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) =
         gl.glUniform4i(location, x, y, z, w)
 
-    override fun uniform4iv(location: UniformLocation, value: IntArray) = gl.glUniform4iv(location, value.size, value, 0)
+    override fun uniform4iv(location: UniformLocation, value: IntArray) = gl.glUniform4iv(location, value.size / 4, value, 0)
 
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
         gl.glUniformMatrix3fv(location, value.size, transpose, value, 0)
