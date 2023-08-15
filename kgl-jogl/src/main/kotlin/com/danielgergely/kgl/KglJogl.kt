@@ -333,3 +333,15 @@ fun imageToByteBuffer(image: BufferedImage): ByteBuffer {
 
     return buffer
 }
+
+private fun FloatArray.vSize(vecSize: Int): Int {
+    if (size % vecSize != 0)
+        throw IllegalArgumentException("Array size must be a multiple of $vecSize.")
+    return size / vecSize
+}
+
+private fun IntArray.vSize(vecSize: Int): Int {
+    if (size % vecSize != 0)
+        throw IllegalArgumentException("Array size must be a multiple of $vecSize.")
+    return size / vecSize
+}
