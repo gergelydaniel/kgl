@@ -87,35 +87,43 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
 
     public override fun uniform1f(location: UniformLocation, f: Float): Unit =
         gl.uniform1f(location.unsafeCast<WebGLUniformLocation>(), f)
-
+    public override fun uniform1fv(location: UniformLocation, value: FloatArray): Unit =
+        gl.uniform1fv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Float32Array>())
     public override fun uniform1i(location: UniformLocation, i: Int): Unit =
         gl.uniform1i(location.unsafeCast<WebGLUniformLocation>(), i)
+    public override fun uniform1iv(location: UniformLocation, value: IntArray): Unit =
+        gl.uniform1iv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Int32Array>())
 
     public override fun uniform2f(location: UniformLocation, x: Float, y: Float): Unit =
         gl.uniform2f(location.unsafeCast<WebGLUniformLocation>(), x, y)
-
+    public override fun uniform2fv(location: UniformLocation, value: FloatArray): Unit =
+        gl.uniform2fv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Float32Array>())
     public override fun uniform2i(location: UniformLocation, x: Int, y: Int): Unit =
         gl.uniform2i(location.unsafeCast<WebGLUniformLocation>(), x, y)
+    public override fun uniform2iv(location: UniformLocation, value: IntArray): Unit =
+        gl.uniform2iv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Int32Array>())
 
     public override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float): Unit =
         gl.uniform3f(location.unsafeCast<WebGLUniformLocation>(), x, y, z)
-
     public override fun uniform3fv(location: UniformLocation, value: FloatArray): Unit =
         gl.uniform3fv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Float32Array>())
-
     public override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int): Unit =
         gl.uniform3i(location.unsafeCast<WebGLUniformLocation>(), x, y, z)
+    public override fun uniform3iv(location: UniformLocation, value: IntArray): Unit =
+        gl.uniform3iv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Int32Array>())
 
     public override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float): Unit =
         gl.uniform4f(location.unsafeCast<WebGLUniformLocation>(), x, y, z, w)
-
+    public override fun uniform4fv(location: UniformLocation, value: FloatArray): Unit =
+        gl.uniform4fv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Float32Array>())
     public override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int): Unit =
         gl.uniform4i(location.unsafeCast<WebGLUniformLocation>(), x, y, z, w)
+    public override fun uniform4iv(location: UniformLocation, value: IntArray): Unit =
+        gl.uniform4iv(location.unsafeCast<WebGLUniformLocation>(), value.unsafeCast<Int32Array>())
 
     public override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: dynamic) {
         gl.uniformMatrix3fv(location.unsafeCast<WebGLUniformLocation>(), transpose, value.unsafeCast<Float32Array>())
     }
-
     public override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: dynamic) {
         gl.uniformMatrix4fv(location.unsafeCast<WebGLUniformLocation>(), transpose, value.unsafeCast<Float32Array>())
     }

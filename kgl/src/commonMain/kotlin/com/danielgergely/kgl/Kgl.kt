@@ -39,17 +39,24 @@ public interface Kgl {
     public fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
 
     public fun uniform1f(location: UniformLocation, f: Float)
+    public fun uniform1fv(location: UniformLocation, value: FloatArray)
     public fun uniform1i(location: UniformLocation, i: Int)
+    public fun uniform1iv(location: UniformLocation, value: IntArray)
 
     public fun uniform2f(location: UniformLocation, x: Float, y: Float)
+    public fun uniform2fv(location: UniformLocation, value: FloatArray)
     public fun uniform2i(location: UniformLocation, x: Int, y: Int)
+    public fun uniform2iv(location: UniformLocation, value: IntArray)
 
     public fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float)
     public fun uniform3fv(location: UniformLocation, value: FloatArray)
     public fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int)
+    public fun uniform3iv(location: UniformLocation, value: IntArray)
 
     public fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float)
+    public fun uniform4fv(location: UniformLocation, value: FloatArray)
     public fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int)
+    public fun uniform4iv(location: UniformLocation, value: IntArray)
 
     public fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
     public fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray)
