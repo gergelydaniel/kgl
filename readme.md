@@ -18,10 +18,12 @@ Despite it not being ready I can still recommend using it, since it's designed t
 
 ## Install
 
+[<img src="https://maven.danielgergely.com/api/badge/latest/releases/com/danielgergely/kgl/kgl">](https://maven.danielgergely.com/#/releases/com/danielgergely/kgl)
+
 ```groovy
 maven { url 'https://maven.danielgergely.com/releases' }
 
-implementation 'com.danielgergely.kgl:$artifactName:0.6.1'
+implementation 'com.danielgergely.kgl:$artifactName:$kglVersion'
 ```
 
 ## Build
