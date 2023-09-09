@@ -37,6 +37,10 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosX64Main.dependsOn(this)
         }
+
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
     }
 }
 

@@ -7,20 +7,17 @@ repositories {
     mavenCentral()
 }
 
-val lwjglVersion = "3.3.0"
-val kotlinVersion = rootProject.ext["kotlin_version"] as String
-
 version = currentVersion
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation(libs.org.jetbrains.kotlin.stdlib)
 
-    implementation("org.lwjgl:lwjgl:$lwjglVersion")
-    implementation("org.lwjgl:lwjgl-assimp:$lwjglVersion")
-    implementation("org.lwjgl:lwjgl-glfw:$lwjglVersion")
-    implementation("org.lwjgl:lwjgl-openal:$lwjglVersion")
-    implementation("org.lwjgl:lwjgl-opengl:$lwjglVersion")
-    implementation("org.lwjgl:lwjgl-stb:$lwjglVersion")
+    implementation(libs.org.lwjgl)
+    implementation(libs.org.lwjgl.assimp)
+    implementation(libs.org.lwjgl.glfw)
+    implementation(libs.org.lwjgl.openal)
+    implementation(libs.org.lwjgl.opengl)
+    implementation(libs.org.lwjgl.stb)
 
     implementation(project(":kgl"))
 }

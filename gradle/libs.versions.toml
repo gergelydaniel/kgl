@@ -1,0 +1,18 @@
+[versions]
+android-gradle-plugin = "7.3.1"
+jogl = "2.3.2"
+kotlin = "1.9.10"
+lwjgl = "3.3.0"
+
+[libraries]
+com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle-plugin" }
+org-jetbrains-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+org-jetbrains-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+org-jogamp-jogl-all = { module = "org.jogamp.jogl:jogl-all", version.ref = "jogl" }
+org-jogamp-gluegen-rt = { module = "org.jogamp.gluegen:gluegen-rt", version.ref = "jogl" }
+org-lwjgl = { module = "org.lwjgl:lwjgl", version.ref = "lwjgl" }
+org-lwjgl-assimp = { module = "org.lwjgl:lwjgl-assimp", version.ref = "lwjgl" }
+org-lwjgl-openal = { module = "org.lwjgl:lwjgl-openal", version.ref = "lwjgl" }
+org-lwjgl-glfw = { module = "org.lwjgl:lwjgl-glfw", version.ref = "lwjgl" }
+org-lwjgl-stb = { module = "org.lwjgl:lwjgl-stb", version.ref = "lwjgl" }
+org-lwjgl-opengl = { module = "org.lwjgl:lwjgl-opengl", version.ref = "lwjgl" }

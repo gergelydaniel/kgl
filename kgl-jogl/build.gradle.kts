@@ -10,8 +10,8 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
-    implementation("org.jogamp.gluegen:gluegen-rt:2.3.2")
-    implementation("org.jogamp.jogl:jogl-all:2.3.2")
+    implementation(libs.org.jogamp.gluegen.rt)
+    implementation(libs.org.jogamp.jogl.all)
 
     implementation(project(":kgl"))
 }

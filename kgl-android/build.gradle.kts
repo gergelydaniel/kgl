@@ -33,10 +33,8 @@ android {
     }
 }
 
-val kotlinVersion = rootProject.ext["kotlin_version"] as String
-
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation(libs.org.jetbrains.kotlin.stdlib)
 
     implementation(project(":kgl"))
 }

@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
+    kotlin("multiplatform")
     id("maven-publish")
 }
 
@@ -13,7 +13,7 @@ version = currentVersion
 kotlin {
     jvm()
 
-    js(BOTH) {
+    js {
         browser {
             testTask {} // To run tests with browser.
         }
@@ -83,6 +83,10 @@ kotlin {
             mingwX64Main.dependsOn(this)
 
             appleOnlySourceSets.forEach { it.dependsOn(this) }
+        }
+
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
         }
     }
 }
