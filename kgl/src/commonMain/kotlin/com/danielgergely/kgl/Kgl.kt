@@ -37,7 +37,6 @@ public interface Kgl {
     public fun deleteBuffer(buffer: GlBuffer)
 
     public fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
-    public fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, ptr: FloatBuffer)
 
     public fun uniform1f(location: UniformLocation, f: Float)
     public fun uniform1fv(location: UniformLocation, value: FloatArray)
