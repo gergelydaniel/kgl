@@ -263,6 +263,84 @@ object KglLwjgl : Kgl {
         }
     }
 
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
+        buffer.withJavaBuffer { javaBuffer ->
+            when (javaBuffer) {
+                is ByteBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is ShortBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is IntBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is FloatBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is DoubleBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                else -> throw IllegalArgumentException("unknown buffer type ${javaBuffer.javaClass}")
+            }
+        }
+    }
+
     override fun texParameteri(target: Int, pname: Int, value: Int) {
         GL.glTexParameteri(target, pname, value)
     }

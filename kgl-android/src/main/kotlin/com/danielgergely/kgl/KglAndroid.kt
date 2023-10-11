@@ -184,6 +184,22 @@ object KglAndroid : Kgl {
         }
     }
 
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
+        buffer.withJavaBuffer {  javaBuffer ->
+            GL.glTexSubImage2D(target, level, xOffset, yOffset, width, height, format, type, javaBuffer)
+        }
+    }
+
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)
     override fun bindTexture(target: Int, texture: Texture?) = GL.glBindTexture(target, texture ?: 0)
     override fun generateMipmap(target: Int) = GL.glGenerateMipmap(target)
