@@ -13,7 +13,7 @@ public class BitmapTextureAsset(
 
     public override fun dispose() {}
 
-    override fun Kgl.texImage2D(target: Int, level: Int, internalFormat: Int, border: Int) {
+    override fun texImage2D(kgl : Kgl, target: Int, level: Int, internalFormat: Int, border: Int) {
         if (internalFormat == -1) {
             GLUtils.texImage2D(
                 target, level, bitmap, border
@@ -31,7 +31,8 @@ public class BitmapTextureAsset(
         }
     }
 
-    override fun Kgl.texSubImage2D(
+    override fun texSubImage2D(
+        kgl : Kgl,
         target: Int,
         level: Int,
         xOffset: Int,

@@ -203,7 +203,7 @@ object KglAndroid : Kgl {
     }
 
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
-        TODO("Not yet implemented")
+        resource.texImage2D(kgl = this, target, level, internalFormat, border)
     }
 
     override fun texSubImage2D(
@@ -217,7 +217,7 @@ object KglAndroid : Kgl {
         type: Int,
         resource: TextureAsset
     ) {
-        TODO("Not yet implemented")
+        resource.texSubImage2D(kgl = this, target, level, xOffset, yOffset, width, height, format, type)
     }
 
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)

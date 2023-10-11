@@ -20,9 +20,10 @@ public actual interface TextureAsset {
 
     public actual fun dispose()
 
-    public fun Kgl.texImage2D(target: Int, level: Int, internalFormat: Int, border: Int)
+    public fun texImage2D(kgl : Kgl, target: Int, level: Int, internalFormat: Int, border: Int)
 
-    public fun Kgl.texSubImage2D(
+    public fun texSubImage2D(
+        kgl : Kgl,
         target: Int,
         level: Int,
         xOffset: Int,
@@ -45,8 +46,8 @@ public actual class TextureResource(
 
     public override fun dispose() {}
 
-    public override fun Kgl.texImage2D(target: Int, level: Int, internalFormat: Int, border: Int) {
-        texImage2D(
+    public override fun texImage2D(kgl : Kgl, target: Int, level: Int, internalFormat: Int, border: Int) {
+        kgl.texImage2D(
             target = target,
             level = level,
             internalFormat = internalFormat,
@@ -59,7 +60,8 @@ public actual class TextureResource(
         )
     }
 
-    override fun Kgl.texSubImage2D(
+    override fun texSubImage2D(
+        kgl : Kgl,
         target: Int,
         level: Int,
         xOffset: Int,
@@ -69,7 +71,7 @@ public actual class TextureResource(
         format: Int,
         type: Int
     ) {
-        texSubImage2D(
+        kgl.texSubImage2D(
             target,
             level,
             xOffset,
