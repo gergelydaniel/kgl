@@ -58,7 +58,7 @@ kotlin {
         }
         // android jvm
         val androidMain by getting {
-            dependsOn(jvmMain)
+            dependsOn(androJvmMain)
         }
         val jvmTest by getting {
             dependencies {
