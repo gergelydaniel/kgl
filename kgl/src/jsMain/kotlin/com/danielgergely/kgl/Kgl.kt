@@ -194,6 +194,48 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
         )
     }
 
+    public fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        format: Int,
+        type: Int,
+        resource: TextureResource
+    ): Unit {
+        gl.texSubImage2D(
+            target,
+            level,
+            xOffset,
+            yOffset,
+            format,
+            type,
+            resource.image
+        )
+    }
+
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
+        with(resource){
+            texImage2D(target, level, internalFormat, border)
+        }
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        asset: TextureAsset
+    ) {
+        with(asset){
+            texSubImage2D(target, level, xOffset, yOffset, width, height, format, type)
+        }
+    }
+
 
     public override fun activeTexture(texture: Int): Unit = gl.activeTexture(texture)
     public override fun bindTexture(target: Int, texture: Texture?): Unit =
