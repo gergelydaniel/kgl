@@ -85,6 +85,18 @@ public interface Kgl {
         buffer: Buffer
     )
 
+    public fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset : Int,
+        yOffset : Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    )
+
     public fun activeTexture(texture: Int)
     public fun bindTexture(target: Int, texture: Texture?)
     public fun generateMipmap(target: Int)
