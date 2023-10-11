@@ -8,9 +8,11 @@ public expect class UniformLocation
 
 public expect class GlBuffer
 
-public expect class TextureResource {
+public expect interface TextureAsset {
     public fun dispose()
 }
+
+public expect class TextureResource : TextureAsset
 
 public expect class Texture
 

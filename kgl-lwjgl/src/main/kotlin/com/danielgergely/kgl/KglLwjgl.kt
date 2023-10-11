@@ -185,6 +185,28 @@ object KglLwjgl : Kgl {
         )
     }
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
+        with(resource) {
+            texImage2D(target, level, internalFormat, border)
+        }
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        resource: TextureAsset
+    ) {
+        with(resource){
+            texSubImage2D(target, level, xOffset, yOffset, width, height, format, type)
+        }
+    }
+
     override fun texImage2D(
         target: Int,
         level: Int,

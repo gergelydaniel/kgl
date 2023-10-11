@@ -17,8 +17,12 @@ public actual typealias Program = Any
  */
 public actual typealias UniformLocation = Any
 
-public actual open class TextureResource(public val image: TexImageSource) {
-    public actual open fun dispose() {}
+public actual interface TextureAsset {
+    public actual fun dispose()
+}
+
+public actual open class TextureResource(public val image: TexImageSource) : TextureAsset {
+    public override fun dispose() {}
 }
 
 /**

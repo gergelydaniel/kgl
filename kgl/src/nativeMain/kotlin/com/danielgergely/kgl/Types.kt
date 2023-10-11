@@ -11,14 +11,18 @@ public actual typealias GlBuffer = Int
 
 public actual typealias Texture = Int
 
+public actual interface TextureAsset {
+    public actual fun dispose()
+}
+
 public actual class TextureResource(
     public val width: Int,
     public val height: Int,
     public val format: Int,
     public val type: Int,
     public val data: Buffer,
-) {
-    public actual fun dispose() {
+) : TextureAsset {
+    public override fun dispose() {
         data.dispose()
     }
 }

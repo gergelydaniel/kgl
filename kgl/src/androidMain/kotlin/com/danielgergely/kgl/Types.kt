@@ -1,13 +1,55 @@
 package com.danielgergely.kgl
 
-import java.nio.Buffer
+import android.graphics.Bitmap
+import android.opengl.GLUtils
 
-public actual class TextureResource(
-    public val width: Int,
-    public val height: Int,
-    public val format: Int,
-    public val type: Int,
-    public val data: Buffer,
-) {
-    public actual fun dispose() {}
+public class BitmapTextureAsset(
+    public val bitmap: Bitmap,
+    public val type: Int = -1,
+) : TextureAsset {
+
+    public inline val width: Int get() = bitmap.width
+    public val height: Int get() = bitmap.height
+
+    public override fun dispose() {}
+
+    override fun Kgl.texImage2D(target: Int, level: Int, internalFormat: Int, border: Int) {
+        if (internalFormat == -1) {
+            GLUtils.texImage2D(
+                target, level, bitmap, border
+            )
+        } else {
+            if (type == -1) {
+                GLUtils.texImage2D(
+                    target, level, internalFormat, bitmap, border
+                )
+            } else {
+                GLUtils.texImage2D(
+                    target, level, internalFormat, bitmap, type, border
+                )
+            }
+        }
+    }
+
+    override fun Kgl.texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int
+    ) {
+        if(format != -1 && type != -1){
+            GLUtils.texSubImage2D(
+                target, level, xOffset, yOffset, bitmap, format, type
+            )
+        } else {
+            GLUtils.texSubImage2D(
+                target, level, xOffset, yOffset, bitmap
+            )
+        }
+    }
+
 }
