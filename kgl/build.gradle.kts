@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("maven-publish")
+    id("com.android.library")
 }
 
 repositories {
@@ -12,6 +13,9 @@ version = currentVersion
 
 kotlin {
     jvm()
+    androidTarget {
+        publishLibraryVariants()
+    }
 
     js {
         browser {
@@ -41,10 +45,20 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val jvmMain by getting {
+        // android and jvm shared
+        val androJvmMain by creating {
+            dependsOn(commonMain)
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
             }
+        }
+        // desktop jvm
+        val jvmMain by getting {
+            dependsOn(androJvmMain)
+        }
+        // android jvm
+        val androidMain by getting {
+            dependsOn(jvmMain)
         }
         val jvmTest by getting {
             dependencies {
