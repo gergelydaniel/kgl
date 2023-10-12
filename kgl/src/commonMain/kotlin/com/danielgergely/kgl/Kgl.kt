@@ -73,6 +73,21 @@ public interface Kgl {
     public fun createTextures(n: Int): Array<Texture>
     public fun deleteTexture(texture: Texture)
     public fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
+
+    public fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset)
+
+    public fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset : Int,
+        yOffset : Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        resource: TextureAsset
+    )
+
     public fun texImage2D(
         target: Int,
         level: Int,
@@ -80,6 +95,18 @@ public interface Kgl {
         width: Int,
         height: Int,
         border: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    )
+
+    public fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset : Int,
+        yOffset : Int,
+        width: Int,
+        height: Int,
         format: Int,
         type: Int,
         buffer: Buffer

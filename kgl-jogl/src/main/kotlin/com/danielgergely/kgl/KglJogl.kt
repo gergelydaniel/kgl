@@ -211,6 +211,24 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun deleteTexture(texture: Texture) = gl.glDeleteTextures(1, intArrayOf(texture), 0)
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
+        resource.texImage2D(kgl = this, target, level, internalFormat, border)
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        resource: TextureAsset
+    ) {
+        resource.texSubImage2D(kgl = this, target, level, xOffset, yOffset, width, height, format, type)
+    }
+
     override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource) {
         texImage2D(
             target = target,
@@ -238,6 +256,22 @@ class KglJogl(private val gl: GL) : Kgl {
     ) {
         buffer.withJavaBuffer { javaBuffer ->
             gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, javaBuffer)
+        }
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
+        buffer.withJavaBuffer { javaBuffer->
+            gl.glTexSubImage2D(target, level, xOffset, yOffset, width, height, format, type, javaBuffer)
         }
     }
 

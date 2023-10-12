@@ -17,8 +17,56 @@ public actual typealias Program = Any
  */
 public actual typealias UniformLocation = Any
 
-public actual open class TextureResource(public val image: TexImageSource) {
-    public actual open fun dispose() {}
+public actual interface TextureAsset {
+
+    public actual fun isValid() : Boolean
+
+    public actual fun dispose()
+
+    public fun texImage2D(kgl : Kgl, target: Int, level: Int, internalFormat: Int, border: Int)
+
+    public fun texSubImage2D(
+        kgl : Kgl,
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int
+    )
+
+}
+
+public actual open class TextureResource(public val image: TexImageSource) : TextureAsset {
+
+    override fun isValid(): Boolean {
+        return true
+    }
+
+    public override fun dispose() {}
+
+    override fun texImage2D(kgl: Kgl, target: Int, level: Int, internalFormat: Int, border: Int) {
+        kgl.texImage2D(target, level, internalFormat, border, this@TextureResource)
+    }
+
+    override fun texSubImage2D(
+        kgl: Kgl,
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int
+    ) {
+        (kgl as KglJs).texSubImage2D(
+            target, level, xOffset, yOffset, format, type, resource = this@TextureResource
+        )
+    }
+
 }
 
 /**

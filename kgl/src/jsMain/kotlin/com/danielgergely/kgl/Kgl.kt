@@ -170,6 +170,68 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
         )
     }
 
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
+        gl.texSubImage2D(
+            target,
+            level,
+            xOffset,
+            yOffset,
+            width,
+            height,
+            format,
+            type,
+            buffer.getJsBufferWithOffset()
+        )
+    }
+
+    public fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        format: Int,
+        type: Int,
+        resource: TextureResource
+    ): Unit {
+        gl.texSubImage2D(
+            target,
+            level,
+            xOffset,
+            yOffset,
+            format,
+            type,
+            resource.image
+        )
+    }
+
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
+        resource.texImage2D(kgl = this, target, level, internalFormat, border)
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        resource: TextureAsset
+    ) {
+        resource.texSubImage2D(kgl = this, target, level, xOffset, yOffset, width, height, format, type)
+    }
+
 
     public override fun activeTexture(texture: Int): Unit = gl.activeTexture(texture)
     public override fun bindTexture(target: Int, texture: Texture?): Unit =

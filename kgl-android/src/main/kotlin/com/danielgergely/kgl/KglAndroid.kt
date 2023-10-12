@@ -1,7 +1,9 @@
 package com.danielgergely.kgl
 
+import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLES30
+import android.opengl.GLUtils
 
 typealias GL = GLES20
 
@@ -182,6 +184,40 @@ object KglAndroid : Kgl {
         buffer.withJavaBuffer { javaBuffer ->
             GL.glTexImage2D(target, level, internalFormat, width, height, border, format, type, javaBuffer)
         }
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
+        buffer.withJavaBuffer {  javaBuffer ->
+            GL.glTexSubImage2D(target, level, xOffset, yOffset, width, height, format, type, javaBuffer)
+        }
+    }
+
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
+        resource.texImage2D(kgl = this, target, level, internalFormat, border)
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        resource: TextureAsset
+    ) {
+        resource.texSubImage2D(kgl = this, target, level, xOffset, yOffset, width, height, format, type)
     }
 
     override fun activeTexture(texture: Int) = GL.glActiveTexture(texture)

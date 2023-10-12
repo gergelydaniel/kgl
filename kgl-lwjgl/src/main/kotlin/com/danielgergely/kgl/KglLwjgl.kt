@@ -185,6 +185,24 @@ object KglLwjgl : Kgl {
         )
     }
 
+    override fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureAsset) {
+        resource.texImage2D(kgl = this, target, level, internalFormat, border)
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        resource: TextureAsset
+    ) {
+        resource.texSubImage2D(kgl = this, target, level, xOffset, yOffset, width, height, format, type)
+    }
+
     override fun texImage2D(
         target: Int,
         level: Int,
@@ -253,6 +271,84 @@ object KglLwjgl : Kgl {
                     width,
                     height,
                     border,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                else -> throw IllegalArgumentException("unknown buffer type ${javaBuffer.javaClass}")
+            }
+        }
+    }
+
+    override fun texSubImage2D(
+        target: Int,
+        level: Int,
+        xOffset: Int,
+        yOffset: Int,
+        width: Int,
+        height: Int,
+        format: Int,
+        type: Int,
+        buffer: Buffer
+    ) {
+        buffer.withJavaBuffer { javaBuffer ->
+            when (javaBuffer) {
+                is ByteBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is ShortBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is IntBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is FloatBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
+                    format,
+                    type,
+                    javaBuffer
+                )
+
+                is DoubleBuffer -> GL.glTexSubImage2D(
+                    target,
+                    level,
+                    xOffset,
+                    yOffset,
+                    width,
+                    height,
                     format,
                     type,
                     javaBuffer
