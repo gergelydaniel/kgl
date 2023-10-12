@@ -19,7 +19,7 @@ public actual typealias UniformLocation = Any
 
 public actual interface TextureAsset {
 
-    public actual fun isValid() : Boolean = true
+    public actual fun isValid() : Boolean
 
     public actual fun dispose()
 
@@ -40,6 +40,10 @@ public actual interface TextureAsset {
 }
 
 public actual open class TextureResource(public val image: TexImageSource) : TextureAsset {
+
+    override fun isValid(): Boolean {
+        return true
+    }
 
     public override fun dispose() {}
 
