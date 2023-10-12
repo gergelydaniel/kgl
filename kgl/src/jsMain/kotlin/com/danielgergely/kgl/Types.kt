@@ -19,6 +19,8 @@ public actual typealias UniformLocation = Any
 
 public actual interface TextureAsset {
 
+    public actual fun isValid() : Boolean = true
+
     public actual fun dispose()
 
     public fun texImage2D(kgl : Kgl, target: Int, level: Int, internalFormat: Int, border: Int)

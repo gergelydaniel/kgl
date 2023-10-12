@@ -12,7 +12,11 @@ public actual typealias GlBuffer = Int
 public actual typealias Texture = Int
 
 public actual interface TextureAsset {
+
+    public actual fun isValid() : Boolean = true
+
     public actual fun dispose()
+
 }
 
 public actual class TextureResource(

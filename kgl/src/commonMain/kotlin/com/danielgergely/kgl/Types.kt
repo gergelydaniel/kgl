@@ -9,7 +9,12 @@ public expect class UniformLocation
 public expect class GlBuffer
 
 public expect interface TextureAsset {
+
+    /** if asset is valid, isRecycled == false on Android **/
+    public fun isValid() : Boolean
+
     public fun dispose()
+
 }
 
 public expect class TextureResource : TextureAsset

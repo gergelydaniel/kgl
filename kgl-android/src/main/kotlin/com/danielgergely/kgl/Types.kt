@@ -11,6 +11,10 @@ public class BitmapTextureAsset(
     public inline val width: Int get() = bitmap.width
     public val height: Int get() = bitmap.height
 
+    override fun isValid(): Boolean {
+        return !bitmap.isRecycled
+    }
+
     public override fun dispose() {}
 
     override fun texImage2D(kgl : Kgl, target: Int, level: Int, internalFormat: Int, border: Int) {
