@@ -72,7 +72,24 @@ public interface Kgl {
     public fun createTexture(): Texture
     public fun createTextures(n: Int): Array<Texture>
     public fun deleteTexture(texture: Texture)
+
     public fun texImage2D(target: Int, level: Int, internalFormat: Int, border: Int, resource: TextureResource)
+
+    /**
+     * buffer is null
+     * https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml#notes
+     **/
+    public fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
+        type: Int
+    )
+
     public fun texImage2D(
         target: Int,
         level: Int,

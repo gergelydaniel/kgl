@@ -399,6 +399,22 @@ public class DebugKgl(
         height: Int,
         border: Int,
         format: Int,
+        type: Int
+    ) {
+        runBefore("texImage2D")
+        val ret = kgl.texImage2D(target, level, internalFormat, width, height, border, format, type)
+        runAfter("texImage2D")
+        return ret
+    }
+
+    override fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
         type: Int,
         buffer: Buffer
     ) {

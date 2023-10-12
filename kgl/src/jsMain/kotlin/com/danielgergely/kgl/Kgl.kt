@@ -146,6 +146,29 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
         resource: TextureResource
     ): Unit = gl.texImage2D(target, level, internalFormat, GL_RGBA, GL_UNSIGNED_BYTE, resource.image)
 
+    override fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
+        type: Int
+    ) {
+        gl.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            null
+        )
+    }
+
     public override fun texImage2D(
         target: Int,
         level: Int,

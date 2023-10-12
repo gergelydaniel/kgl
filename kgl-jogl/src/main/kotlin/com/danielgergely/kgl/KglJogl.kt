@@ -233,6 +233,19 @@ class KglJogl(private val gl: GL) : Kgl {
         height: Int,
         border: Int,
         format: Int,
+        type: Int
+    ) {
+        gl.glTexImage2D(target, level, internalFormat, width, height, border, format, type, null)
+    }
+
+    override fun texImage2D(
+        target: Int,
+        level: Int,
+        internalFormat: Int,
+        width: Int,
+        height: Int,
+        border: Int,
+        format: Int,
         type: Int,
         buffer: Buffer
     ) {
