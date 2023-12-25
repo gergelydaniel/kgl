@@ -23,6 +23,7 @@ kotlin {
     mingwX64()
 
     if (isMacOs()) {
+        macosArm64()
         macosX64()
         iosArm64()
         iosX64()
@@ -68,10 +69,11 @@ kotlin {
 
         val appleOnlySourceSets = if (isMacOs()) {
             val macosX64Main by getting { }
+            val macosArm64Main by getting { }
             val iosArm64Main by getting { }
             val iosX64Main by getting { }
 
-            listOf(macosX64Main, iosArm64Main, iosX64Main)
+            listOf(macosX64Main, iosArm64Main, iosX64Main, macosArm64Main)
         } else {
             listOf()
         }
