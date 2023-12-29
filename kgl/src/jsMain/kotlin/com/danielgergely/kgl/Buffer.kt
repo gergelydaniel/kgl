@@ -2,21 +2,27 @@ package com.danielgergely.kgl
 
 import org.khronos.webgl.*
 
-public actual abstract class Buffer {
-    public abstract fun getJsBufferWithOffset(): ArrayBufferView
+public actual sealed class Buffer
+
+public fun Buffer.getJsBufferWithOffset(): ArrayBufferView {
+    return when(this) {
+        is ByteBuffer -> byteBuffer.asDynamic().subarray(position)
+        is FloatBuffer -> buffer.asDynamic().subarray(position)
+        is IntBuffer -> buffer.asDynamic().subarray(position)
+        is ShortBuffer -> buffer.asDynamic().subarray(position)
+        else -> throw IllegalStateException()
+    }
 }
 
-public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer() {
+public actual class FloatBuffer(internal val buffer: Float32Array) : Buffer() {
     public actual constructor(buffer: Array<Float>) : this(Float32Array(buffer))
     public actual constructor(buffer: FloatArray) : this(Float32Array(buffer.unsafeCast<Float32Array>()))
     public actual constructor(size: Int) : this(Float32Array(size))
 
     public actual var position: Int = 0
 
-    private val floatBuffer: Float32Array = buffer
-
     public actual fun put(f: Float) {
-        floatBuffer[position] = f
+        buffer[position] = f
         position += 1
     }
 
@@ -25,15 +31,15 @@ public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer() {
     }
 
     public actual fun put(floatArray: FloatArray, offset: Int, length: Int) {
-        floatBuffer.set((floatArray.unsafeCast<Float32Array>()).subarray(offset, length), position)
+        buffer.set((floatArray.unsafeCast<Float32Array>()).subarray(offset, length), position)
         position += length
     }
 
     public actual operator fun set(pos: Int, f: Float) {
-        floatBuffer[pos] = f
+        buffer[pos] = f
     }
 
-    public actual fun get(): Float = floatBuffer[position]
+    public actual fun get(): Float = buffer[position]
 
     public actual fun get(floatArray: FloatArray) {
         get(floatArray, 0, floatArray.size)
@@ -41,17 +47,13 @@ public actual class FloatBuffer constructor(buffer: Float32Array) : Buffer() {
 
     public actual fun get(floatArray: FloatArray, offset: Int, length: Int) {
         val dest = floatArray.unsafeCast<Float32Array>()
-        dest.subarray(offset, length).set(floatBuffer, position)
+        dest.subarray(offset, length).set(buffer, position)
     }
 
-    public actual operator fun get(pos: Int): Float = floatBuffer[pos]
-
-    override fun getJsBufferWithOffset(): ArrayBufferView {
-        return floatBuffer.asDynamic().subarray(position)
-    }
+    public actual operator fun get(pos: Int): Float = buffer[pos]
 }
 
-public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) : Buffer() {
+public actual class ByteBuffer(internal val byteBuffer: Uint8Array) : Buffer() {
     public actual constructor(buffer: Array<Byte>) : this(Uint8Array(buffer))
     public actual constructor(buffer: ByteArray) : this(Uint8Array(buffer.unsafeCast<Uint8Array>()))
     public actual constructor(size: Int) : this(ByteArray(size))
@@ -92,14 +94,9 @@ public actual class ByteBuffer constructor(private val byteBuffer: Uint8Array) :
     public actual operator fun get(pos: Int): Byte {
         return byteBuffer[pos].toUByte().toByte()
     }
-
-    override fun getJsBufferWithOffset(): ArrayBufferView {
-        return byteBuffer.asDynamic().subarray(position)
-    }
 }
 
-
-public actual class IntBuffer constructor(private val buffer: Int32Array) : Buffer() {
+public actual class IntBuffer(internal val buffer: Int32Array) : Buffer() {
     public actual constructor(buffer: Array<Int>) : this(Int32Array(buffer))
     public actual constructor(buffer: IntArray) : this(Int32Array(buffer.unsafeCast<Int32Array>()))
     public actual constructor(size: Int) : this(Int32Array(size))
@@ -136,8 +133,43 @@ public actual class IntBuffer constructor(private val buffer: Int32Array) : Buff
     }
 
     public actual operator fun get(pos: Int): Int = buffer[pos]
+}
 
-    override fun getJsBufferWithOffset(): ArrayBufferView {
-        return buffer.asDynamic().subarray(position)
+public actual class ShortBuffer(internal val buffer: Int16Array) : Buffer() {
+    public actual constructor(buffer: Array<Short>) : this(Int16Array(buffer))
+    public actual constructor(buffer: ShortArray) : this(Int16Array(buffer.unsafeCast<Int16Array>()))
+    public actual constructor(size: Int) : this(Int16Array(size))
+
+    public actual var position: Int = 0
+
+    public actual fun put(s: Short) {
+        buffer[position] = s
+        position += 1
     }
+
+    public actual fun put(shortArray: ShortArray) {
+        put(shortArray, 0, shortArray.size)
+    }
+
+    public actual fun put(shortArray: ShortArray, offset: Int, length: Int) {
+        buffer.set((shortArray.unsafeCast<Int16Array>()).subarray(offset, length), position)
+        position += length
+    }
+
+    public actual operator fun set(pos: Int, s: Short) {
+        buffer[pos] = s
+    }
+
+    public actual fun get(): Short = buffer[position]
+
+    public actual fun get(shortArray: ShortArray) {
+        get(shortArray, 0, shortArray.size)
+    }
+
+    public actual fun get(shortArray: ShortArray, offset: Int, length: Int) {
+        val dest = shortArray.unsafeCast<Int16Array>()
+        dest.subarray(offset, length).set(buffer, position)
+    }
+
+    public actual operator fun get(pos: Int): Short = buffer[pos]
 }

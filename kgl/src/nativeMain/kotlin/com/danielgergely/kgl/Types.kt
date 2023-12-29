@@ -19,7 +19,6 @@ public actual class TextureResource(
     public val data: Buffer,
 ) {
     public actual fun dispose() {
-        data.dispose()
     }
 }
 

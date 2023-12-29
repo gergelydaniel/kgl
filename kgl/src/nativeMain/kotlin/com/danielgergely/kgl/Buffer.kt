@@ -2,38 +2,36 @@ package com.danielgergely.kgl
 
 import kotlinx.cinterop.CValuesRef
 import kotlinx.cinterop.refTo
-import platform.posix.free
 
 
-public actual abstract class Buffer {
-    public abstract fun ref(): CValuesRef<*>
+public actual sealed class Buffer
 
-    internal open fun dispose() {}
-}
-
-public class PointerBuffer(
-    private val pointer: CValuesRef<*>,
-    private val freeOnDispose: Boolean
-) : Buffer() {
-
-    override fun ref(): CValuesRef<*> {
-        return pointer
-    }
-
-    override fun dispose() {
-        if (freeOnDispose) {
-            free(pointer)
-        }
+public fun Buffer.ref(): CValuesRef<*> {
+    return when (this) {
+        is ByteBuffer -> buffer.refTo(position)
+        is FloatBuffer -> buffer.refTo(position)
+        is IntBuffer -> buffer.refTo(position)
+        is ShortBuffer -> buffer.refTo(position)
+        else -> throw IllegalStateException()
     }
 }
 
-public actual class FloatBuffer actual constructor(buffer: FloatArray) : Buffer() {
-    public actual constructor(buffer: Array<Float>) : this(buffer.toFloatArray())
-    public actual constructor(size: Int) : this(FloatArray(size))
+public actual class FloatBuffer : Buffer {
 
-    private val buffer: FloatArray = buffer.copyOf()
-
+    internal val buffer: FloatArray
     public actual var position: Int = 0
+
+    public actual constructor(buffer: FloatArray) {
+        this.buffer = buffer.copyOf()
+    }
+
+    public actual constructor(buffer: Array<Float>) {
+        this.buffer = buffer.toFloatArray()
+    }
+
+    public actual constructor(size: Int) {
+        this.buffer = FloatArray(size)
+    }
 
     public actual fun put(f: Float) {
         buffer[position++] = f
@@ -68,18 +66,25 @@ public actual class FloatBuffer actual constructor(buffer: FloatArray) : Buffer(
     public actual operator fun get(pos: Int): Float {
         return buffer[pos]
     }
-
-    override fun ref(): CValuesRef<*> {
-        return buffer.refTo(position)
-    }
 }
 
-public actual class ByteBuffer actual constructor(buffer: ByteArray) : Buffer() {
-    public actual constructor(buffer: Array<Byte>) : this(buffer.toByteArray())
-    public actual constructor(size: Int) : this(ByteArray(size))
+public actual class ByteBuffer : Buffer {
 
-    private val buffer: ByteArray = buffer.copyOf()
+    internal val buffer: ByteArray
     public actual var position: Int = 0
+
+    public actual constructor(buffer: ByteArray) : super() {
+        this.buffer = buffer.copyOf()
+    }
+
+    public actual constructor(buffer: Array<Byte>) {
+        this.buffer = buffer.toByteArray()
+    }
+
+    public actual constructor(size: Int) {
+        this.buffer = ByteArray(size)
+    }
+
 
     public actual fun put(b: Byte) {
         buffer[position++] = b
@@ -114,19 +119,24 @@ public actual class ByteBuffer actual constructor(buffer: ByteArray) : Buffer() 
     public actual operator fun get(pos: Int): Byte {
         return buffer[pos]
     }
-
-    override fun ref(): CValuesRef<*> {
-        return buffer.refTo(position) //TODO test
-    }
 }
 
-public actual class IntBuffer actual constructor(buffer: IntArray) : Buffer() {
-    public actual constructor(buffer: Array<Int>) : this(buffer.toIntArray())
-    public actual constructor(size: Int) : this(IntArray(size))
+public actual class IntBuffer : Buffer {
 
-    private val buffer: IntArray = buffer.copyOf()
-
+    internal val buffer: IntArray
     public actual var position: Int = 0
+
+    public actual constructor(buffer: IntArray) : super() {
+        this.buffer = buffer.copyOf()
+    }
+
+    public actual constructor(buffer: Array<Int>) {
+        this.buffer = buffer.toIntArray()
+    }
+
+    public actual constructor(size: Int) {
+        this.buffer = IntArray(size)
+    }
 
     public actual fun put(i: Int) {
         buffer[position++] = i
@@ -161,8 +171,57 @@ public actual class IntBuffer actual constructor(buffer: IntArray) : Buffer() {
     public actual operator fun get(pos: Int): Int {
         return buffer[pos]
     }
+}
 
-    override fun ref(): CValuesRef<*> {
-        return buffer.refTo(position)
+public actual class ShortBuffer : Buffer {
+
+    internal val buffer: ShortArray
+    public actual var position: Int = 0
+
+    public actual constructor(buffer: ShortArray) {
+        this.buffer = buffer.copyOf()
+    }
+
+    public actual constructor(buffer: Array<Short>) {
+        this.buffer = buffer.toShortArray()
+    }
+
+    public actual constructor(size: Int) {
+        this.buffer = ShortArray(size)
+    }
+
+
+    public actual fun put(s: Short) {
+        buffer[position++] = s
+    }
+
+    public actual fun put(shortArray: ShortArray) {
+        shortArray.copyInto(buffer, position)
+        position += shortArray.size
+    }
+
+    public actual fun put(shortArray: ShortArray, offset: Int, length: Int) {
+        shortArray.copyInto(buffer, position, offset, offset + length)
+        position += length
+    }
+
+    public actual operator fun set(pos: Int, s: Short) {
+        buffer[pos] = s
+    }
+
+    public actual fun get(): Short {
+        return buffer[position]
+    }
+
+    public actual fun get(shortArray: ShortArray) {
+        get(shortArray, 0, shortArray.size)
+    }
+
+    public actual fun get(shortArray: ShortArray, offset: Int, length: Int) {
+        buffer.copyInto(shortArray, offset, position, position + length)
+    }
+
+    public actual operator fun get(pos: Int): Short {
+        return buffer[pos]
     }
 }

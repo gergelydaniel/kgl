@@ -3,6 +3,7 @@ package com.danielgergely.kgl
 import kotlinx.cinterop.*
 import platform.gles3.*
 import platform.glescommon.GLboolean
+import kotlin.native.concurrent.ThreadLocal
 
 // TODO: Replace this with actual stack implementation.
 @ThreadLocal

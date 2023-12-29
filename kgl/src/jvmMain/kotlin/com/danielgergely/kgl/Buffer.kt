@@ -5,18 +5,25 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
 
-public actual abstract class Buffer internal constructor(
-    @JvmField @PublishedApi internal val javaBuffer: java.nio.Buffer
-) {
+public actual sealed class Buffer
 
-    public inline fun withJavaBuffer(block: (java.nio.Buffer) -> Unit) {
-        val positionBefore = javaBuffer.position()
-        block(javaBuffer)
-        javaBuffer.position(positionBefore)
+@PublishedApi
+internal val Buffer.javaBuffer: java.nio.Buffer
+    get() = when(this) {
+        is com.danielgergely.kgl.ByteBuffer -> buffer
+        is com.danielgergely.kgl.FloatBuffer -> buffer
+        is com.danielgergely.kgl.IntBuffer -> buffer
+        is com.danielgergely.kgl.ShortBuffer -> buffer
+        else -> throw IllegalStateException()
     }
+
+public inline fun Buffer.withJavaBuffer(block: (java.nio.Buffer) -> Unit) {
+    val positionBefore = javaBuffer.position()
+    block(javaBuffer)
+    javaBuffer.position(positionBefore)
 }
 
-public actual class FloatBuffer(buffer: FloatBuffer) : Buffer(buffer) {
+public actual class FloatBuffer(internal val buffer: FloatBuffer) : Buffer() {
 
     public actual constructor(buffer: Array<Float>) : this(buffer.toFloatArray())
     public actual constructor(buffer: FloatArray) : this(alloc(buffer.size).apply {
@@ -66,7 +73,7 @@ public actual class FloatBuffer(buffer: FloatBuffer) : Buffer(buffer) {
     public actual operator fun get(pos: Int): Float = floatBuffer.get(pos)
 }
 
-public actual class ByteBuffer(buffer: ByteBuffer) : Buffer(buffer) {
+public actual class ByteBuffer(internal val buffer: ByteBuffer) : Buffer() {
     public actual constructor(buffer: Array<Byte>) : this(buffer.toByteArray())
     public actual constructor(buffer: ByteArray) : this(alloc(buffer.size).apply {
         put(buffer)
@@ -115,7 +122,7 @@ public actual class ByteBuffer(buffer: ByteBuffer) : Buffer(buffer) {
 }
 
 
-public actual class IntBuffer(private val buffer: IntBuffer) : Buffer(buffer) {
+public actual class IntBuffer(internal val buffer: IntBuffer) : Buffer() {
 
     public actual constructor(buffer: Array<Int>) : this(buffer.toIntArray())
     public actual constructor(buffer: IntArray) : this(alloc(buffer.size).apply {
@@ -160,4 +167,52 @@ public actual class IntBuffer(private val buffer: IntBuffer) : Buffer(buffer) {
     }
 
     public actual operator fun get(pos: Int): Int = buffer.get(pos)
+}
+
+public actual class ShortBuffer(internal val buffer: java.nio.ShortBuffer) : Buffer() {
+
+    public actual constructor(buffer: Array<Short>) : this(buffer.toShortArray())
+    public actual constructor(buffer: ShortArray) : this(alloc(buffer.size).apply {
+        put(buffer)
+        position(0)
+    })
+
+    public actual constructor(size: Int) : this(alloc(size))
+
+    private companion object {
+        private fun alloc(size: Int) =
+            ByteBuffer.allocateDirect(size * 2).order(ByteOrder.nativeOrder()).asShortBuffer()
+    }
+
+    public actual var position: Int
+        get() = buffer.position()
+        set(value) {
+            buffer.position(value)
+        }
+
+    public actual fun put(s: Short) {
+        buffer.put(s)
+    }
+
+    public actual fun put(shortArray: ShortArray): Unit = put(shortArray, 0, shortArray.size)
+
+    public actual fun put(shortArray: ShortArray, offset: Int, length: Int) {
+        buffer.put(shortArray, offset, length)
+    }
+
+    public actual operator fun set(pos: Int, s: Short) {
+        buffer.put(pos, s)
+    }
+
+    public actual fun get(): Short = buffer.get()
+
+    public actual fun get(shortArray: ShortArray) {
+        get(shortArray, 0, shortArray.size)
+    }
+
+    public actual fun get(shortArray: ShortArray, offset: Int, length: Int) {
+        buffer.get(shortArray, offset, length)
+    }
+
+    public actual operator fun get(pos: Int): Short = buffer.get(pos)
 }

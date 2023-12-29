@@ -210,7 +210,7 @@ object KglLwjgl : Kgl {
                     javaBuffer
                 )
 
-                is ShortBuffer -> GL.glTexImage2D(
+                is java.nio.ShortBuffer -> GL.glTexImage2D(
                     target,
                     level,
                     internalFormat,
@@ -384,7 +384,7 @@ object KglLwjgl : Kgl {
         buffer.withJavaBuffer { javaBuffer ->
             when (javaBuffer) {
                 is ByteBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
-                is ShortBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
+                is java.nio.ShortBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
                 is IntBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
                 is FloatBuffer -> GL.glReadPixels(x, y, width, height, format, type, javaBuffer)
                 else -> throw IllegalArgumentException("unknown buffer type ${javaBuffer.javaClass}")

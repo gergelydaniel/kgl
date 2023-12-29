@@ -1,6 +1,6 @@
 package com.danielgergely.kgl
 
-public expect abstract class Buffer
+public expect sealed class Buffer
 
 public expect class FloatBuffer : Buffer {
     public constructor(buffer: Array<Float>)
@@ -54,4 +54,22 @@ public expect class IntBuffer : Buffer {
     public fun get(intArray: IntArray)
     public fun get(intArray: IntArray, offset: Int, length: Int)
     public operator fun get(pos: Int): Int
+}
+
+public expect class ShortBuffer : Buffer {
+    public constructor(buffer: Array<Short>)
+    public constructor(buffer: ShortArray)
+    public constructor(size: Int)
+
+    public var position: Int
+
+    public fun put(s: Short)
+    public fun put(shortArray: ShortArray)
+    public fun put(shortArray: ShortArray, offset: Int, length: Int)
+    public operator fun set(pos: Int, s: Short)
+
+    public fun get(): Short
+    public fun get(shortArray: ShortArray)
+    public fun get(shortArray: ShortArray, offset: Int, length: Int)
+    public operator fun get(pos: Int): Short
 }
