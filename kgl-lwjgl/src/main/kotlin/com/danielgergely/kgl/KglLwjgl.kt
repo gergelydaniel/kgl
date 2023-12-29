@@ -119,6 +119,10 @@ object KglLwjgl : Kgl {
         GL.glDrawArrays(mode, first, count)
     }
 
+    override fun drawElements(mode: Int, count: Int, type: Int) {
+        GL.glDrawElements(mode, count, type, 0)
+    }
+
     override fun getError(): Int {
         return GL.glGetError()
     }

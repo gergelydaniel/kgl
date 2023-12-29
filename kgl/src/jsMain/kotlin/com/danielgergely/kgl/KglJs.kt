@@ -190,6 +190,8 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
 
     public override fun drawArrays(mode: Int, first: Int, count: Int): Unit = gl.drawArrays(mode, first, count)
 
+    public override fun drawElements(mode: Int, count: Int, type: Int): Unit = gl.drawElements(mode, count, type, 0)
+
     public override fun getError(): Int = gl.getError()
     public override fun finish(): Unit = gl.finish()
 
