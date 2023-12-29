@@ -361,6 +361,10 @@ object KglIos : Kgl {
         glDrawArrays(mode.toUInt(), first, count)
     }
 
+    override fun drawElements(mode: Int, count: Int, type: Int) {
+        glDrawElements(mode.toUInt(), count, type.toUInt(), null)
+    }
+
     override fun getError(): Int {
         return glGetError().toInt()
     }

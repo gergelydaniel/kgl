@@ -260,6 +260,7 @@ class KglJogl(private val gl: GL) : Kgl {
         gl.glDeleteVertexArrays(1, intArrayOf(vertexArrayObject), 0)
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
+    override fun drawElements(mode: Int, count: Int, type: Int) = gl.glDrawElements(mode, count, type, 0)
 
     override fun getError(): Int = gl.glGetError()
     override fun finish() = gl.glFinish()

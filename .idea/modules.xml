@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/kgl.iml" filepath="$PROJECT_DIR$/.idea/kgl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-android/kgl.kgl-android.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-jogl/kgl.kgl-jogl.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-jogl/kgl.kgl-jogl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-jogl/kgl.kgl-jogl.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-jogl/kgl.kgl-jogl.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-jogl/kgl.kgl-jogl.test.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-jogl/kgl.kgl-jogl.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-lwjgl/kgl.kgl-lwjgl.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-lwjgl/kgl.kgl-lwjgl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-lwjgl/kgl.kgl-lwjgl.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-lwjgl/kgl.kgl-lwjgl.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl-lwjgl/kgl.kgl-lwjgl.test.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl-lwjgl/kgl.kgl-lwjgl.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.commonMain.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.commonMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.commonTest.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.commonTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jsMain.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jsMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jsTest.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jsTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jvmMain.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jvmMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jvmTest.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl/kgl.kgl.jvmTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kgl.test.iml" filepath="$PROJECT_DIR$/.idea/modules/kgl.test.iml" />
+    </modules>
+  </component>
+</project>

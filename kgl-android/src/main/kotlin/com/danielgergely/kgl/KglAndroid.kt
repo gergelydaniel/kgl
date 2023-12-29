@@ -203,6 +203,8 @@ object KglAndroid : Kgl {
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = GL.glDrawArrays(mode, first, count)
 
+    override fun drawElements(mode: Int, count: Int, type: Int) = GL.glDrawElements(mode, count, type, 0)
+
     override fun getError(): Int = GL.glGetError()
     override fun finish() = GL.glFinish()
 

@@ -464,6 +464,13 @@ public class DebugKgl(
         return ret
     }
 
+    override fun drawElements(mode: Int, count: Int, type: Int) {
+        runBefore("drawElements")
+        val ret = kgl.drawElements(mode, count, type)
+        runAfter("drawElements")
+        return ret
+    }
+
     override fun getError(): Int {
         runBefore("getError")
         val ret = kgl.getError()

@@ -95,6 +95,7 @@ public interface Kgl {
     public fun deleteVertexArray(vertexArrayObject: VertexArrayObject)
 
     public fun drawArrays(mode: Int, first: Int, count: Int)
+    public fun drawElements(mode: Int, count: Int, type: Int)
 
     public fun getError(): Int
     public fun finish()
