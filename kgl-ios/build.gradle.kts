@@ -13,6 +13,7 @@ repositories {
 kotlin {
     iosArm64()
     iosX64()
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
@@ -30,12 +31,14 @@ kotlin {
 
         val iosArm64Main by getting { }
         val iosX64Main by getting { }
+        val iosSimulatorArm64Main by getting { }
 
         val nativeMain by sourceSets.creating {
             dependsOn(commonMain)
 
             iosArm64Main.dependsOn(this)
             iosX64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
         }
 
         all {
