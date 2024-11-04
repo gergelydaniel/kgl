@@ -27,6 +27,7 @@ kotlin {
         macosX64()
         iosArm64()
         iosX64()
+        iosSimulatorArm64()
     }
     explicitApi()
 
@@ -72,8 +73,9 @@ kotlin {
             val macosArm64Main by getting { }
             val iosArm64Main by getting { }
             val iosX64Main by getting { }
+            val iosSimulatorArm64Main by getting { }
 
-            listOf(macosX64Main, iosArm64Main, iosX64Main, macosArm64Main)
+            listOf(macosX64Main, iosArm64Main, iosX64Main, macosArm64Main, iosSimulatorArm64Main)
         } else {
             listOf()
         }
