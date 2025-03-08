@@ -164,7 +164,12 @@ object KglLwjgl : Kgl {
     }
 
     override fun getUniformLocation(programId: Program, name: String): UniformLocation? {
-        return GL.glGetUniformLocation(programId, name)
+        val location = GL.glGetUniformLocation(programId, name)
+        return if (location < 0) {
+            null
+        } else {
+            location
+        }
     }
 
     override fun linkProgram(programId: Program) {
