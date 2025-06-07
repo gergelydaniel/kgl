@@ -124,7 +124,12 @@ object KglIos : Kgl {
     }
 
     override fun getUniformLocation(programId: Program, name: String): UniformLocation? {
-        return glGetUniformLocation(programId.toUInt(), name)
+        val location = glGetUniformLocation(programId.toUInt(), name)
+        return if (location < 0) {
+            null
+        } else {
+            location
+        }
     }
 
     override fun getAttribLocation(programId: Program, name: String): Int {
