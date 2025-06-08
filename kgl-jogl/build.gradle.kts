@@ -26,7 +26,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.danielgergely.kgl"
-            artifactId = "kgl-logl"
+            artifactId = "kgl-jogl"
             version = currentVersion
 
             from(components["java"])
