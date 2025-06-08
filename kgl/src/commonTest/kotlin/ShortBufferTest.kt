@@ -53,4 +53,54 @@ class ShortBufferTest {
 
         assertEquals(111, shortBuffer[5])
     }
+
+    @Test
+    fun shortBufferArrayGet() {
+        val shortBuffer = ShortBuffer(shortArrayOf(10, 20, 30, 40))
+
+        shortBuffer.get()
+
+        val shortArray = ShortArray(2)
+        shortBuffer.get(shortArray)
+
+        assertEquals(20, shortArray[0])
+        assertEquals(30, shortArray[1])
+    }
+
+    @Test
+    fun shortBufferSingleGetChangesPosition() {
+        val shortBuffer = ShortBuffer(shortArrayOf(10, 20, 30))
+
+        val firstRead = shortBuffer.get()
+        assertEquals(10, firstRead)
+
+        val secondRead = shortBuffer.get()
+        assertEquals(20, secondRead)
+
+        assertEquals(2, shortBuffer.position)
+    }
+
+    @Test
+    fun shortBufferArrayGetChangesPosition() {
+        val shortBuffer = ShortBuffer(shortArrayOf(10, 20, 30))
+
+        val shortArray = ShortArray(2)
+        shortBuffer.get(shortArray)
+
+        assertEquals(10, shortArray[0])
+        assertEquals(20, shortArray[1])
+
+        assertEquals(30, shortBuffer.get())
+    }
+
+    @Test
+    fun shortBufferRandomGetDoesntChangePosition() {
+        val shortBuffer = ShortBuffer(shortArrayOf(10, 20, 30))
+
+        val getValue0 = shortBuffer[0]
+        val getValue1 = shortBuffer[1]
+
+        assertEquals(0, shortBuffer.position)
+        assertEquals(shortBuffer.get(), 10)
+    }
 }

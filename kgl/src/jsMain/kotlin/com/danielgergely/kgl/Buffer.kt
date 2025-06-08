@@ -5,7 +5,7 @@ import org.khronos.webgl.*
 public actual sealed class Buffer
 
 public fun Buffer.getJsBufferWithOffset(): ArrayBufferView {
-    return when(this) {
+    return when (this) {
         is ByteBuffer -> byteBuffer.asDynamic().subarray(position)
         is FloatBuffer -> buffer.asDynamic().subarray(position)
         is IntBuffer -> buffer.asDynamic().subarray(position)
@@ -39,7 +39,7 @@ public actual class FloatBuffer(internal val buffer: Float32Array) : Buffer() {
         buffer[pos] = f
     }
 
-    public actual fun get(): Float = buffer[position]
+    public actual fun get(): Float = buffer[position++]
 
     public actual fun get(floatArray: FloatArray) {
         get(floatArray, 0, floatArray.size)
@@ -47,7 +47,9 @@ public actual class FloatBuffer(internal val buffer: Float32Array) : Buffer() {
 
     public actual fun get(floatArray: FloatArray, offset: Int, length: Int) {
         val dest = floatArray.unsafeCast<Float32Array>()
-        dest.subarray(offset, length).set(buffer, position)
+        val destSubarray = dest.subarray(offset, length)
+        destSubarray.set(buffer.subarray(position, position + length))
+        position += length
     }
 
     public actual operator fun get(pos: Int): Float = buffer[pos]
@@ -79,7 +81,7 @@ public actual class ByteBuffer(internal val byteBuffer: Uint8Array) : Buffer() {
     }
 
     public actual fun get(): Byte {
-        return byteBuffer[position].toUByte().toByte()
+        return byteBuffer[position++].toUByte().toByte()
     }
 
     public actual fun get(byteArray: ByteArray) {
@@ -88,7 +90,9 @@ public actual class ByteBuffer(internal val byteBuffer: Uint8Array) : Buffer() {
 
     public actual fun get(byteArray: ByteArray, offset: Int, length: Int) {
         val dest = byteArray.unsafeCast<Uint8Array>()
-        dest.subarray(offset, length).set(byteBuffer, position)
+        val destSubarray = dest.subarray(offset, length)
+        destSubarray.set(byteBuffer.subarray(position, position + length))
+        position += length
     }
 
     public actual operator fun get(pos: Int): Byte {
@@ -121,7 +125,7 @@ public actual class IntBuffer(internal val buffer: Int32Array) : Buffer() {
         buffer[pos] = i
     }
 
-    public actual fun get(): Int = buffer[position]
+    public actual fun get(): Int = buffer[position++]
 
     public actual fun get(intArray: IntArray) {
         get(intArray, 0, intArray.size)
@@ -129,7 +133,9 @@ public actual class IntBuffer(internal val buffer: Int32Array) : Buffer() {
 
     public actual fun get(intArray: IntArray, offset: Int, length: Int) {
         val dest = intArray.unsafeCast<Int32Array>()
-        dest.subarray(offset, length).set(buffer, position)
+        val destSubarray = dest.subarray(offset, length)
+        destSubarray.set(buffer.subarray(position, position + length))
+        position += length
     }
 
     public actual operator fun get(pos: Int): Int = buffer[pos]
@@ -160,7 +166,7 @@ public actual class ShortBuffer(internal val buffer: Int16Array) : Buffer() {
         buffer[pos] = s
     }
 
-    public actual fun get(): Short = buffer[position]
+    public actual fun get(): Short = buffer[position++]
 
     public actual fun get(shortArray: ShortArray) {
         get(shortArray, 0, shortArray.size)
@@ -168,7 +174,9 @@ public actual class ShortBuffer(internal val buffer: Int16Array) : Buffer() {
 
     public actual fun get(shortArray: ShortArray, offset: Int, length: Int) {
         val dest = shortArray.unsafeCast<Int16Array>()
-        dest.subarray(offset, length).set(buffer, position)
+        val destSubarray = dest.subarray(offset, length)
+        destSubarray.set(buffer.subarray(position, position + length))
+        position += length
     }
 
     public actual operator fun get(pos: Int): Short = buffer[pos]

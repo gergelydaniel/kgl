@@ -52,7 +52,7 @@ public actual class FloatBuffer : Buffer {
     }
 
     public actual fun get(): Float {
-        return buffer[position]
+        return buffer[position++]
     }
 
     public actual fun get(floatArray: FloatArray) {
@@ -61,6 +61,7 @@ public actual class FloatBuffer : Buffer {
 
     public actual fun get(floatArray: FloatArray, offset: Int, length: Int) {
         buffer.copyInto(floatArray, offset, position, position + length)
+        position += length
     }
 
     public actual operator fun get(pos: Int): Float {
@@ -105,7 +106,7 @@ public actual class ByteBuffer : Buffer {
     }
 
     public actual fun get(): Byte {
-        return buffer[position]
+        return buffer[position++]
     }
 
     public actual fun get(byteArray: ByteArray) {
@@ -114,6 +115,7 @@ public actual class ByteBuffer : Buffer {
 
     public actual fun get(byteArray: ByteArray, offset: Int, length: Int) {
         buffer.copyInto(byteArray, offset, position, position + length)
+        position += length
     }
 
     public actual operator fun get(pos: Int): Byte {
@@ -157,7 +159,7 @@ public actual class IntBuffer : Buffer {
     }
 
     public actual fun get(): Int {
-        return buffer[position]
+        return buffer[position++]
     }
 
     public actual fun get(intArray: IntArray) {
@@ -166,6 +168,7 @@ public actual class IntBuffer : Buffer {
 
     public actual fun get(intArray: IntArray, offset: Int, length: Int) {
         buffer.copyInto(intArray, offset, position, position + length)
+        position += length
     }
 
     public actual operator fun get(pos: Int): Int {
@@ -210,7 +213,7 @@ public actual class ShortBuffer : Buffer {
     }
 
     public actual fun get(): Short {
-        return buffer[position]
+        return buffer[position++]
     }
 
     public actual fun get(shortArray: ShortArray) {
@@ -219,6 +222,7 @@ public actual class ShortBuffer : Buffer {
 
     public actual fun get(shortArray: ShortArray, offset: Int, length: Int) {
         buffer.copyInto(shortArray, offset, position, position + length)
+        position += length
     }
 
     public actual operator fun get(pos: Int): Short {
