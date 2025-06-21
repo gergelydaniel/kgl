@@ -181,6 +181,13 @@ public class DebugKgl(
         return ret
     }
 
+    override fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer) {
+        runBefore("bufferSubData")
+        val ret = kgl.bufferSubData(target, dstOffset, sourceData)
+        runAfter("bufferSubData")
+        return ret
+    }
+
     override fun deleteBuffer(buffer: GlBuffer) {
         runBefore("deleteBuffer")
         val ret = kgl.deleteBuffer(buffer)
@@ -199,6 +206,13 @@ public class DebugKgl(
         runBefore("vertexAttribPointer")
         val ret = kgl.vertexAttribPointer(location, size, type, normalized, stride, offset)
         runAfter("vertexAttribPointer")
+        return ret
+    }
+
+    override fun vertexAttribDivisor(index: Int, divisor: Int) {
+        runBefore("vertexAttribDivisor")
+        val ret = kgl.vertexAttribDivisor(index, divisor)
+        runAfter("vertexAttribDivisor")
         return ret
     }
 
@@ -468,6 +482,31 @@ public class DebugKgl(
         runBefore("drawElements")
         val ret = kgl.drawElements(mode, count, type)
         runAfter("drawElements")
+        return ret
+    }
+
+    override fun drawArraysInstanced(
+        mode: Int,
+        first: Int,
+        count: Int,
+        instanceCount: Int,
+    ) {
+        runBefore("drawArraysInstanced")
+        val ret = kgl.drawArraysInstanced(mode, first, count, instanceCount)
+        runAfter("drawArraysInstanced")
+        return ret
+    }
+
+    override fun drawElementsInstanced(
+        mode: Int,
+        count: Int,
+        type: Int,
+        offset: Int,
+        instanceCount: Int
+    ) {
+        runBefore("drawElementsInstanced")
+        val ret = kgl.drawElementsInstanced(mode, count, type, offset, instanceCount)
+        runAfter("drawElementsInstanced")
         return ret
     }
 

@@ -1,13 +1,13 @@
 package com.danielgergely.kgl
 
-import org.lwjgl.opengl.GL33
+import org.lwjgl.opengl.GL46C
 import java.nio.*
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
 import java.nio.ShortBuffer
 
-typealias GL = GL33
+typealias GL = GL46C
 
 object KglLwjgl : Kgl {
 
@@ -52,6 +52,18 @@ object KglLwjgl : Kgl {
                 is FloatBuffer -> GL.glBufferData(target, buffer, usage)
                 is ShortBuffer -> GL.glBufferData(target, buffer, usage)
                 is IntBuffer -> GL.glBufferData(target, buffer, usage)
+                else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
+            }
+        }
+    }
+
+    override fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer) {
+        sourceData.withJavaBuffer { buffer ->
+            when (buffer) {
+                is ByteBuffer -> GL.glBufferSubData(target, dstOffset.toLong(), buffer)
+                is FloatBuffer -> GL.glBufferSubData(target, dstOffset.toLong(), buffer)
+                is ShortBuffer -> GL.glBufferSubData(target, dstOffset.toLong(), buffer)
+                is IntBuffer -> GL.glBufferSubData(target, dstOffset.toLong(), buffer)
                 else -> throw IllegalArgumentException("unknown buffer type ${buffer.javaClass}")
             }
         }
@@ -124,6 +136,25 @@ object KglLwjgl : Kgl {
 
     override fun drawElements(mode: Int, count: Int, type: Int) {
         GL.glDrawElements(mode, count, type, 0)
+    }
+
+    override fun drawArraysInstanced(
+        mode: Int,
+        first: Int,
+        count: Int,
+        instanceCount: Int
+    ) {
+        GL.glDrawArraysInstanced(mode, first, count, instanceCount)
+    }
+
+    override fun drawElementsInstanced(
+        mode: Int,
+        count: Int,
+        type: Int,
+        offset: Int,
+        instanceCount: Int
+    ) {
+        GL.glDrawElementsInstanced(mode, count, type, offset.toLong(), instanceCount)
     }
 
     override fun getError(): Int {
@@ -360,6 +391,10 @@ object KglLwjgl : Kgl {
         offset: Int
     ) {
         GL.glVertexAttribPointer(location, size, type, normalized, stride, offset.toLong())
+    }
+
+    override fun vertexAttribDivisor(index: Int, divisor: Int) {
+        GL.glVertexAttribDivisor(index, divisor)
     }
 
     override fun viewport(x: Int, y: Int, width: Int, height: Int) {

@@ -3,7 +3,9 @@ package com.danielgergely.kgl
 import com.jogamp.opengl.GL3ES3
 import java.awt.image.BufferedImage
 import java.nio.ByteBuffer
+import java.nio.FloatBuffer
 import java.nio.IntBuffer
+import java.nio.ShortBuffer
 import java.util.*
 
 typealias GL = GL3ES3
@@ -128,6 +130,20 @@ class KglJogl(private val gl: GL) : Kgl {
         }
     }
 
+    override fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer) {
+        sourceData.withJavaBuffer { buffer ->
+            val bytePerElement = when (buffer) {
+                is ByteBuffer -> 1
+                is FloatBuffer -> 4
+                is ShortBuffer -> 2
+                is IntBuffer -> 4
+                else -> throw IllegalArgumentException("Unsupported buffer $buffer for bufferSubData")
+            }
+
+            gl.glBufferSubData(target, dstOffset.toLong(), (buffer.remaining() * bytePerElement).toLong(), buffer)
+        }
+    }
+
     override fun deleteBuffer(buffer: GlBuffer) = gl.glDeleteBuffers(1, intArrayOf(buffer), 0)
 
 
@@ -144,44 +160,57 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun uniform1f(location: UniformLocation, f: Float) =
         gl.glUniform1f(location, f)
+
     override fun uniform1fv(location: UniformLocation, value: FloatArray) =
         gl.glUniform1fv(location, value.vSize(1), value, 0)
+
     override fun uniform1i(location: UniformLocation, i: Int) =
         gl.glUniform1i(location, i)
+
     override fun uniform1iv(location: UniformLocation, value: IntArray) =
         gl.glUniform1iv(location, value.vSize(1), value, 0)
 
     override fun uniform2f(location: UniformLocation, x: Float, y: Float) =
         gl.glUniform2f(location, x, y)
+
     override fun uniform2fv(location: UniformLocation, value: FloatArray) =
         gl.glUniform2fv(location, value.vSize(2), value, 0)
+
     override fun uniform2i(location: UniformLocation, x: Int, y: Int) =
         gl.glUniform2i(location, x, y)
+
     override fun uniform2iv(location: UniformLocation, value: IntArray) =
         gl.glUniform2iv(location, value.vSize(2), value, 0)
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) =
         gl.glUniform3f(location, x, y, z)
+
     override fun uniform3fv(location: UniformLocation, value: FloatArray) =
         gl.glUniform3fv(location, value.vSize(3), value, 0)
+
     override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) =
         gl.glUniform3i(location, x, y, z)
+
     override fun uniform3iv(location: UniformLocation, value: IntArray) =
         gl.glUniform3iv(location, value.vSize(3), value, 0)
 
     override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) =
         gl.glUniform4f(location, x, y, z, w)
+
     override fun uniform4fv(location: UniformLocation, value: FloatArray) =
         gl.glUniform4fv(location, value.vSize(4), value, 0)
+
     override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) =
         gl.glUniform4i(location, x, y, z, w)
+
     override fun uniform4iv(location: UniformLocation, value: IntArray) =
         gl.glUniform4iv(location, value.vSize(4), value, 0)
 
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
-        gl.glUniformMatrix3fv(location, value.vSize(3*3), transpose, value, 0)
+        gl.glUniformMatrix3fv(location, value.vSize(3 * 3), transpose, value, 0)
+
     override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
-        gl.glUniformMatrix4fv(location, value.vSize(4*4), transpose, value, 0)
+        gl.glUniformMatrix4fv(location, value.vSize(4 * 4), transpose, value, 0)
 
     override fun blendFunc(sFactor: Int, dFactor: Int) = gl.glBlendFunc(sFactor, dFactor)
 
@@ -261,6 +290,22 @@ class KglJogl(private val gl: GL) : Kgl {
 
     override fun drawArrays(mode: Int, first: Int, count: Int) = gl.glDrawArrays(mode, first, count)
     override fun drawElements(mode: Int, count: Int, type: Int) = gl.glDrawElements(mode, count, type, 0)
+    override fun drawArraysInstanced(
+        mode: Int,
+        first: Int,
+        count: Int,
+        instanceCount: Int
+    ) = gl.glDrawArraysInstanced(mode, first, count, instanceCount)
+
+    override fun drawElementsInstanced(
+        mode: Int,
+        count: Int,
+        type: Int,
+        offset: Int,
+        instanceCount: Int
+    ) = gl.glDrawElementsInstanced(mode, count, type, offset.toLong(), instanceCount)
+
+    override fun vertexAttribDivisor(index: Int, divisor: Int) = gl.glVertexAttribDivisor(index, divisor)
 
     override fun getError(): Int = gl.glGetError()
     override fun finish() = gl.glFinish()

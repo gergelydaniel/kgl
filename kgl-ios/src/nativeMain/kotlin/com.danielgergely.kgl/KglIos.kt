@@ -3,7 +3,6 @@ package com.danielgergely.kgl
 import kotlinx.cinterop.*
 import platform.gles3.*
 import platform.glescommon.GLboolean
-import kotlin.native.concurrent.ThreadLocal
 
 // TODO: Replace this with actual stack implementation.
 @ThreadLocal
@@ -176,6 +175,10 @@ object KglIos : Kgl {
         glBufferData(target.toUInt(), size.toLong(), sourceData.ref(), usage.toUInt())
     }
 
+    override fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer) {
+        glBufferSubData(target.toUInt(), dstOffset.toLong(), sourceData.remainingBytes().toLong(), sourceData.ref())
+    }
+
     override fun deleteBuffer(buffer: GlBuffer) {
         val buffers = uintArrayOf(buffer.toUInt())
         buffers.usePinned {
@@ -203,45 +206,57 @@ object KglIos : Kgl {
 
     override fun uniform1f(location: UniformLocation, f: Float) =
         glUniform1f(location, f)
+
     override fun uniform1fv(location: UniformLocation, value: FloatArray) =
         glUniform1fv(location, value.vSize(1), value.refTo(0))
+
     override fun uniform1i(location: UniformLocation, i: Int) =
         glUniform1i(location, i)
+
     override fun uniform1iv(location: UniformLocation, value: IntArray) =
         glUniform1iv(location, value.vSize(1), value.refTo(0))
 
     override fun uniform2f(location: UniformLocation, x: Float, y: Float) =
         glUniform2f(location, x, y)
+
     override fun uniform2fv(location: UniformLocation, value: FloatArray) =
         glUniform2fv(location, value.vSize(2), value.refTo(0))
+
     override fun uniform2i(location: UniformLocation, x: Int, y: Int) =
         glUniform2i(location, x, y)
+
     override fun uniform2iv(location: UniformLocation, value: IntArray) =
         glUniform2iv(location, value.vSize(2), value.refTo(0))
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) =
         glUniform3f(location, x, y, z)
+
     override fun uniform3fv(location: UniformLocation, value: FloatArray) =
         glUniform3fv(location, value.vSize(3), value.refTo(0))
+
     override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) =
         glUniform3i(location, x, y, z)
+
     override fun uniform3iv(location: UniformLocation, value: IntArray) =
         glUniform3iv(location, value.vSize(3), value.refTo(0))
 
     override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) =
         glUniform4f(location, x, y, z, w)
+
     override fun uniform4fv(location: UniformLocation, value: FloatArray) =
         glUniform4fv(location, value.vSize(4), value.refTo(0))
+
     override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) =
         glUniform4i(location, x, y, z, w)
+
     override fun uniform4iv(location: UniformLocation, value: IntArray) =
         glUniform4iv(location, value.vSize(4), value.refTo(0))
 
     override fun uniformMatrix3fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
-        glUniformMatrix3fv(location, value.vSize(3*3), transpose.toGl(), value.refTo(0))
+        glUniformMatrix3fv(location, value.vSize(3 * 3), transpose.toGl(), value.refTo(0))
 
     override fun uniformMatrix4fv(location: UniformLocation, transpose: Boolean, value: FloatArray) =
-        glUniformMatrix4fv(location, value.vSize(4*4), transpose.toGl(), value.refTo(0))
+        glUniformMatrix4fv(location, value.vSize(4 * 4), transpose.toGl(), value.refTo(0))
 
     override fun blendFunc(sFactor: Int, dFactor: Int) {
         glBlendFunc(sFactor.toUInt(), dFactor.toUInt())
@@ -265,6 +280,10 @@ object KglIos : Kgl {
 
     override fun createTexture(): Texture {
         return createTextures(1)[0]
+    }
+
+    override fun vertexAttribDivisor(index: Int, divisor: Int) {
+        glVertexAttribDivisor(index.toUInt(), divisor.toUInt())
     }
 
     override fun createTextures(n: Int): Array<Texture> {
@@ -369,6 +388,25 @@ object KglIos : Kgl {
 
     override fun drawElements(mode: Int, count: Int, type: Int) {
         glDrawElements(mode.toUInt(), count, type.toUInt(), null)
+    }
+
+    override fun drawArraysInstanced(
+        mode: Int,
+        first: Int,
+        count: Int,
+        instanceCount: Int
+    ) {
+        glDrawArraysInstanced(mode.toUInt(), first, count, instanceCount)
+    }
+
+    override fun drawElementsInstanced(
+        mode: Int,
+        count: Int,
+        type: Int,
+        offset: Int,
+        instanceCount: Int
+    ) {
+        glDrawElementsInstanced(mode.toUInt(), count, type.toUInt(), null, instanceCount)
     }
 
     override fun getError(): Int {

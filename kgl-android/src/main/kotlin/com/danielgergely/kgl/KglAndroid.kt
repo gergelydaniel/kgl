@@ -2,6 +2,10 @@ package com.danielgergely.kgl
 
 import android.opengl.GLES20
 import android.opengl.GLES30
+import java.nio.ByteBuffer
+import java.nio.FloatBuffer
+import java.nio.IntBuffer
+import java.nio.ShortBuffer
 
 typealias GL = GLES20
 
@@ -73,6 +77,20 @@ object KglAndroid : Kgl {
         }
     }
 
+    override fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer) {
+        sourceData.withJavaBuffer { buffer ->
+            val bytePerElement = when (buffer) {
+                is ByteBuffer -> 1
+                is FloatBuffer -> 4
+                is ShortBuffer -> 2
+                is IntBuffer -> 4
+                else -> throw IllegalArgumentException("Unsupported buffer $buffer for bufferSubData")
+            }
+
+            GLES30.glBufferSubData(target, dstOffset, buffer.remaining() * bytePerElement, buffer)
+        }
+    }
+
     override fun deleteBuffer(buffer: GlBuffer) = GL.glDeleteBuffers(1, intArrayOf(buffer), 0)
 
     override fun vertexAttribPointer(
@@ -92,44 +110,57 @@ object KglAndroid : Kgl {
 
     override fun uniform1f(location: UniformLocation, f: Float) =
         GL.glUniform1f(location, f)
+
     override fun uniform1fv(location: UniformLocation, value: FloatArray) =
         GL.glUniform1fv(location, value.vSize(1), value, 0)
+
     override fun uniform1i(location: UniformLocation, i: Int) =
         GL.glUniform1i(location, i)
+
     override fun uniform1iv(location: UniformLocation, value: IntArray) =
         GL.glUniform1iv(location, value.vSize(1), value, 0)
 
     override fun uniform2f(location: UniformLocation, x: Float, y: Float) =
         GL.glUniform2f(location, x, y)
+
     override fun uniform2fv(location: UniformLocation, value: FloatArray) =
         GL.glUniform2fv(location, value.vSize(2), value, 0)
+
     override fun uniform2i(location: UniformLocation, x: Int, y: Int) =
         GL.glUniform2i(location, x, y)
+
     override fun uniform2iv(location: UniformLocation, value: IntArray) =
         GL.glUniform2iv(location, value.vSize(2), value, 0)
 
     override fun uniform3f(location: UniformLocation, x: Float, y: Float, z: Float) =
         GL.glUniform3f(location, x, y, z)
+
     override fun uniform3fv(location: UniformLocation, value: FloatArray) =
         GL.glUniform3fv(location, value.vSize(3), value, 0)
+
     override fun uniform3i(location: UniformLocation, x: Int, y: Int, z: Int) =
         GL.glUniform3i(location, x, y, z)
+
     override fun uniform3iv(location: UniformLocation, value: IntArray) =
         GL.glUniform3iv(location, value.vSize(3), value, 0)
 
     override fun uniform4f(location: UniformLocation, x: Float, y: Float, z: Float, w: Float) =
         GL.glUniform4f(location, x, y, z, w)
+
     override fun uniform4fv(location: UniformLocation, value: FloatArray) =
         GL.glUniform4fv(location, value.vSize(4), value, 0)
+
     override fun uniform4i(location: UniformLocation, x: Int, y: Int, z: Int, w: Int) =
         GL.glUniform4i(location, x, y, z, w)
+
     override fun uniform4iv(location: UniformLocation, value: IntArray) =
         GL.glUniform4iv(location, value.vSize(4), value, 0)
 
     override fun uniformMatrix3fv(location: Int, transpose: Boolean, value: FloatArray) =
-        GL.glUniformMatrix3fv(location, value.vSize(3*3), transpose, value, 0)
+        GL.glUniformMatrix3fv(location, value.vSize(3 * 3), transpose, value, 0)
+
     override fun uniformMatrix4fv(location: Int, transpose: Boolean, value: FloatArray) =
-        GL.glUniformMatrix4fv(location, value.vSize(4*4), transpose, value, 0)
+        GL.glUniformMatrix4fv(location, value.vSize(4 * 4), transpose, value, 0)
 
     override fun blendFunc(sFactor: Int, dFactor: Int) = GL.glBlendFunc(sFactor, dFactor)
 
@@ -204,6 +235,28 @@ object KglAndroid : Kgl {
     override fun drawArrays(mode: Int, first: Int, count: Int) = GL.glDrawArrays(mode, first, count)
 
     override fun drawElements(mode: Int, count: Int, type: Int) = GL.glDrawElements(mode, count, type, 0)
+    override fun drawArraysInstanced(
+        mode: Int,
+        first: Int,
+        count: Int,
+        instanceCount: Int
+    ) {
+        GLES30.glDrawArraysInstanced(mode, first, count, instanceCount)
+    }
+
+    override fun drawElementsInstanced(
+        mode: Int,
+        count: Int,
+        type: Int,
+        offset: Int,
+        instanceCount: Int
+    ) {
+        GLES30.glDrawElementsInstanced(mode, count, type, offset, instanceCount)
+    }
+
+    override fun vertexAttribDivisor(index: Int, divisor: Int) {
+        GLES30.glVertexAttribDivisor(index, divisor)
+    }
 
     override fun getError(): Int = GL.glGetError()
     override fun finish() = GL.glFinish()

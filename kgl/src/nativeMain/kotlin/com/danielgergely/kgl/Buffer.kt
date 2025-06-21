@@ -4,7 +4,12 @@ import kotlinx.cinterop.CValuesRef
 import kotlinx.cinterop.refTo
 
 
-public actual sealed class Buffer
+public actual sealed class Buffer {
+
+    public abstract fun remainingElements(): Int
+
+    public abstract fun remainingBytes(): Int
+}
 
 public fun Buffer.ref(): CValuesRef<*> {
     return when (this) {
@@ -67,6 +72,14 @@ public actual class FloatBuffer : Buffer {
     public actual operator fun get(pos: Int): Float {
         return buffer[pos]
     }
+
+    override fun remainingElements(): Int {
+        return buffer.size - position
+    }
+
+    override fun remainingBytes(): Int {
+        return remainingElements() * 4
+    }
 }
 
 public actual class ByteBuffer : Buffer {
@@ -121,6 +134,14 @@ public actual class ByteBuffer : Buffer {
     public actual operator fun get(pos: Int): Byte {
         return buffer[pos]
     }
+
+    override fun remainingElements(): Int {
+        return buffer.size - position
+    }
+
+    override fun remainingBytes(): Int {
+        return remainingElements()
+    }
 }
 
 public actual class IntBuffer : Buffer {
@@ -173,6 +194,14 @@ public actual class IntBuffer : Buffer {
 
     public actual operator fun get(pos: Int): Int {
         return buffer[pos]
+    }
+
+    override fun remainingElements(): Int {
+        return buffer.size - position
+    }
+
+    override fun remainingBytes(): Int {
+        return remainingElements() * 4
     }
 }
 
@@ -227,5 +256,13 @@ public actual class ShortBuffer : Buffer {
 
     public actual operator fun get(pos: Int): Short {
         return buffer[pos]
+    }
+
+    override fun remainingElements(): Int {
+        return buffer.size - position
+    }
+
+    override fun remainingBytes(): Int {
+        return remainingElements() * 2
     }
 }

@@ -34,9 +34,11 @@ public interface Kgl {
     public fun createBuffers(count: Int): Array<GlBuffer>
     public fun bindBuffer(target: Int, bufferId: GlBuffer?)
     public fun bufferData(target: Int, sourceData: Buffer, size: Int, usage: Int)
+    public fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer)
     public fun deleteBuffer(buffer: GlBuffer)
 
     public fun vertexAttribPointer(location: Int, size: Int, type: Int, normalized: Boolean, stride: Int, offset: Int)
+    public fun vertexAttribDivisor(index: Int, divisor: Int)
 
     public fun uniform1f(location: UniformLocation, f: Float)
     public fun uniform1fv(location: UniformLocation, value: FloatArray)
@@ -96,6 +98,8 @@ public interface Kgl {
 
     public fun drawArrays(mode: Int, first: Int, count: Int)
     public fun drawElements(mode: Int, count: Int, type: Int)
+    public fun drawArraysInstanced(mode: Int, first: Int, count: Int, instanceCount: Int)
+    public fun drawElementsInstanced(mode: Int, count: Int, type: Int, offset: Int, instanceCount: Int)
 
     public fun getError(): Int
     public fun finish()

@@ -74,6 +74,10 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
         gl.bufferData(target, sourceData.getJsBufferWithOffset(), usage)
     }
 
+    override fun bufferSubData(target: Int, dstOffset: Int, sourceData: Buffer) {
+        gl.bufferSubData(target, dstOffset, sourceData.getJsBufferWithOffset())
+    }
+
     public override fun deleteBuffer(buffer: GlBuffer): Unit = gl.deleteBuffer(buffer.unsafeCast<WebGLBuffer>())
 
     public override fun vertexAttribPointer(
@@ -191,6 +195,23 @@ public class KglJs(private val gl: WebGLRenderingContext) : Kgl {
     public override fun drawArrays(mode: Int, first: Int, count: Int): Unit = gl.drawArrays(mode, first, count)
 
     public override fun drawElements(mode: Int, count: Int, type: Int): Unit = gl.drawElements(mode, count, type, 0)
+
+    override fun drawArraysInstanced(
+        mode: Int,
+        first: Int,
+        count: Int,
+        instanceCount: Int
+    ): Unit = gl.asDynamic().drawArraysInstanced(mode, first, count, instanceCount)
+
+    override fun drawElementsInstanced(
+        mode: Int,
+        count: Int,
+        type: Int,
+        offset: Int,
+        instanceCount: Int
+    ): Unit = gl.asDynamic().drawElementsInstanced(mode, count, type, offset, instanceCount)
+
+    override fun vertexAttribDivisor(index: Int, divisor: Int): Unit = gl.asDynamic().vertexAttribDivisor(index, divisor)
 
     public override fun getError(): Int = gl.getError()
     public override fun finish(): Unit = gl.finish()
